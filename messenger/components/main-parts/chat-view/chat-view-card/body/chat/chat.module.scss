@@ -1,0 +1,73 @@
+.chatContainer {
+    position: relative;
+    margin: 0;
+    &:first-child{
+        margin: 70px 0 0 0;
+    }
+}
+
+.chat {
+    height: auto;
+    width: auto;
+    max-width: 300px;
+    border-radius: 5px;
+}
+
+.chat::after {
+}
+
+.chatContent {
+    height: auto;
+    width: fit-content;
+}
+
+.chatDetail {
+    height: 20px;
+    font-size: 10px;
+    font-weight: bold;
+    display: inline-flex;
+    justify-content: flex-end;
+    align-items: center;
+    flex-direction: row;
+    flex-wrap: nowrap;
+}
+
+.chatTime {
+    justify-self: flex-end;
+    margin: 1px 3px;
+}
+
+.chatStatus {
+    justify-self: flex-end;
+    margin: 1px 3px;
+}
+
+.chatEdit {
+    justify-self: flex-end;
+    margin: 1px 3px;
+    & > button {
+        font-size: 9px;
+        font-weight: bolder;
+        height: 100%;
+        width: auto;
+        border: 0 solid transparent;
+        border-radius: 2px;
+        background-color: transparent;
+        color: green !important;
+    }
+}
+
+.chatDelete {
+    justify-self: flex-end;
+    margin: 1px 3px;
+    & > button {
+        font-size: 9px;
+        font-weight: bolder;
+        height: 100%;
+        width: auto;
+        border: 0 solid transparent;
+        border-radius: 1px;
+        background-color: transparent;
+        color: red !important;
+    }
+}

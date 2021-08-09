@@ -1,0 +1,44 @@
+.cardFooterContainer {
+    background-color: #112153;
+    height: 100px;
+    position: sticky;
+    bottom: 0;
+}
+
+.cardFooter {
+    height: 60%;
+    margin-bottom: auto;
+}
+
+.searchInput {
+    background-color: transparent;
+    box-shadow: inset 0 0 40px 10px #ffffff21;
+    color: white;
+    &:focus {
+        background-color: transparent;
+        box-shadow: inset 0 0 40px 10px #ffffff21;
+        color: white;
+    }
+    &:placeholder-shown{
+        color: #112153;
+    }
+}
+
+.searchBtn{
+    background-color: #636788b3;
+    box-shadow: inset 0 0 0px 5px #ffffff21;
+}
+
+@media (max-width: 576px) {
+    .cardFooterContainer {
+        background-color: #112153;
+        height: 70px;
+    }
+}
+
+@media (max-width: 768px) {
+    .cardFooterContainer {
+        background-color: #112153;
+        height: 70px;
+    }
+}

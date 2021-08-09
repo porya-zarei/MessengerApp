@@ -1,0 +1,25 @@
+.navItem{
+    background-color: #273036;
+    cursor: pointer;
+    color: white;
+    position: absolute;
+    top: -35px;
+    border: 0px;
+    border-radius: 50%;
+    height: 80px;
+    width: 80px;
+    font-size: x-large;
+    font-weight: bolder;
+    transition: all 1s cubic-bezier(0.165, 0.84, 0.44, 1);
+    &>span{
+        display: none;
+    }
+    &:hover{
+        transform: translateY(-20px);
+    }
+    &:hover span{
+        display: block;
+        position: absolute;
+        top: 55px;
+    }
+}

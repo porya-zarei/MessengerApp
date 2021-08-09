@@ -1,0 +1,38 @@
+.container{
+    background-color: rgb(233, 233, 233);
+    position: fixed;
+    top: 0;
+    left: 0;
+    padding: 5px;
+    width: 100%;
+    height: auto;
+    box-shadow: 5px 0 gray;
+    z-index: 10;
+}
+
+.homeNavbar{
+    height: 100%;
+    width: 100%;
+}
+
+.homeNavbarList{
+    height: 100%;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    display: inline-flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: row;
+    flex-wrap: wrap;
+    list-style: none;
+}
+
+.homeNavbarListItem{
+    width: auto;
+    padding: 3px;
+    margin: 0 2px;
+    &:last-child{
+        margin-left: auto;
+    }
+}

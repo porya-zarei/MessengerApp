@@ -1,0 +1,46 @@
+.cardBodyContainer {
+    background-color: yellow;
+    height: 88%;
+    padding: 0px 5px 0px 10px;
+    z-index: 0;
+}
+
+.cardBody {
+    background-color: transparent;
+    height: 100%;
+    overflow-y: scroll;
+    padding-right: 10px;
+    padding-bottom: 110px;
+}
+
+@media (max-width: 576px) {
+    .cardBodyContainer {
+        background-color: yellow;
+        height: 87%;
+        overflow-y: scroll;
+        overflow-x: hidden;
+        z-index: 0;
+    }
+    .cardBody {
+        background-color: transparent;
+        height: 100%;
+        overflow-y: scroll;
+        padding-right: 10px;
+        padding-bottom: 80px;
+    }
+}
+
+@media (max-width: 768px) {
+    .cardFooterContainer {
+        background-color: blue;
+        height: 87%;
+        z-index: 0;
+    }
+    .cardBody {
+        background-color: transparent;
+        height: 100%;
+        overflow-y: scroll;
+        padding-right: 10px;
+        padding-bottom: 80px;
+    }
+}

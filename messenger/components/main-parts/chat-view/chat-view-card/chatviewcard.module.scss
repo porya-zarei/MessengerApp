@@ -1,0 +1,55 @@
+.cardContainer {
+    height: 100%;
+    width: 100%;
+    z-index: 0;
+    overflow: visible hidden;
+}
+
+.card {
+    height: 100%;
+    width: 100%;
+    overflow: visible hidden;
+    z-index: 0;
+    padding-top: 5% !important;
+    position: relative;
+}
+
+@media (max-width: 576px) {
+    .cardContainer {
+        height: 100%;
+        width: 100%;
+        z-index: 0;
+        overflow: visible hidden;
+    }
+    .card {
+        height: 100%;
+        width: 100%;
+        overflow: visible hidden;
+        z-index: 0;
+        padding-top: 10% !important;
+        position: relative;
+    }
+}
+@media (max-width: 768px) {
+    .cardContainer {
+        height: 100%;
+        width: 100%;
+        z-index: 0;
+        overflow: visible hidden;
+    }
+    .card {
+        height: 100%;
+        width: 100%;
+        overflow: visible hidden;
+        z-index: 0;
+        padding-top: 10% !important;
+        position: relative;
+    }
+}
+
+// @media (max-width: 576px) {
+
+// }
+// @media (max-width: 768px) {
+
+// }

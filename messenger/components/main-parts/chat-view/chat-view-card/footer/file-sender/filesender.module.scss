@@ -1,0 +1,96 @@
+.senderContainer {
+    height: 100%;
+    width: 40px;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    &:hover > .sender {
+        display: inline-flex;
+        justify-content: space-evenly;
+        align-items: center;
+        flex-direction: row;
+    }
+}
+
+.sender {
+    display: none;
+    height: 60px;
+    width: 165px;
+    position: absolute;
+    top: -50px;
+    left: 10px;
+    background-color: rgb(26, 25, 121);
+    border: 0 solid transparent;
+    border-radius: 10px;
+    cursor: default;
+    padding: 5px;
+}
+
+.imageSenderBtn {
+    height: 45px;
+    width: 45px;
+    border: 0 solid transparent;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 30px;
+    color: rgb(218, 216, 216);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-clip: text;
+    background: linear-gradient(
+        to bottom right,
+        red,
+        purple,
+        blue,
+        green,
+        yellow
+    );
+}
+
+.videoSenderBtn {
+    height: 45px;
+    width: 45px;
+    border: 0 solid transparent;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 30px;
+    color: rgb(218, 216, 216);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-clip: text;
+    background: linear-gradient(
+        to bottom right,
+        red,
+        purple,
+        blue,
+        green,
+        yellow
+    );
+}
+
+.fileSenderBtn {
+    height: 45px;
+    width: 45px;
+    // background-color: rgba(255, 255, 255, 0.151);
+    border: 0 solid transparent;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 30px;
+    color: rgb(218, 216, 216);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-clip: text;
+    background: linear-gradient(
+        to bottom right,
+        red,
+        purple,
+        blue,
+        green,
+        yellow
+    );
+}

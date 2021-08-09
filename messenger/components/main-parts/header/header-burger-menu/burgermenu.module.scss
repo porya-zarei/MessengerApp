@@ -1,0 +1,16 @@
+.burgerMenuContainer {
+    position: fixed;
+    top: 50px;
+    left: 0px;
+    display: none;
+    height: 100%;
+    width: 100%;
+    z-index: 10;
+    background-color: transparent;
+}
+
+.burgerMenu {
+    height: 100%;
+    width: 340px;
+    background-color: rgb(56, 56, 56);
+}

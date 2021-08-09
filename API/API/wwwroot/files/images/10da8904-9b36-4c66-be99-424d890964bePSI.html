@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <title>PSI</title>
+        <link href="psi_css.css" rel="stylesheet" type="text/css" />
+    </head>
+
+    <body>
+        <h2>Pollutant Standards Index(PSI)</h2>
+
+        <h4>PM2.5(24hr avg)</h4>
+        <input id="PM25Data" type="number" />
+        <span>ug/m3</span>
+
+        <h4>PM10(24hr avg)</h4>
+        <input id="PM10Data" type="number" />
+        <span>ug/m3</span>
+
+        <h4>O3 (8hr avg)</h4>
+        <input id="O3Data" type="number" />
+        <span>ppm</span>
+
+        <h4>CO (8hr avg)</h4>
+        <input id="COData" type="number" />
+        <span>ppm</span>
+
+        <h4>NO2 (1hr avg)</h4>
+        <input id="NO2Data" type="number" />
+        <span>ppm</span>
+
+        <h4>SO2 (24hr avg)</h4>
+        <input id="SO2Data" type="number" />
+        <span>ppm</span>
+
+        <hr />
+        <h3>Quality Report</h3>
+        <table>
+            <tr>
+                <td>Pollutant</td>
+                <td class="text-center">
+                    <span class="text-center">PSI</span>
+                </td>
+            </tr>
+
+            <tr>
+                <td>PM2.5 (24hr avg)</td>
+                <td class="text-center">
+                    <input
+                        disabled
+                        type="text"
+                        id="PM25PSI"
+                        text-align="center"
+                    />
+                </td>
+            </tr>
+
+            <tr>
+                <td>PM10 - (24hr avg)</td>
+                <td class="text-center">
+                    <input
+                        disabled
+                        type="text"
+                        id="PM10PSI"
+                        text-align="center"
+                    />
+                </td>
+            </tr>
+            <tr>
+                <td>CO (8hr avg)</td>
+                <td class="text-center">
+                    <input
+                        disabled
+                        type="text"
+                        id="COPSI"
+                        text-align="center"
+                    />
+                </td>
+            </tr>
+
+            <tr>
+                <td>SO2(24hr avg)</td>
+                <td class="text-center">
+                    <input
+                        disabled
+                        type="text"
+                        id="SO2PSI"
+                        text-align="center"
+                    />
+                </td>
+            </tr>
+
+            <tr>
+                <td>O3</td>
+                <td class="text-center">
+                    <input
+                        disabled
+                        type="text"
+                        id="O3PSI"
+                        text-align="center"
+                    />
+                </td>
+            </tr>
+
+            <tr>
+                <td>NO2 (1hr avg)</td>
+                <td>
+                    <input
+                        disabled
+                        type="text"
+                        id="NO2PSI"
+                        text-align="center"
+                    />
+                </td>
+            </tr>
+        </table>
+
+        <table>
+            <tr>
+                <td>
+                    <span id="Label3">Overall Quality PSI:</span>
+                </td>
+                <td>
+                    <input id="OveralPSI" disabled />
+                </td>
+            </tr>
+        </table>
+
+        <button onclick="OveralPSIFunction()">Calculate Overall PSI</button>
+
+        <script>
+            let h, f, n, d, b, j;
+            function So2() {
+                var g = parseInt(document.getElementById("SO2Data").value);
+
+                if (g >= 1) {
+                    g = 0.99;
+                }
+                if (g < 0) {
+                    h = "Your value is wrong";
+                } else if (g < 0.03) {
+                    h = (50 / 0.03) * g;
+                } else if (g < 0.14) {
+                    h = (49 / 0.109) * (g - 0.036) + 51;
+                } else if (g < 0.3) {
+                    h = (99 / 0.159) * (g - 0.141) + 101;
+                } else if (g < 0.6) {
+                    h = (99 / 0.299) * (g - 0.301) + 201;
+                } else if (g < 0.8) {
+                    h = (99 / 0.199) * (g - 0.601) + 301;
+                } else if (g < 1) {
+                    h = (99 / 0.199) * (g - 0.801) + 401;
+                } else {
+                    h = "Your value is too large";
+                }
+                h = Math.round(h);
+                document.getElementById("SO2PSI").innerHTML = h;
+            }
+
+            function co() {
+                var e = parseInt(document.getElementById("COData").value);
+                if (e >= 50) {
+                    e = 49.99;
+                }
+                if (e < 0) {
+                    f = "Your value is wrong";
+                } else if (e < 4.5) {
+                    f = (50 / 4.5) * e;
+                } else if (e < 9) {
+                    f = (49 / 4.4) * (e - 4.6) + 51;
+                } else if (e < 15) {
+                    f = (99 / 5.9) * (e - 9.1) + 101;
+                } else if (e < 30) {
+                    f = (99 / 14.9) * (e - 15.1) + 201;
+                } else if (e < 40) {
+                    f = (99 / 0.9) * (e - 30.1) + 301;
+                } else if (e < 50) {
+                    f = (99 / 0.9) * (e - 40.1) + 401;
+                } else {
+                    f = "Your value is too large";
+                }
+
+                f = Math.round(f);
+                document.getElementById("COPSI").innerHTML = f;
+            }
+
+            function No2() {
+                var m = parseInt(document.getElementById("NO2Data").value);
+
+                if (m >= 2) {
+                    m = 1.99;
+                }
+                if (m < 0) {
+                    n = "Your value is wrong";
+                } else if (m < 0.6) {
+                    n = (99 / 0.01) * (m - 0.59) + 101;
+                } else if (m < 1.2) {
+                    n = (99 / 0.59) * (m - 0.61) + 201;
+                } else if (m < 1.6) {
+                    n = (99 / 0.39) * (m - 1.21) + 301;
+                } else if (m < 2) {
+                    n = (99 / 0.39) * (m - 1.61) + 401;
+                } else {
+                    n = "Your value is too large";
+                }
+                n = Math.round(n);
+                document.getElementById("NO2PSI").innerHTML = n;
+            }
+
+            function PM10() {
+                var c = parseInt(document.getElementById("PM10Data").value);
+
+                if (c >= 600) {
+                    c = 599.9;
+                }
+                if (c < 0) {
+                    d = "Your value is wrong";
+                } else if (c < 50) {
+                    d = (50 / 50) * c;
+                } else if (c < 150) {
+                    d = (49 / 99) * (c - 51) + 51;
+                } else if (c < 350) {
+                    d = (99 / 199) * (c - 151) + 101;
+                } else if (c < 420) {
+                    d = (99 / 69) * (c - 351) + 201;
+                } else if (c < 421) {
+                    d = (99 / 79) * (c - 421) + 301;
+                } else if (c < 600) {
+                    d = (99 / 99) * (c - 501) + 401;
+                } else {
+                    d = "Your value is too large";
+                }
+
+                d = Math.round(d);
+                document.getElementById("PM10PSI").innerHTML = d;
+            }
+
+            function PM25() {
+                var a = parseInt(document.getElementById("PM25Data").value);
+
+                if (a >= 500) {
+                    a = 499.99;
+                }
+                if (a < 0) {
+                    b = "Your value is wrong";
+                } else if (a < 12) {
+                    b = (50 / 12) * a;
+                } else if (a < 55) {
+                    b = (50 / 42) * (a - 13) + 51;
+                } else if (a < 150) {
+                    b = (99 / 94) * (a - 56) + 101;
+                } else if (a < 200) {
+                    b = (99 / 49) * (a - 151) + 201;
+                } else if (a < 350) {
+                    b = (99 / 149) * (a - 201) + 301;
+                } else if (a < 500) {
+                    b = (99 / 50) * (a - 350) + 401;
+                } else {
+                    b = "Your value is too large";
+                }
+
+                b = Math.round(b);
+                document.getElementById("PM25PSI").innerHTML = b;
+            }
+
+            function O3() {
+                var i = parseInt(document.getElementById("O3Data").value);
+
+                if (i >= 0.6) {
+                    i = 0.59;
+                }
+                if (i < 0) {
+                    j = "Your value is wrong";
+                } else if (i < 0.04) {
+                    j = (50 / 39) * i;
+                } else if (i < 0.08) {
+                    j = (49 / 0.04) * (i - 0.041) + 51;
+                } else if (i < 0.2) {
+                    j = (99 / 0.119) * (i - 0.081) + 101;
+                } else if (i < 0.4) {
+                    j = (99 / 0.199) * (i - 0.201) + 201;
+                } else if (i < 0.5) {
+                    j = (99 / 0.099) * (i - 0.401) + 301;
+                } else if (i < 0.6) {
+                    j = (99 / 0.099) * (i - 0.501) + 401;
+                } else {
+                    j = "Your value is too large";
+                }
+                j = Math.round(j);
+                document.getElementById("O3PSI").innerHTML = j;
+            }
+
+            function OveralPSIFunction() {
+                No2();
+                O3();
+                PM10();
+                PM25();
+                So2();
+                co();
+                console.log(h, f, n, d, b, j);
+                var PSI = Math.max(h, f, n, d, b, j);
+
+                if (isNaN(PSI)) {
+                    PSI = " Out of Range";
+                    document.getElementById("OveralPSI").value = PSI;
+                }
+                document.getElementById("OveralPSI").value = PSI;
+            }
+        </script>
+    </body>
+</html>

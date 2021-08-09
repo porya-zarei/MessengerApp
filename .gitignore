@@ -1,0 +1,41 @@
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# dependencies
+messenger/.vscode
+messenger/node_modules
+messenger/.pnp
+messenger/.pnp.js
+API/.vs
+API/API/bin
+API/API/obj
+API/APIDataLayer/bin
+API/APIDataLayer/obj
+
+# testing
+messenger/coverage
+
+# next.js
+messenger/.next/
+messenger/.next
+messenger/out/
+
+# production
+messenger/build
+
+# misc
+messenger/.DS_Store
+messenger/*.pem
+
+# debug
+messenger/npm-debug.log*
+messenger/yarn-debug.log*
+messenger/yarn-error.log*
+
+# local env files
+messenger/.env.local
+messenger/.env.development.local
+messenger/.env.test.local
+messenger/.env.production.local
+
+# vercel
+messenger/.vercel
