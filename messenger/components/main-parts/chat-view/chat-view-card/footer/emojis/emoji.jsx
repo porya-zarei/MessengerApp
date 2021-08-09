@@ -1,9 +1,24 @@
 const Emoji = ({emoji, setText}) => {
     return (
-        <button onClick={() => setText((p) => `${p + emoji}`)} className="">
+        <span
+            role="img"
+            onClick={() => setText((p) => `${p + emoji}`)}
+            className="curser-pointer">
             {emoji}
-        </button>
+        </span>
     );
 };
 
 export default Emoji;
+{
+    /*
+<span
+        className="emoji"
+        role="img"
+        aria-label={props.label ? props.label : ""}
+        aria-hidden={props.label ? "false" : "true"}
+    >
+        {props.symbol}
+    </span>
+*/
+}

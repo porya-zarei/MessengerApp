@@ -9,9 +9,9 @@ const VoiceChat = ({voiceName, voiceSize}) => {
                     src={source}
                     className={`${classes.voice}`}
                     controls></audio>
-                <span className="badge badge-info badge-pill h-100 w-auto">
+                {/* <span className="badge badge-info badge-pill h-100 w-auto">
                     {voiceSize}
-                </span>
+                </span> */}
             </div>
         </div>
     );

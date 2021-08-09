@@ -13,7 +13,9 @@ const Home = () => {
     ]);
     return (
         <div className={classes.homeContainer}>
-            <HomeNavbar />
+            <header className="w-100 h-auto">
+                <HomeNavbar />
+            </header>
             <div className={classes.homeRow}>
                 <div className={classes.homeCol}>
                     <div className={classes.bannerContainer}>
@@ -95,7 +97,9 @@ const Home = () => {
                     </div>
                 </div>
             </div>
-            <HomeInfo />
+            <footer className="w-100 h-auto">
+                <HomeInfo />
+            </footer>
         </div>
     );
 };

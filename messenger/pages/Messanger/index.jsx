@@ -12,11 +12,8 @@ import {ViewContext} from "../../context/view-context/view-context";
 const MainPage = ({userData, isError}) => {
     const router = useRouter();
     const {
-        rooms,
         roomsDispatcher,
-        groups,
         groupsDispatcher,
-        channels,
         channelsDispatcher,
     } = useContext(UserDataContext);
     const {isLoged, setConnection, token, setConnectionId} =
@@ -67,9 +64,8 @@ const MainPage = ({userData, isError}) => {
             });
         }
     },[])
-
     return (
-        <>
+        <div className="w-100 row m-0 p-0" style={{height:"100vh"}}>
             <div
                 className={`col-md-4 col-lg-4 col-sm-12 h-100 bg-dark p-0 ${chatListClass} m-0`}>
                 <ChatLists />
@@ -78,7 +74,7 @@ const MainPage = ({userData, isError}) => {
                 className={`col-md-8 col-lg-8 col-sm-12 h-100 bg-primary ${chatViewClass} p-0 m-0`}>
                 <ChatView />
             </div>
-        </>
+        </div>
     );
 };
 

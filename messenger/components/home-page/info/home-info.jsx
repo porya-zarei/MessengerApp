@@ -1,31 +1,26 @@
-import classes from './homeinfo.module.scss'
+import classes from "./homeinfo.module.scss";
 
 const HomeInfo = () => {
     return (
         <div className={classes.container}>
             <ul className={classes.col}>
-                <li className={classes.row}>1</li>
-                <li className={classes.row}>2</li>
-                <li className={classes.row}>3</li>
-                <li className={classes.row}>4</li>
-                <li className={classes.row}>5</li>
+                Features :<li className={classes.row}>Full RealTime</li>
+                <li className={classes.row}>Very Secure</li>
+                <li className={classes.row}>
+                    Responsive and very Simple for Use
+                </li>
+                <li className={classes.row}>Enjoy it</li>
             </ul>
             <ul className={classes.col}>
-                <li className={classes.row}>1</li>
-                <li className={classes.row}>2</li>
-                <li className={classes.row}>3</li>
-                <li className={classes.row}>4</li>
-                <li className={classes.row}>5</li>
+                App Parts :<li className={classes.row}>Login</li>
+                <li className={classes.row}>Register</li>
+                <li className={classes.row}>Messenger</li>
             </ul>
-            <ul className={classes.col}>
-                <li className={classes.row}>1</li>
-                <li className={classes.row}>2</li>
-                <li className={classes.row}>3</li>
-                <li className={classes.row}>4</li>
-                <li className={classes.row}>5</li>
-            </ul>
+            <div className={classes.copyRight}>
+                Porya Zarei Messenger App, all Right Reserved &copy;
+            </div>
         </div>
     );
-}
- 
+};
+
 export default HomeInfo;

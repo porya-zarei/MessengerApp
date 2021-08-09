@@ -75,12 +75,9 @@ const MainLayout = ({children}) => {
     };
     return (
         <main
-            onTouchStart={(e) => {
-                console.log("on main touch => ", e);
-            }}
             onContextMenu={handleContextMenu}
-            style={{height: "100vh", zIndex: "0", margin: "30px 0 0 0"}}
-            className="m-0 mt-4 row w-100">
+            style={{zIndex: "0", margin: "0"}}
+            className="h-auto w-100">
             {children}
         </main>
     );

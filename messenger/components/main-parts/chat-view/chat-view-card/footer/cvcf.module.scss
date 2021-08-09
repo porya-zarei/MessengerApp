@@ -1,12 +1,13 @@
 .cardFooterContainer {
     background-color: #112153;
-    height: 100px;
-    position: sticky;
+    height: 60px;
+    position: absolute;
     bottom: 0;
+    left: 0;
 }
 
 .cardFooter {
-    height: 60%;
+    height: 100%;
     margin-bottom: auto;
 }
 
@@ -32,13 +33,13 @@
 @media (max-width: 576px) {
     .cardFooterContainer {
         background-color: #112153;
-        height: 70px;
+        height: 60px;
     }
 }
 
 @media (max-width: 768px) {
     .cardFooterContainer {
         background-color: #112153;
-        height: 70px;
+        height: 60px;
     }
 }

@@ -1,6 +1,6 @@
 .cardBodyContainer {
     background-color: yellow;
-    height: 88%;
+    height: 100%;
     padding: 0px 5px 0px 10px;
     z-index: 0;
 }
@@ -16,7 +16,7 @@
 @media (max-width: 576px) {
     .cardBodyContainer {
         background-color: yellow;
-        height: 87%;
+        height: 100%;
         overflow-y: scroll;
         overflow-x: hidden;
         z-index: 0;

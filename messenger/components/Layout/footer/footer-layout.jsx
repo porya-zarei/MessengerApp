@@ -6,7 +6,7 @@ import classes from './footer.module.scss'
 const FooterLayout = () => {
     const {isLoged} = useContext(UserContext);
     return (
-        <footer className={`${classes.displayOnHover} fixed-bottom text-white-50 w-100 p-0 m-0`}>
+        <footer className={`${classes.displayOnHover} text-white-50`}>
             {isLoged ? <Navigator /> : null}
         </footer>
     );

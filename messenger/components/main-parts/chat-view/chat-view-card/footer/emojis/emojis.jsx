@@ -3,7 +3,10 @@ import classes from "./emojis.module.scss";
 
 const Emojis = ({setText}) => {
     const allEmojis = `😀🤣😅😊😍😗☺🤩😐🙄😥😯😁😃😆😋😘😙🙂😑😏😪😂😄🥰😚🤗🤨😶😣🤐😫🥱😛🤤😔🤑🙁😟😭😨🥵🤪😴😜😲😖😤😦😩😰🥶😵😌😝😓🙃☹😞😢😧🤯😱😳🥴😠😷🤢😇🤓👹☠👾😻😡🤒🤮🤡🤭😈👺👻🤖😼🤬🤕🤧🥺🤥👿💀💩😹😽🙋‍♂️🙋‍♀️🤦‍♀️🤦‍♂️🏃‍♂️🏃‍♀️🤏👈👆☝👉👇✌🤞🖖🤘🤙👌✋🖐👍👎✊🤜👊🤛👋🤚🤟🙏👐👏✍🙌🤲🤝`;
-    const emojis = allEmojis.split("");
+
+    const a =
+        "😀 😃 😄 😁 😆 😅 😂 🤣 😊 😇 🙂 🙃 😉 😌 😍 🥰 😘 😗 😙 😚 😋 😛 😝 😜 🤪 🤨 🧐 🤓 😎 🤩 🥳 😏 😒 😞 😔 😟 😕 🙁 ☹️ 😣 😖 😫 😩 🥺 😢 😭 😤 😠 😡 🤬 🤯 😳 🥵 🥶 😱 😨 😰 😥 😓 🤗 🤔 🤭 🤫 🤥 😶 😐 😑 😬 🙄 😯 😦 😧 😮 😲 🥱 😴 🤤 😪 😵 🤐 🥴 🤢 🤮 🤧 😷 🤒 🤕 🤑 🤠 😈 👿 👹 👺 🤡 💩 👻 💀 ☠️ 👽 👾 🤖 🎃 😺 😸 😹 😻 😼 😽 🙀 😿 😾 👋 🤚 🖐 ✋ 🖖 👌 🤌 🤏 ✌️ 🤞 🤟 🤘 🤙 👈 👉 👆 🖕 👇 ☝️ 👍 👎 ✊ 👊 🤛 🤜 👏 🙌 👐 🤲 🤝 🙏 ✍️ 💅 🤳 💪 🦾 🦵 🦿 🦶 👣 👂 🦻 👃 🫀 🫁 🧠 🦷 🦴 👀 👁 👅 👄 💋 🩸";
+    const emojis = a.split(" ");
     return (
         <div className={`${classes.emojisContainer}`}>
             <div className={`${classes.emojis}`}>

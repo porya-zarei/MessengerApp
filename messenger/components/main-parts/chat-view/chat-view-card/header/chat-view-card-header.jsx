@@ -56,7 +56,7 @@ const ChatViewCardHeader = () => {
 
     return (
         <div
-            className={`${classes.cardHeaderContainer} co-12 position fixed-top`}>
+            className={`${classes.cardHeaderContainer} co-12`}>
             <div className={`${classes.cardHeader}`}>
                 <div className={`${classes.userAvatar} center`}>
                     <div className="center m-auto hw-70px">

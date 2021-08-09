@@ -7,7 +7,7 @@ const ChatViewCard = () => {
     return ( 
         <>
             <div className={`${classes.cardContainer} bg-secondary overflow-hidden`}>
-                <div className={`${classes.card} row p-0 m-0 h-100`}>
+                <div className={`${classes.card} row p-0 m-0`}>
                     <ChatViewCardHeader/>
                     <ChatViewCardBody/>
                     <ChatViewCardFooter/>

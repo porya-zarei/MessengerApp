@@ -17,13 +17,13 @@ const Layout = ({children}) => {
             <ViewContextProvider>
                 <UserDataContextProvider>
                     <UserContextProvider>
-                        <div className="h-100 m-0 p-0 w-100 position-relative">
+                        <div className="h-auto m-0 p-0 w-100 position-relative">
                             <MetaLayout />
                             <HeaderLayout />
                             <MainLayout>{children}</MainLayout>
                             <Dialogs />
                             <ContextMenu/>
-                            <FooterLayout />
+                            {/* <FooterLayout /> */}
                         </div>
                     </UserContextProvider>
                 </UserDataContextProvider>
