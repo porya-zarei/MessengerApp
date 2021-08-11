@@ -20,6 +20,8 @@ const ChatListItems = () => {
             Image: item.Image,
             UserAccess: true,
             MembersName: item.MembersName,
+            userName: item.userName,
+            description: item.description,
         });
     };
     const handleGroupClick = (item) => {
@@ -32,10 +34,12 @@ const ChatListItems = () => {
             Image: item.Image,
             UserAccess: item.UserAccess,
             MembersName: item.MembersName,
+            userName: item.userName,
+            description: item.description,
         });
     };
 
-    const handleChannelClick = () => {
+    const handleChannelClick = (item) => {
         setIsInChat(true);
         setChatsToShow({
             chats: channels.find((ch) => ch.ChannelID === item.Id).Chats,
@@ -45,6 +49,8 @@ const ChatListItems = () => {
             Image: item.Image,
             UserAccess: item.UserAccess,
             MembersName: item.MembersName,
+            userName: item.userName,
+            description: item.description,
         });
     };
 
@@ -66,6 +72,8 @@ const ChatListItems = () => {
                 UserAccess: ch?.AdminsUserName?.includes(user.UserName),
                 chatsCount: ch?.Chats?.length,
                 MembersName: ch?.AdminsUserName,
+                userName: ch?.ChannelUserName,
+                description: ch?.ChannelDescription,
             };
         });
     }
@@ -90,6 +98,8 @@ const ChatListItems = () => {
                 ),
                 chatsCount: gr?.Chats.length,
                 MembersName: gr?.GroupMembersName,
+                userName: gr?.GroupUserName,
+                description: gr?.GroupDescription,
             };
         });
     }
@@ -98,7 +108,7 @@ const ChatListItems = () => {
     if (rooms.length !== 0) {
         roomsList = rooms.map((ro) => {
             return {
-                Name: ro?.OtherUserName,
+                Name: ro?.OtherName,
                 LastChatText:
                     ro?.Chats.length !== 0
                         ? ro?.Chats[ro?.Chats?.length - 1]?.Text
@@ -111,6 +121,8 @@ const ChatListItems = () => {
                 Image: ro?.OtherUserImage,
                 chatsCount: ro?.Chats?.length,
                 MembersName: [ro?.SenderName, ro?.ReceiverName],
+                userName: ro?.OtherUserName,
+                description: ro?.OtherDescription,
             };
         });
     }

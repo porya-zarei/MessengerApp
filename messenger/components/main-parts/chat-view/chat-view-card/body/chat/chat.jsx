@@ -98,6 +98,7 @@ const Chat = ({
 
     return (
         <div
+            id={chatId}
             aria-chatdetail={JSON.stringify(chatDetail)}
             className={`${
                 classes.chatContainer

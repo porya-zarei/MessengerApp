@@ -8,6 +8,7 @@ const CreateChannelDialog = () => {
     const {userId, token} = useContext(UserContext);
     const [channelUserName, setChannelUserName] = useState("");
     const [channelName, setChannelName] = useState("");
+    const [channelDescription, setChannelDescription] = useState("");
     const [loading, setLoading] = useState(false);
     const [successfull, setSuccessfull] = useState("");
     const handleClose = () => {
@@ -20,6 +21,7 @@ const CreateChannelDialog = () => {
             Name: channelName,
             ChannelUserName: channelUserName,
             CreatorID: userId,
+            ChannelDescription : channelDescription,
         };
         const {result, isError, resStatus} = await fetcher(
             "POST",
@@ -79,6 +81,18 @@ const CreateChannelDialog = () => {
                                 value={channelUserName}
                                 onChange={(e) => {
                                     setChannelUserName(e.target.value);
+                                }}
+                                className="w-100 outline-none border-0 rounded-pill p-2"
+                            />
+                        </div>
+                        <div className="form-control border-0 bg-transparent p-1 w-100 my-2">
+                            <input
+                                name="channelDescription"
+                                placeholder="your channel description"
+                                type="text"
+                                value={channelDescription}
+                                onChange={(e) => {
+                                    setChannelDescription(e.target.value);
                                 }}
                                 className="w-100 outline-none border-0 rounded-pill p-2"
                             />

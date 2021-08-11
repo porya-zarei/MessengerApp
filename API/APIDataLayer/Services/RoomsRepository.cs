@@ -80,8 +80,10 @@ namespace APIDataLayer.Services
                 CreateDate = room.CreateDate,
                 ReceiverUserID = room.ReceiverUserID,
                 SenderUserID = room.SenderUserID,
+                OtherName = (user.UserID == room.ReceiverUserID ? (users.Find(u => u.UserID == room.SenderUserID).FirstName + " " + users.Find(u => u.UserID == room.SenderUserID).LastName) : (users.Find(u => u.UserID == room.ReceiverUserID).FirstName + " " + users.Find(u => u.UserID == room.ReceiverUserID).LastName)),
                 OtherUserImage = (user.UserID == room.ReceiverUserID ? users.Find(u => u.UserID == room.SenderUserID).ProfileImage : users.Find(u => u.UserID == room.ReceiverUserID).ProfileImage),
-                OtherUserName = (user.UserID == room.ReceiverUserID ? (users.Find(u => u.UserID == room.SenderUserID).FirstName + " " + users.Find(u => u.UserID == room.SenderUserID).LastName) : (users.Find(u => u.UserID == room.ReceiverUserID).FirstName + " " + users.Find(u => u.UserID == room.ReceiverUserID).LastName)),
+                OtherUserName = (user.UserID == room.ReceiverUserID ? users.Find(u => u.UserID == room.SenderUserID).UserName : users.Find(u => u.UserID == room.ReceiverUserID).UserName),
+                OtherDescription = (user.UserID == room.ReceiverUserID ? users.Find(u => u.UserID == room.SenderUserID).Description : users.Find(u => u.UserID == room.ReceiverUserID).Description),
                 SenderName = users.First(u => u.UserID == room.SenderUserID).FirstName + " " + users.First(u => u.UserID == room.SenderUserID).LastName,
                 ReceiverName = users.First(u => u.UserID == room.ReceiverUserID).FirstName + " " + users.First(u => u.UserID == room.ReceiverUserID).LastName,
                 Chats = room.RoomChatsID.Count > 0 ? RoomChatsToOutputRoomChats(room.RoomChatsID) : new List<OutputRoomChat>() { }

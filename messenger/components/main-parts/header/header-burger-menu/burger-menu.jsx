@@ -1,14 +1,14 @@
 import {motion, useMotionValue, AnimatePresence} from "framer-motion";
 import {useContext, useEffect, useRef, useState} from "react";
-import {MainContext} from "../../../../context/main-context";
 import classes from "./burgermenu.module.scss";
 import BurgerCard from "./burger-card/burger-card";
 import BurgerList from "./burger-list/burger-list";
 import EditUser from "./burger-edit-user/burger-edit-user";
+import { ViewContext } from "../../../../context/view-context/view-context";
 const BurgerMenu = () => {
     const constraintsRef = useRef(null);
     const burger = useRef(null);
-    const {showBurgerMenu, setShowBurgerMenu} = useContext(MainContext);
+    const {showBurgerMenu, setShowBurgerMenu} = useContext(ViewContext);
     const xPosition = useMotionValue(0);
 
     const handleShowNavbar = () => {

@@ -13,6 +13,8 @@ export const ViewContext = createContext({
         Image: "",
         UserAccess: false,
         MembersName: [],
+        userName: "",
+        description: "",
     },
     setChatsToShow: () => {},
     showCreateGroup: false,
@@ -23,14 +25,18 @@ export const ViewContext = createContext({
     setShowCreateRoom: () => {},
     selectedChatsId: [],
     setSelectedChatsId: () => {},
-    contextMenu: {show: false, x: 0, y: 0, chatData: {},listItemData:{}},
-    setContextMenu: ({show, x, y, chatData,listItemData}) => {},
+    contextMenu: {show: false, x: 0, y: 0, chatData: {}, listItemData: {}},
+    setContextMenu: ({show, x, y, chatData, listItemData}) => {},
     selectedForwardDestinations: {
         rooms: [],
         channels: [],
         groups: [],
     },
     setSelectedForwardDestinations: ({rooms, channels, groups}) => {},
+    showBurgerMenu: false,
+    setShowBurgerMenu: () => {},
+    showHeaderInfo: false,
+    setShowHeaderInfo: () => {},
 });
 
 const ViewContextProvider = ({children}) => {
@@ -51,7 +57,7 @@ const ViewContextProvider = ({children}) => {
         x: 0,
         y: 0,
         chatData: {},
-        listItemData:{}
+        listItemData: {},
     });
     const [chatsToShow, setChatsToShow] = useState({
         chats: [],
@@ -61,7 +67,11 @@ const ViewContextProvider = ({children}) => {
         Image: "",
         UserAccess: false,
         MembersName: [],
+        userName: "",
+        description: "",
     });
+    const [showBurgerMenu, setShowBurgerMenu] = useState(false);
+    const [showHeaderInfo, setShowHeaderInfo] = useState(false);
     useEffect(() => {
         if (window) {
             console.log(
@@ -94,6 +104,10 @@ const ViewContextProvider = ({children}) => {
         setContextMenu,
         selectedForwardDestinations,
         setSelectedForwardDestinations,
+        showBurgerMenu,
+        setShowBurgerMenu,
+        showHeaderInfo,
+        setShowHeaderInfo,
     };
     return (
         <ViewContext.Provider value={context}>{children}</ViewContext.Provider>

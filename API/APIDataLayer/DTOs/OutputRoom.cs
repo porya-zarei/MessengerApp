@@ -16,6 +16,8 @@ namespace APIDataLayer.DTOs
         public DateTime CreateDate { get; set; }
         public List<OutputRoomChat> Chats { get; set; }
         public string OtherUserName { get; set; }
+        public string OtherName { get; set; }
         public string OtherUserImage { get; set; }
+        public string OtherDescription { get; set; }
     }
 }

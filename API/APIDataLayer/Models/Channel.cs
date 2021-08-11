@@ -22,6 +22,8 @@ namespace APIDataLayer.Models
         [Required]
         public Guid CreatorID { get; set; }
 
+        public string ChannelDescription { get; set; } = "";
+
         public List<Guid> AdminsID { get; set; }
 
         public List<Guid> ChannelUsersID { get; set; }

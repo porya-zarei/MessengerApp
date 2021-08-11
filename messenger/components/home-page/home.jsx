@@ -16,15 +16,15 @@ const Home = () => {
             <header className="w-100 h-auto">
                 <HomeNavbar />
             </header>
-            <div className={classes.homeRow}>
+            <main className={classes.homeRow}>
                 <div className={classes.homeCol}>
                     <div className={classes.bannerContainer}>
                         <Image
                             className={classes.banner}
                             src="/assets/images/jpg/dasht.jpg"
                             layout="responsive"
-                            height={400}
-                            width={1000}
+                            height={200}
+                            width={500}
                         />
                     </div>
                 </div>
@@ -96,7 +96,7 @@ const Home = () => {
                         </div>
                     </div>
                 </div>
-            </div>
+            </main>
             <footer className="w-100 h-auto">
                 <HomeInfo />
             </footer>

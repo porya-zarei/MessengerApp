@@ -12,7 +12,7 @@ import {
 import classes from "./cvch.module.scss";
 
 const ChatViewCardHeader = () => {
-    const {chatsToShow, isMobile, setIsInChat} = useContext(ViewContext);
+    const {chatsToShow, isMobile, setIsInChat,setShowHeaderInfo} = useContext(ViewContext);
     const {userId, token} = useContext(UserContext);
     const [settingShow, setSettingShow] = useState(false);
     const [voiceChatShow, setVoiceChatShow] = useState(false);
@@ -94,6 +94,7 @@ const ChatViewCardHeader = () => {
                         right: 0,
                     }}
                     onDragEnd={() => isMobile && handleDragEnd()}
+                    onClick={()=> setShowHeaderInfo(p=>!p)}
                     className={`${classes.cardHeader}`}>
                     <div className={`${classes.userAvatar} center`}>
                         <div className="center m-auto hw-70px">

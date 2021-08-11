@@ -201,8 +201,10 @@ namespace APIDataLayer.Services
                                 ReceiverUserID = r.ReceiverUserID,
                                 SenderUserID = r.SenderUserID,
                                 OtherUserImage = (user.UserID == r.ReceiverUserID ? users.Find(u => u.UserID == r.SenderUserID).ProfileImage : users.Find(u => u.UserID == r.ReceiverUserID).ProfileImage),
-                                OtherUserName = (user.UserID == r.ReceiverUserID ? (users.Find(u => u.UserID == r.SenderUserID).FirstName + " " + users.Find(u => u.UserID == r.SenderUserID).LastName) : (users.Find(u => u.UserID == r.ReceiverUserID).FirstName + " " + users.Find(u => u.UserID == r.ReceiverUserID).LastName)),
+                                OtherName = (user.UserID == r.ReceiverUserID ? (users.Find(u => u.UserID == r.SenderUserID).FirstName + " " + users.Find(u => u.UserID == r.SenderUserID).LastName) : (users.Find(u => u.UserID == r.ReceiverUserID).FirstName + " " + users.Find(u => u.UserID == r.ReceiverUserID).LastName)),
+                                OtherUserName = (user.UserID == r.ReceiverUserID ? users.Find(u => u.UserID == r.SenderUserID).UserName : users.Find(u => u.UserID == r.ReceiverUserID).UserName),
                                 SenderName = users.First(u => u.UserID == r.SenderUserID).FirstName + " " + users.First(u => u.UserID == r.SenderUserID).LastName,
+                                OtherDescription = (user.UserID == r.ReceiverUserID ? users.Find(u => u.UserID == r.SenderUserID).Description : users.Find(u => u.UserID == r.ReceiverUserID).Description),
                                 ReceiverName = users.First(u => u.UserID == r.ReceiverUserID).FirstName + " " + users.First(u => u.UserID == r.ReceiverUserID).LastName,
                                 Chats = roomsChats.Where(rc => r.RoomChatsID.Contains(rc.ChatID)).Select(rc => new OutputRoomChat()
                                 {
@@ -266,6 +268,7 @@ namespace APIDataLayer.Services
                                 ChannelID = c.ChannelID,
                                 Name = c.Name,
                                 ChannelUserName = c.ChannelUserName,
+                                ChannelDescription = c.ChannelDescription,
                                 AdminsUserName = users.AsEnumerable().Where(cu => c.AdminsID.Contains(cu.UserID)).Select(cu => cu.UserName).ToList(),
                                 CreatorName = users.First(u => u.UserID == c.CreatorID).FirstName + " " + users.First(u => u.UserID == c.CreatorID).LastName,
                                 ChannelChatsID = c.ChannelChatsID,
@@ -352,6 +355,7 @@ namespace APIDataLayer.Services
                     ChannelID = c.ChannelID,
                     Name = c.Name,
                     ChannelUserName = c.ChannelUserName,
+                    ChannelDescription = c.ChannelDescription,
                     AdminsUserName = users.Where(cu => c.AdminsID.Contains(cu.UserID)).Select(cu => cu.UserName).ToList(),
                     CreatorName = (users.First(u => u.UserID == c.CreatorID).FirstName + " " + users.First(u => u.UserID == c.CreatorID).LastName) ?? "null ",
                     ChannelChatsID = c.ChannelChatsID,

@@ -87,7 +87,8 @@ namespace APIDataLayer.Services
                 Chats = channel.ChannelChatsID.Count > 0 ? ChannelChatsToOutputChannelChats(channel.ChannelChatsID) : new List<OutputChannelChat>() { },
                 ChannelUserName = channel.ChannelUserName,
                 CreatorName = users.Find(u => u.UserID == channel.CreatorID).FirstName + " " + users.Find(u => u.UserID == channel.CreatorID).LastName,
-                ChannelChatsID = channel.ChannelChatsID
+                ChannelChatsID = channel.ChannelChatsID,
+                ChannelDescription = channel.ChannelDescription
             };
         }
 
