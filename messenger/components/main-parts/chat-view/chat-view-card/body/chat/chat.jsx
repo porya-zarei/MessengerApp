@@ -22,8 +22,10 @@ const Chat = ({
     type,
     chatId,
     id,
+    time,
 }) => {
-    var style = {
+    let sendingTime = new Date(time);
+    let style = {
         backgroundColor: "rgb(22, 0, 102)",
     };
     if (!me) {
@@ -148,7 +150,9 @@ const Chat = ({
                         </>
                     )}
                     <div className={`${classes.chatTime}`}>
-                        {new Date().getUTCHours()}
+                        {sendingTime.getHours() +
+                            ":" +
+                            sendingTime.getMinutes()}
                     </div>
                     <div className={`${classes.chatStatus}`}>
                         <i className="bi bi-check-all text-white-50"></i>

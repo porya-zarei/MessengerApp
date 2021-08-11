@@ -45,6 +45,14 @@ const MetaLayout = () => {
                 <link rel="stylesheet" href="/assets/css/bootstrap.min.css" />
                 <link
                     rel="stylesheet"
+                    href="/assets/css/ReactToastify.min.css"
+                />
+                <link
+                    rel="stylesheet"
+                    href="/assets/css/ReactToastify.minimal.css"
+                />
+                <link
+                    rel="stylesheet"
                     href="/assets/css/bootstrap-icons.min.css"
                 />
                 <script async src="/assets/js/bootstrap.bundle.min.js"></script>

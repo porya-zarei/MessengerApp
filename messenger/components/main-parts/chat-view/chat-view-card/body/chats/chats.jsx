@@ -20,6 +20,7 @@ const Chats = ({type = "", chats, userId}) => {
                         type={"room"}
                         chatId={chat.ChatID}
                         id={chat.RoomID}
+                        time={chat.SendingTime}
                     />
                 ))}
             </>
@@ -43,6 +44,7 @@ const Chats = ({type = "", chats, userId}) => {
                         type={"group"}
                         chatId={chat.ChatID}
                         id={chat.GroupID}
+                        time={chat.SendingTime}
                     />
                 ))}
             </>
@@ -66,6 +68,7 @@ const Chats = ({type = "", chats, userId}) => {
                         type={"Channel"}
                         chatId={chat.ChatID}
                         id={chat.ChannelID}
+                        time={chat.SendingTime}
                     />
                 ))}
             </>

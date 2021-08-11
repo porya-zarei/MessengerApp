@@ -9,7 +9,45 @@ const ChatListItems = () => {
     const {setIsInChat, setChatsToShow} = useContext(ViewContext);
     const {rooms, groups, channels} = useContext(UserDataContext);
     const {userId, user} = useContext(UserContext);
-    console.log("user data in lists => ", rooms, groups, channels);
+
+    const handleRoomClick = (item) => {
+        setIsInChat(true);
+        setChatsToShow({
+            chats: rooms.find((ro) => ro.RoomID === item.Id).Chats,
+            type: "room",
+            Id: item.Id,
+            Name: item.Name,
+            Image: item.Image,
+            UserAccess: true,
+            MembersName: item.MembersName,
+        });
+    };
+    const handleGroupClick = (item) => {
+        setIsInChat(true);
+        setChatsToShow({
+            chats: groups.find((gr) => gr.GroupID === item.Id).Chats,
+            type: "group",
+            Id: item.Id,
+            Name: item.Name,
+            Image: item.Image,
+            UserAccess: item.UserAccess,
+            MembersName: item.MembersName,
+        });
+    };
+
+    const handleChannelClick = () => {
+        setIsInChat(true);
+        setChatsToShow({
+            chats: channels.find((ch) => ch.ChannelID === item.Id).Chats,
+            type: "channel",
+            Id: item.Id,
+            Name: item.Name,
+            Image: item.Image,
+            UserAccess: item.UserAccess,
+            MembersName: item.MembersName,
+        });
+    };
+
     let channelsList;
     if (channels.length !== 0) {
         channelsList = channels.map((ch) => {
@@ -18,6 +56,10 @@ const ChatListItems = () => {
                 LastChatText:
                     ch?.Chats.length !== 0
                         ? ch?.Chats[ch?.Chats.length - 1]?.Text
+                        : "",
+                lastChatSendingTime:
+                    ch?.Chats.length !== 0
+                        ? ch?.Chats[ch?.Chats?.length - 1]?.SendingTime
                         : "",
                 Id: ch?.ChannelID,
                 Image: "",
@@ -31,16 +73,15 @@ const ChatListItems = () => {
     let groupsList;
     if (groups.length !== 0) {
         groupsList = groups.map((gr) => {
-            console.log(
-                "access group => ",
-                gr?.GroupMembersName,
-                user?.FirstName + " " + user.LastName,
-            );
             return {
                 Name: gr?.Name,
                 LastChatText:
                     gr.Chats.length !== 0
                         ? gr?.Chats[gr?.Chats?.length - 1]?.Text
+                        : "",
+                lastChatSendingTime:
+                    gr?.Chats.length !== 0
+                        ? gr?.Chats[gr?.Chats?.length - 1]?.SendingTime
                         : "",
                 Id: gr?.GroupID,
                 Image: gr?.GroupProfileImage,
@@ -62,6 +103,10 @@ const ChatListItems = () => {
                     ro?.Chats.length !== 0
                         ? ro?.Chats[ro?.Chats?.length - 1]?.Text
                         : "",
+                lastChatSendingTime:
+                    ro?.Chats.length !== 0
+                        ? ro?.Chats[ro?.Chats?.length - 1]?.SendingTime
+                        : "",
                 Id: ro?.RoomID,
                 Image: ro?.OtherUserImage,
                 chatsCount: ro?.Chats?.length,
@@ -74,27 +119,18 @@ const ChatListItems = () => {
             {roomsList?.map((item) => (
                 <li className={`w-100`} key={item.name}>
                     <button
-                        onClick={() => {
-                            setIsInChat(true);
-                            setChatsToShow({
-                                chats: rooms.find((ro) => ro.RoomID === item.Id)
-                                    .Chats,
-                                type: "room",
-                                Id: item.Id,
-                                Name: item.Name,
-                                Image: item.Image,
-                                UserAccess: true,
-                                MembersName: item.MembersName,
-                            });
-                        }}
+                        onClick={() => handleRoomClick(item)}
                         className="btn w-100 h-100 p-0 m-0">
                         <ChatListItem
                             name={item.Name}
                             lastText={item.LastChatText}
+                            lastChatTime={item.lastChatSendingTime}
                             color={"info"}
                             count={item.chatsCount}
                             image={item.Image}
                             detail={{id: item.Id, type: "room"}}
+                            item={item}
+                            onDragEnd={handleRoomClick}
                         />
                     </button>
                 </li>
@@ -102,28 +138,18 @@ const ChatListItems = () => {
             {groupsList?.map((item) => (
                 <li className={`w-100`} key={item.Name}>
                     <button
-                        onClick={() => {
-                            setIsInChat(true);
-                            setChatsToShow({
-                                chats: groups.find(
-                                    (gr) => gr.GroupID === item.Id,
-                                ).Chats,
-                                type: "group",
-                                Id: item.Id,
-                                Name: item.Name,
-                                Image: item.Image,
-                                UserAccess: item.UserAccess,
-                                MembersName: item.MembersName,
-                            });
-                        }}
+                        onClick={() => handleGroupClick(item)}
                         className="btn w-100 h-100 p-0 m-0">
                         <ChatListItem
                             name={item.Name}
                             lastText={item.LastChatText}
+                            lastChatTime={item.lastChatSendingTime}
                             color={"primary"}
                             count={item.chatsCount}
                             image={item.Image}
                             detail={{id: item.Id, type: "group"}}
+                            item={item}
+                            onDragEnd={handleGroupClick}
                         />
                     </button>
                 </li>
@@ -131,28 +157,18 @@ const ChatListItems = () => {
             {channelsList?.map((item) => (
                 <li className={`w-100`} key={item.Name}>
                     <button
-                        onClick={() => {
-                            setIsInChat(true);
-                            setChatsToShow({
-                                chats: channels.find(
-                                    (ch) => ch.ChannelID === item.Id,
-                                ).Chats,
-                                type: "channel",
-                                Id: item.Id,
-                                Name: item.Name,
-                                Image: item.Image,
-                                UserAccess: item.UserAccess,
-                                MembersName: item.MembersName,
-                            });
-                        }}
+                        onClick={() => handleChannelClick(item)}
                         className="btn w-100 h-100 p-0 m-0">
                         <ChatListItem
                             name={item.Name}
                             lastText={item.LastChatText}
+                            lastChatTime={item.lastChatSendingTime}
                             color={"danger"}
                             count={item.chatsCount}
                             image={item.Image}
                             detail={{id: item.Id, type: "channel"}}
+                            item={item}
+                            onDragEnd={handleChannelClick}
                         />
                     </button>
                 </li>

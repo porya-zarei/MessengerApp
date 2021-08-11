@@ -8,7 +8,7 @@ import FooterLayout from "./footer/footer-layout";
 import HeaderLayout from "./header/header-layout";
 import MainLayout from "./main/main-layout";
 import MetaLayout from "./meta-layout";
-import { useContext } from "react";
+import { ToastContainer } from "react-toastify";
 
 const Layout = ({children}) => {
     
@@ -23,6 +23,7 @@ const Layout = ({children}) => {
                             <MainLayout>{children}</MainLayout>
                             <Dialogs />
                             <ContextMenu/>
+                            <ToastContainer/>
                             {/* <FooterLayout /> */}
                         </div>
                     </UserContextProvider>

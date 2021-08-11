@@ -4,6 +4,9 @@
     &:first-child{
         margin: 140px 0 0 0;
     }
+    &:last-child{
+        margin: 0 0 140px 0;
+    }
 }
 
 .chat {
@@ -11,9 +14,18 @@
     width: auto;
     max-width: 300px;
     border-radius: 5px;
+    animation: chatAnimation ease 1.5s;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
 }
 
-.chat::after {
+@keyframes chatAnimation {
+    from{
+        opacity: 0;
+    }
+    to{
+        opacity: 1;
+    }
 }
 
 .chatContent {

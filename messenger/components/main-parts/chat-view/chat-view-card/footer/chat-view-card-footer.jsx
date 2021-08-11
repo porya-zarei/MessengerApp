@@ -62,26 +62,33 @@ const ChatViewCardFooter = () => {
                                 file={file}
                                 video={video}
                             />
-                            <input
-                                name="ImageFile"
-                                id="ImageFileInputInChatView"
-                                className="display-none"
-                                type="file"
-                                hidden="true"
-                            />
-                            <input
-                                type="text"
-                                placeholder="type..."
-                                className={`${classes.searchInput} form-control p-2 m-0 h-100`}
-                                value={text}
-                                onChange={(e) => {
-                                    setText(e.target.value);
-                                }}
-                            />
+                            <div className={classes.searchInputContainer}>
+                                <input
+                                    type="text"
+                                    placeholder="type..."
+                                    className={`${classes.searchInput} p-2 m-0`}
+                                    value={text}
+                                    onChange={(e) => {
+                                        setText(e.target.value);
+                                    }}
+                                />
+                            </div>
                             <button
                                 onClick={handleSendChat}
-                                className={`${classes.searchBtn} btn m-0 mr-auto mb-auto h-100 w-40px center`}>
-                                <i className="bi bi-telegram text-white fs-larger"></i>
+                                className={`${classes.searchBtn} m-0 mr-auto mb-auto h-100 w-40px center`}>
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    className="h-100 w-100"
+                                    fill="none"
+                                    viewBox="0 0 24 24"
+                                    stroke="currentColor">
+                                    <path
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                        strokeWidth={2}
+                                        d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"
+                                    />
+                                </svg>
                             </button>
                             <button className="btn bg-transparent text-white-50 emoji-button">
                                 <i className="bi bi-emoji-laughing text-white-50 fs-larger"></i>

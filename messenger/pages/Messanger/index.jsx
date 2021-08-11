@@ -25,16 +25,9 @@ const MainPage = ({userData, isError}) => {
 
     console.log("is chat # mobile => ", isInChat, isMobile);
 
-    if (isError) {
+    if (!isLoged || isError) {
         <div>im so sorry please relogin</div>;
     }
-
-    // if (userData !== null && userData !== undefined) {
-    //     console.log("userData => ", userData);
-    //     roomsDispatcher({type: "Initial", payload: [userData.Rooms]});
-    //     groupsDispatcher({type: "Initial", payload: [userData.Groups]});
-    //     channelsDispatcher({type: "Initial", payload: [userData.Channels]});
-    // }
 
     useEffect(() => {
         if (!isLoged || isError) {
