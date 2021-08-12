@@ -2,6 +2,7 @@ import {useContext, useEffect, useState} from "react";
 import classes from "./searchinput.module.scss";
 import {fetcher} from "../../../../hooks/fetcher";
 import {UserContext} from "../../../../context/user-context/user-context";
+import {ViewContext} from "../../../../context/view-context/view-context";
 const SearchInput = () => {
     const [filteredLists, setFilteredLists] = useState({
         Groups: [],
@@ -12,8 +13,9 @@ const SearchInput = () => {
         Channels: [],
     });
     const [text, setText] = useState("");
-    const {token, userId,connectionId} = useContext(UserContext);
+    const {token, userId, connectionId} = useContext(UserContext);
     const [loading, setLoading] = useState(false);
+    const {theme} = useContext(ViewContext);
     useEffect(() => {
         // fetcher("GET", "Main/GetAllData", null, token)
         if (token.length > 0) {
@@ -65,17 +67,7 @@ const SearchInput = () => {
             UserID: userId,
             ChannelID: chId,
         };
-        console.log("data in join => ", data,token);
-        // const resp = await fetch(
-        //     `https://localhost:44389/api/Channels/JoinChannel`,
-        //     {
-        //         body: data,
-        //         method: "POST",
-        //         headers: {
-        //             Authorization: `Bearer ${token}`,
-        //         },
-        //     },
-        // );
+        console.log("data in join => ", data, token);
 
         const {result, isError} = await fetcher(
             "POST",
@@ -94,22 +86,13 @@ const SearchInput = () => {
             UserID: userId,
             GroupID: grId,
         };
-        console.log("data in join => ",data,connectionId);
-        // const resp = await fetch(
-        //     "https://localhost:44389/api/Groups"+"​/JoinGroup",
-        //     {
-        //         body: data,
-        //         method: "POST",
-        //         headers: {
-        //             Authorization: `Bearer ${token}`,
-        //         },
-        //     },
-        // );
-        // if (resp.ok) {
-        //     let result = await resp.text();
-        //     console.log("result in join Group => ", result);
-        // }
-        const { result,isError} = await fetcher("POST","Groups/JoinGroup",data,token);
+        console.log("data in join => ", data, connectionId);
+        const {result, isError} = await fetcher(
+            "POST",
+            "Groups/JoinGroup",
+            data,
+            token,
+        );
         if (!isError) {
             console.log("result in join Group => ", result);
         }
@@ -117,12 +100,20 @@ const SearchInput = () => {
     };
     return (
         <div
+            style={{
+                backgroundColor: theme.primarier,
+                borderColor: theme.textGray,
+            }}
             className={`${classes.searchInputContainer} center position-relative`}>
-            <button onClick={handleSearch} className="btn btn-white">
-                <i className="bi bi-search text-white"></i>
+            <button
+                onClick={handleSearch}
+                className="btn btn-white"
+                style={{color: theme.text}}>
+                <i className="bi bi-search"></i>
             </button>
             <input
                 className={`${classes.searchInput}`}
+                style={{color: theme.text}}
                 placeholder="searching ..."
                 type="search"
                 value={text}
@@ -132,13 +123,19 @@ const SearchInput = () => {
                 }}
             />
             <div className={`${classes.searchListContainer}`}>
-                <ul className={`${classes.searchList}`}>
+                <ul
+                    className={`${classes.searchList}`}
+                    style={{backgroundColor: theme.primaryLight}}>
                     {filteredLists.Channels.map((ch) => (
                         <li
                             title="click for join channel"
                             className={`${classes.searchListItem}`}>
                             <button
-                                className={`${classes.itemBtnChannel} text-white-50`}>
+                                style={{
+                                    backgroundColor: theme.primary,
+                                    color: theme.textGray,
+                                }}
+                                className={`${classes.itemBtnChannel}`}>
                                 <span>ch : {ch.Name}</span>
                                 <button
                                     onClick={() => {
@@ -160,7 +157,11 @@ const SearchInput = () => {
                             title="click for join group"
                             className={`${classes.searchListItem}`}>
                             <button
-                                className={`${classes.itemBtnGroup} text-white-50`}>
+                                style={{
+                                    backgroundColor: theme.primary,
+                                    color: theme.textGray,
+                                }}
+                                className={`${classes.itemBtnGroup}`}>
                                 <span>gr : {gr.Name}</span>
                                 <button
                                     onClick={() => {

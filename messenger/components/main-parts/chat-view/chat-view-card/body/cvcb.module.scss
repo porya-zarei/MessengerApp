@@ -1,9 +1,9 @@
 .cardBodyContainer {
-    background-color: yellow;
     height: 100%;
     padding: 0px 5px 0px 10px;
     z-index: 0;
     position: relative;
+    background-color: rgb(39, 39, 39);
 }
 
 .cardBody {
@@ -23,7 +23,7 @@
     width: 30px;
     border: 0 solid transparent;
     border-radius: 50%;
-    background-color: rgb(0, 110, 255);
+    background-color: rgb(0, 84, 180);
     color: white;
     z-index: 1000;
     opacity: 0.5;
@@ -34,7 +34,6 @@
 
 @media (max-width: 576px) {
     .cardBodyContainer {
-        background-color: yellow;
         height: 100%;
         overflow-y: scroll;
         overflow-x: hidden;
@@ -52,7 +51,6 @@
 
 @media (max-width: 768px) {
     .cardFooterContainer {
-        background-color: blue;
         height: 87%;
         z-index: 0;
         position: relative;

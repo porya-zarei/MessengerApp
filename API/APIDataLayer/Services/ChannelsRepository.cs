@@ -88,7 +88,8 @@ namespace APIDataLayer.Services
                 ChannelUserName = channel.ChannelUserName,
                 CreatorName = users.Find(u => u.UserID == channel.CreatorID).FirstName + " " + users.Find(u => u.UserID == channel.CreatorID).LastName,
                 ChannelChatsID = channel.ChannelChatsID,
-                ChannelDescription = channel.ChannelDescription
+                ChannelDescription = channel.ChannelDescription,
+                ChannelProfileImage = channel.ChannelProfileImage
             };
         }
 
@@ -165,6 +166,42 @@ namespace APIDataLayer.Services
             catch (Exception)
             {
                 return null;
+            }
+        }
+
+        public async Task<bool> UpdateChannel(UpdateChannel updateChannel, string profileImage, Guid userId)
+        {
+            try
+            {
+                var channel = await GetChannelWithChannelID(updateChannel.ChannelID);
+                bool isCreator = channel.CreatorID == userId;
+                if (!isCreator)
+                {
+                    return false;
+                }
+
+                if (updateChannel.Name != null && updateChannel.Name.Length > 0)
+                {
+                    channel.Name = updateChannel.Name;
+                }
+                if (updateChannel.ChannelUserName != null && updateChannel.ChannelUserName.Length > 0)
+                {
+                    channel.ChannelUserName = updateChannel.ChannelUserName;
+                }
+                if (updateChannel.ChannelDescription != null && updateChannel.ChannelDescription.Length > 0)
+                {
+                    channel.ChannelDescription = updateChannel.ChannelDescription;
+                }
+                if (profileImage != null)
+                {
+                    channel.ChannelProfileImage = profileImage;
+                }
+                await SaveChangesAsync();
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
             }
         }
 

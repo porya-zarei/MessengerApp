@@ -24,12 +24,19 @@ const Chat = ({
     id,
     time,
 }) => {
+    
+    const [editing, setEditing] = useState(false);
+    const [deleting, setDeleting] = useState(false);
+    const contentRef = useRef();
+    const {token} = useContext(UserContext);
+    const {theme} = useContext(ViewContext);
+
     let sendingTime = new Date(time);
     let style = {
-        backgroundColor: "rgb(22, 0, 102)",
+        backgroundColor: theme.bubble1,
     };
     if (!me) {
-        style.backgroundColor = "#05056d";
+        style.backgroundColor = theme.bubble2;
     }
     if (fileName) {
         console.log("file name => ", fileName, fileSize);
@@ -40,11 +47,7 @@ const Chat = ({
         id,
         type,
     };
-    const [editing, setEditing] = useState(false);
-    const [deleting, setDeleting] = useState(false);
-    const contentRef = useRef();
-    const {token} = useContext(UserContext);
-    const {setContextMenu} = useContext(ViewContext);
+
     const sendEditingReq = async () => {
         let url = "";
         if (type === "room") {
@@ -106,7 +109,7 @@ const Chat = ({
                 !me ? "justify-content-start" : "justify-content-end"
             }`}>
             <div
-                style={{backgroundColor: style.backgroundColor}}
+                style={{backgroundColor: style.backgroundColor,color:theme.text}}
                 className={`${classes.chat} row m-0 my-1 p-1`}>
                 {imageName && (
                     <div className="col-12 m-0 p-0 h-auto">
@@ -156,7 +159,7 @@ const Chat = ({
                             sendingTime.getMinutes()}
                     </div>
                     <div className={`${classes.chatStatus}`}>
-                        <i className="bi bi-check-all text-white-50"></i>
+                        <i className="bi bi-check-all" style={{color:theme.textGray}}></i>
                     </div>
                 </div>
                 {voiceName && voiceName?.length > 0 && (

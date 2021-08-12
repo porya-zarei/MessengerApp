@@ -8,7 +8,7 @@ import {sendRequest} from "./send-request";
 import VoiceSender from "./voice-sender/voice-sender";
 
 const ChatViewCardFooter = () => {
-    const {chatsToShow} = useContext(ViewContext);
+    const {chatsToShow,theme} = useContext(ViewContext);
     const {userId, token, user} = useContext(UserContext);
     const [text, setText] = useState("");
     const file = useRef();
@@ -49,7 +49,9 @@ const ChatViewCardFooter = () => {
         console.log("show chats => ", chatsToShow, user, userId);
     }, []);
     return (
-        <div className={`${classes.cardFooterContainer} col-12 mb-auto mt-1`}>
+        <div
+            style={{backgroundColor: theme.primarier}}
+            className={`${classes.cardFooterContainer} col-12 mb-auto mt-1`}>
             <div
                 className={`${classes.cardFooter} ${
                     chatsToShow.UserAccess ? "" : "display-none"
@@ -71,6 +73,7 @@ const ChatViewCardFooter = () => {
                                     onChange={(e) => {
                                         setText(e.target.value);
                                     }}
+                                    style={{borderColor:theme.text}}
                                 />
                             </div>
                             <button
@@ -81,7 +84,7 @@ const ChatViewCardFooter = () => {
                                     className="h-100 w-100"
                                     fill="none"
                                     viewBox="0 0 24 24"
-                                    stroke="currentColor">
+                                    stroke={theme.text}>
                                     <path
                                         strokeLinecap="round"
                                         strokeLinejoin="round"
@@ -91,7 +94,7 @@ const ChatViewCardFooter = () => {
                                 </svg>
                             </button>
                             <button className="btn bg-transparent text-white-50 emoji-button">
-                                <i className="bi bi-emoji-laughing text-white-50 fs-larger"></i>
+                                <i style={{color:theme.textGray}} className="bi bi-emoji-laughing fs-larger"></i>
                                 <Emojis setText={setText} />
                             </button>
                             <VoiceSender voice={voice} setVoice={setVoice} />

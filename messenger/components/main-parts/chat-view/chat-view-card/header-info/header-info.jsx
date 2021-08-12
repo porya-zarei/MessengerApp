@@ -7,9 +7,11 @@ import {
     useTransform,
 } from "framer-motion";
 import classes from "./headerinfo.module.scss";
+import ChannelUpdate from "./channel-update/channel-update";
+import GroupUpdate from "./group-update/group-update";
 
 const HeaderInfo = () => {
-    const {showHeaderInfo, setShowHeaderInfo, chatsToShow} =
+    const {showHeaderInfo, setShowHeaderInfo, chatsToShow, theme} =
         useContext(ViewContext);
     const xPosition = useMotionValue(0);
     const xRange = [-200, 0, 200];
@@ -68,7 +70,12 @@ const HeaderInfo = () => {
                 <AnimatePresence>
                     <motion.div
                         drag="x"
-                        style={{x: xPosition, opacity}}
+                        style={{
+                            x: xPosition,
+                            opacity,
+                            backgroundColor: theme.dark,
+                            color: theme.text,
+                        }}
                         dragConstraints={{
                             left: 0,
                             right: 0,
@@ -84,61 +91,106 @@ const HeaderInfo = () => {
                                 }
                                 className={`${classes.image}`}
                             />
-                            <div className={`${classes.userFullName}`}>
+                            <div
+                                style={{
+                                    backgroundColor: theme.primary,
+                                    color: theme.text,
+                                }}
+                                className={`${classes.userFullName}`}>
                                 {chatsToShow.Name}
                             </div>
                         </div>
                         <div className={`${classes.infoContainer}`}>
-                            <div className={`${classes.info}`}>
-                                <div className={`${classes.infoTitle}`}>
+                            <div
+                                style={{
+                                    backgroundColor: theme.primarier,
+                                    color: theme.text,
+                                }}
+                                className={`${classes.info}`}>
+                                <div
+                                    style={{
+                                        color: theme.info,
+                                    }}
+                                    className={`${classes.infoTitle}`}>
                                     Info
                                 </div>
                                 <div className={`${classes.infoUserName}`}>
                                     @{chatsToShow.userName}
                                 </div>
-                                <div className={`${classes.infoUserNameTitle}`}>
+                                <div
+                                    style={{
+                                        color: theme.textGray,
+                                    }}
+                                    className={`${classes.infoUserNameTitle}`}>
                                     Username
                                 </div>
                                 <div className={`${classes.infoBio}`}>
                                     {chatsToShow.description}
                                 </div>
-                                <div className={`${classes.infoBioTitle}`}>
+                                <div
+                                    style={{
+                                        color: theme.textGray,
+                                    }}
+                                    className={`${classes.infoBioTitle}`}>
                                     Bio
                                 </div>
                                 <button
                                     onClick={() => setShowHeaderInfo(false)}
-                                    className={`${classes.infoGotoChatBtn}`}>
+                                    className={`${classes.infoGotoChatBtn}`}
+                                    style={{
+                                        backgroundColor: theme.dark,
+                                        color: theme.text,
+                                    }}>
                                     <i className="bi-chat"></i>
                                 </button>
                             </div>
                         </div>
+                        {chatsToShow.UserAccess && (
+                            <div className="w-100 h-auto">
+                                {chatsToShow.type === "group" && (
+                                    <GroupUpdate />
+                                )}
+                                {chatsToShow.type === "channel" && (
+                                    <ChannelUpdate />
+                                )}
+                            </div>
+                        )}
                         <div className={`${classes.mediaContainer}`}>
                             <div className={classes.mediaTitle}>
                                 <button
+                                    style={{
+                                        backgroundColor:
+                                            currentMedia === "images"
+                                                ? theme.primarier
+                                                : "transparent",
+                                        color: theme.textGray,
+                                    }}
                                     onClick={() => setCurrentMedia("images")}
-                                    className={
-                                        currentMedia === "images"
-                                            ? classes.mediaBtnActive
-                                            : classes.mediaBtn
-                                    }>
+                                    className={classes.mediaBtnActive}>
                                     images
                                 </button>
                                 <button
                                     onClick={() => setCurrentMedia("voices")}
-                                    className={
-                                        currentMedia === "voices"
-                                            ? classes.mediaBtnActive
-                                            : classes.mediaBtn
-                                    }>
+                                    style={{
+                                        backgroundColor:
+                                            currentMedia === "voices"
+                                                ? theme.primarier
+                                                : "transparent",
+                                        color: theme.textGray,
+                                    }}
+                                    className={classes.mediaBtnActive}>
                                     Voices
                                 </button>
                                 <button
                                     onClick={() => setCurrentMedia("files")}
-                                    className={
-                                        currentMedia === "files"
-                                            ? classes.mediaBtnActive
-                                            : classes.mediaBtn
-                                    }>
+                                    style={{
+                                        backgroundColor:
+                                            currentMedia === "files"
+                                                ? theme.primarier
+                                                : "transparent",
+                                        color: theme.textGray,
+                                    }}
+                                    className={classes.mediaBtnActive}>
                                     files
                                 </button>
                             </div>

@@ -43,6 +43,32 @@ namespace API.Utils
             }
         }
 
+        public async Task<string> UploadImageWithPath(IFormFile image, string path, string webRootPath)
+        {
+            try
+            {
+                string uniquefilename = string.Empty;
+
+                if (image != null)
+                {
+                    string uploadFolder = Path.Combine(webRootPath, "files", "images", path);
+                    uniquefilename = Guid.NewGuid().ToString() + image.FileName;
+                    string filepath = Path.Combine(uploadFolder, uniquefilename);
+                    await using var fileStream = new FileStream(filepath, FileMode.Create);
+                    await image.CopyToAsync(fileStream);
+                    return uniquefilename;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+
         public async Task<string> UploadVoice(IFormFile voice, string webRootPath)
         {
             try

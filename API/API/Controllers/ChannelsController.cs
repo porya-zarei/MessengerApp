@@ -248,5 +248,30 @@ namespace API.Controllers
                 return BadRequest();
             }
         }
+
+        [Authorize]
+        [HttpPost("UpdateChannel")]
+        public async Task<IActionResult> UpdateChannel([FromForm] UpdateChannel updateChannel)
+        {
+            var userId = new Guid(User.FindFirst("UserID").Value);
+            string imageName = null;
+            if (updateChannel.ChannelProfileImage != null)
+            {
+                var uploader = new Uploader();
+                imageName = await uploader.UploadImageWithPath(updateChannel.ChannelProfileImage, "channels", webHostEnvironment.WebRootPath);
+            }
+
+            var res = await channelsRepository.UpdateChannel(updateChannel, imageName, userId);
+
+            if (res)
+            {
+                var channel = await channelsRepository.GetChannelWithChannelID(updateChannel.ChannelID);
+                var connections = channelsRepository.GetChannelUsersConnectionID(updateChannel.ChannelID);
+                await usersHub.Clients.Clients(connections).SendAsync("ChannelUpdated", channel);
+                return Ok(res);
+            }
+            else
+                return BadRequest(res);
+        }
     }
 }

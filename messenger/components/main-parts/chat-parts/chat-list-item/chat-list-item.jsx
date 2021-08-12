@@ -1,5 +1,5 @@
 import Image from "next/image";
-import {useEffect, useLayoutEffect, useState} from "react";
+import {useContext, useEffect, useLayoutEffect, useState} from "react";
 import {
     motion,
     AnimatePresence,
@@ -8,6 +8,7 @@ import {
 } from "framer-motion";
 import classes from "./chatlistitem.module.scss";
 import ChatsCount from "./chats-count";
+import { ViewContext } from "../../../../context/view-context/view-context";
 const ChatListItem = ({
     name,
     lastText,
@@ -26,6 +27,8 @@ const ChatListItem = ({
     const opacityRange = [0, 1, 0];
     const opacity = useTransform(xPosition, xRange, opacityRange);
 
+    const {theme} = useContext(ViewContext);
+
     const handleDragEnd = () => {
         console.log("drag end in list item => ",xPosition.get());
         if (xPosition.get()<70) {
@@ -34,7 +37,7 @@ const ChatListItem = ({
     };
     return (
         <div
-            className={`${classes.itemHeight} p-0 m-0 p-1px w-100 bg-${color}`}>
+            className={`${classes.itemHeight} p-0 m-0 p-1px w-100`} style={{backgroundColor:theme.primary}}>
             <motion.div
                 drag="x"
                 style={{x: xPosition, opacity}}
@@ -45,7 +48,7 @@ const ChatListItem = ({
                 onDragEnd={() => handleDragEnd()}
                 className={`row w-100 h-100 p-0 m-0 justify-content-evenly align-items-center ${classes.animation}`}>
                 <div className="col-2 h-100 p-0 m-0 center">
-                    <div className="center m-auto hw-70px">
+                    <div className="center m-auto h-100 rounded overflow-hidden rounded-circle">
                         <img
                             aria-listitemdetail={JSON.stringify(detail)}
                             src={
@@ -54,15 +57,15 @@ const ChatListItem = ({
                                       image
                                     : "/assets/images/png/avatar.png"
                             }
-                            height="60px"
-                            width="60px"
                             className="h-100 w-100 img-circle"
                         />
                     </div>
                 </div>
                 <div
                     aria-listitemdetail={JSON.stringify(detail)}
-                    className={`${classes.chatDetail} col-10 h-100 bg-white p-0 m-0`}>
+                    className={`${classes.chatDetail} col-10 h-100 p-0 m-0`}
+                    style={{backgroundColor:theme.primary,color:theme.text}}
+                    >
                     <span className={`${classes.timeSpan}`}>
                         {sendingTime.getHours() +
                             ":" +
@@ -72,6 +75,7 @@ const ChatListItem = ({
                     <ChatsCount
                         className={classes.unReadChatsSpan}
                         count={count}
+                        color={theme.primarier}
                     />
                     <span className={`${classes.checkSpan}`}>
                         <i className="bi bi-check-all"></i>

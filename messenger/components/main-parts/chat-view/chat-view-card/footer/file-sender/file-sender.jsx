@@ -1,3 +1,5 @@
+import { useContext } from "react";
+import { ViewContext } from "../../../../../../context/view-context/view-context";
 import classes from "./filesender.module.scss";
 
 const FileSender = ({file, image, video}) => {
@@ -12,10 +14,14 @@ const FileSender = ({file, image, video}) => {
         video.current.click();
     };
 
+    const {theme} = useContext(ViewContext);
+
     return (
         <div className={`${classes.senderContainer}`}>
-            <i className="bi bi-paperclip text-white-50 fs-larger"></i>
-            <div className={`${classes.sender}`}>
+            <i
+                style={{color: theme.textGray}}
+                className="bi bi-paperclip fs-larger"></i>
+            <div style={{backgroundColor:theme.dark}} className={`${classes.sender}`}>
                 <button
                     onClick={handleSelectFile}
                     className={`${classes.fileSenderBtn}`}>

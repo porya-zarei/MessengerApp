@@ -1,21 +1,20 @@
 import Image from "next/image";
 import {useContext, useEffect, useRef, useState} from "react";
 import {UserContext} from "../../../../../context/user-context/user-context";
+import {ViewContext} from "../../../../../context/view-context/view-context";
 import classes from "./burgercard.module.scss";
 
 const BurgerCard = () => {
     const {user} = useContext(UserContext);
+    const {theme} = useContext(ViewContext);
     const cardBgRef = useRef();
-    const [source, setSource] = useState("url(/assets/images/jpg/avatar-bg.jpg)");
-    useEffect(() => {
-    }, []);
+    const [source, setSource] = useState(
+        "url(/assets/images/jpg/avatar-bg.jpg)",
+    );
+    useEffect(() => {}, []);
     const handleSetCardBg = () => {
         let blob = window.URL.createObjectURL(cardBgRef.current.files[0]);
         console.log("blob => ", blob);
-        // localStorage.setItem(
-        //     "burgerCardBackground",
-        //     JSON.stringify(cardBgRef.current.files[0]),
-        // );
         setSource(`url(${blob})`);
     };
     return (
@@ -56,7 +55,12 @@ const BurgerCard = () => {
                     </div>
                 </div>
                 <div className={`${classes.burgerCardBody} col-12 p-0 m-0`}>
-                    <div className={`${classes.burgerCardBodyPart1}`}>
+                    <div
+                        className={`${classes.burgerCardBodyPart1}`}
+                        style={{
+                            backgroundColor: theme.darker,
+                            color: theme.text,
+                        }}>
                         <div className={`${classes.burgerUserName} p-0 m-0`}>
                             {`${user?.FirstName} ${user?.LastName}`}
                         </div>
@@ -64,7 +68,12 @@ const BurgerCard = () => {
                             {`@${user.UserName}`}
                         </div>
                     </div>
-                    <div className={`${classes.burgerCardBodyPart2}`}>
+                    <div
+                        className={`${classes.burgerCardBodyPart2}`}
+                        style={{
+                            backgroundColor: theme.darker,
+                            color: theme.text,
+                        }}>
                         {user?.Description}
                     </div>
                 </div>

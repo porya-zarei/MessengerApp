@@ -1,6 +1,6 @@
-import {useEffect, useLayoutEffect, useRef} from "react";
+import {useLayoutEffect, useRef} from "react";
 
-const ChatsCount = ({count, className}) => {
+const ChatsCount = ({count, className,color}) => {
     const blinker = useRef();
     useLayoutEffect(() => {
         let start = setTimeout(() => {
@@ -18,6 +18,7 @@ const ChatsCount = ({count, className}) => {
         <span
             id="blinker"
             ref={blinker}
+            style={{backgroundColor:color}}
             className={`${className}`}>
             <span className="">{count}</span>
         </span>

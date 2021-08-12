@@ -8,7 +8,7 @@ import { ViewContext } from "../../../../context/view-context/view-context";
 const BurgerMenu = () => {
     const constraintsRef = useRef(null);
     const burger = useRef(null);
-    const {showBurgerMenu, setShowBurgerMenu} = useContext(ViewContext);
+    const {showBurgerMenu, setShowBurgerMenu,theme} = useContext(ViewContext);
     const xPosition = useMotionValue(0);
 
     const handleShowNavbar = () => {
@@ -39,7 +39,7 @@ const BurgerMenu = () => {
                     drag="x"
                     style={{transformOrigin: "left"}}
                     dragConstraints={{left: 0, right: 0}}
-                    style={{x: xPosition}}
+                    style={{x: xPosition,backgroundColor:theme.dark}}
                     onDragEnd={handleDragEnd}
                     initial={{scaleX: 0}}
                     animate={{scaleX: 1}}
@@ -52,7 +52,6 @@ const BurgerMenu = () => {
                         <BurgerCard/>
                         <EditUser/>
                         <BurgerList/>
-                        
                     </div>
                 </motion.div>
             </AnimatePresence>

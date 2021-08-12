@@ -5,7 +5,7 @@
     height: 80px;
     background-color: transparent;
     z-index: 10;
-    color: rgb(202, 202, 202);
+    // color: rgb(202, 202, 202);
     padding: 0;
     margin: 0;
 }
@@ -14,8 +14,8 @@
     position: relative;
     height: 100%;
     width: 100%;
-    background-color: rgb(17, 33, 83);
-    cursor: pointer;
+    // background-color: rgb(17, 33, 83);
+    
 }
 
 .userAvatar {
@@ -36,6 +36,7 @@
     // white-space: nowrap;
     // overflow: hidden;
     // text-overflow: ellipsis;
+    cursor: pointer;
 }
 
 .networkStatus {
@@ -58,9 +59,9 @@
     left: -180px;
     height: 400px;
     width: 200px;
-    background-color: rgb(15, 15, 112);
+    // background-color: rgb(15, 15, 112);
     z-index: 20;
-    box-shadow: inset 0 0 100px 0px #0a0a0aa8;
+    // box-shadow: inset 0 0 100px 0px #0a0a0aa8;
     border: 0 solid transparent;
     border-radius: 15px;
     transition: all 1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
@@ -84,7 +85,7 @@
     display: inline-flex;
     justify-content: flex-start;
     align-items: center;
-    background-color: rgba(255, 255, 255, 0.342);
+    // background-color: rgba(255, 255, 255, 0.342);
     margin: 3px 0;
     border: 0 solid transparent;
     border-radius: 7px;
@@ -102,7 +103,7 @@
         width: 200px;
         top: 30px;
         left: -60px;
-        background-color: rgb(19, 19, 146);
+        // background-color: rgb(19, 19, 146);
         z-index: 21;
         box-shadow: inset 0 0 100px 0px #0a0a0aa8;
         border: 0 solid transparent;
@@ -120,7 +121,7 @@
         width: 200px;
         top: 30px;
         left: -60px;
-        background-color: rgb(19, 19, 146);
+        // background-color: rgb(19, 19, 146);
         z-index: 21;
         box-shadow: inset 0 0 100px 0px #0a0a0aa8;
         border: 0 solid transparent;
@@ -135,9 +136,9 @@
         top: 0;
         left: 0;
         height: 80px;
-        background-color: rgb(17, 33, 83);
+        // background-color: rgb(17, 33, 83);
         z-index: 10;
-        color: rgb(202, 202, 202);
+        // color: rgb(202, 202, 202);
     }
 }
 
@@ -147,9 +148,9 @@
         top: 0;
         left: 0;
         height: 80px;
-        background-color: rgb(17, 33, 83);
+        // background-color: rgb(17, 33, 83);
         z-index: 10;
-        color: rgb(202, 202, 202);
+        // color: rgb(202, 202, 202);
     }
 }
 

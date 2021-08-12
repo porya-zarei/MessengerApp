@@ -251,5 +251,30 @@ namespace API.Controllers
                 return BadRequest();
             }
         }
+
+        [Authorize]
+        [HttpPost("UpdateGroup")]
+        public async Task<IActionResult> UpdateGroup([FromForm] UpdateGroup updateGroup)
+        {
+            var userId = new Guid(User.FindFirst("UserID").Value);
+            string imageName = null;
+            if (updateGroup.GroupProfileImage != null)
+            {
+                var uploader = new Uploader();
+                imageName = await uploader.UploadImageWithPath(updateGroup.GroupProfileImage, "groups", webHostEnvironment.WebRootPath);
+            }
+
+            var res = await groupsRepository.UpdateGroup(updateGroup, imageName, userId);
+
+            if (res)
+            {
+                var group = await groupsRepository.GetGroupWithGroupID(updateGroup.GroupID);
+                var connections = groupsRepository.GetGroupUsersConnectionID(updateGroup.GroupID);
+                await usersHub.Clients.Clients(connections).SendAsync("GroupUpdated", group);
+                return Ok(res);
+            }
+            else
+                return BadRequest(res);
+        }
     }
 }

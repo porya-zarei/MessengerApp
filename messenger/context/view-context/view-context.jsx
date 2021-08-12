@@ -37,6 +37,26 @@ export const ViewContext = createContext({
     setShowBurgerMenu: () => {},
     showHeaderInfo: false,
     setShowHeaderInfo: () => {},
+    theme: {
+        name: "dark",
+        light: "#DDDDDD",
+        primary: "#30475E",
+        primarier: "#0A043C",
+        primaryLight: "#1c6ce3",
+        dark: "#222831",
+        darker: "#171717",
+        danger: "#F05454",
+        warnig: "#FFD369",
+        info: "#03506F",
+        textGray: "#C4BBF0",
+        text: "#F5EDED",
+        textDark: "#151515",
+        bubble1: "#577399",
+        bubble2: "#495867",
+    },
+    setTheme: () => {},
+    chatBackground: "/assets/images/webp/background.webp",
+    setChatBackground: () => {},
 });
 
 const ViewContextProvider = ({children}) => {
@@ -72,6 +92,27 @@ const ViewContextProvider = ({children}) => {
     });
     const [showBurgerMenu, setShowBurgerMenu] = useState(false);
     const [showHeaderInfo, setShowHeaderInfo] = useState(false);
+
+    const [theme, setTheme] = useState({
+        name: "dark",
+        light: "#DDDDDD",
+        primary: "#30475E",
+        primarier: "#0A043C",
+        primaryLight: "rgba(28, 107, 226, 0.514)",
+        dark: "#222831",
+        darker: "#171717",
+        danger: "#F05454",
+        warnig: "#FFD369",
+        info: "#03506F",
+        textGray: "#C4BBF0",
+        text: "#F5EDED",
+        textDark: "#151515",
+        bubble1: "#577399",
+        bubble2: "#495867",
+    });
+    const [chatBackground, setChatBackground] = useState(
+        "/assets/images/webp/background.webp",
+    );
     useEffect(() => {
         if (window) {
             console.log(
@@ -82,6 +123,12 @@ const ViewContextProvider = ({children}) => {
             );
             if (window.screen.availWidth < 800) {
                 setIsMobile(true);
+            }
+        }
+        if (localStorage.getItem("theme")) {
+            const storageTheme = JSON.parse(localStorage.getItem("theme"));
+            if (theme.name !== storageTheme.name) {
+                setTheme(storageTheme);
             }
         }
     }, []);
@@ -108,6 +155,10 @@ const ViewContextProvider = ({children}) => {
         setShowBurgerMenu,
         showHeaderInfo,
         setShowHeaderInfo,
+        theme,
+        setTheme,
+        chatBackground,
+        setChatBackground,
     };
     return (
         <ViewContext.Provider value={context}>{children}</ViewContext.Provider>

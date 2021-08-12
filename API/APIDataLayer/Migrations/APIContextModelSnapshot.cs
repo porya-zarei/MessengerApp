@@ -35,6 +35,9 @@ namespace APIDataLayer.Migrations
                     b.Property<string>("ChannelDescription")
                         .HasColumnType("text");
 
+                    b.Property<string>("ChannelProfileImage")
+                        .HasColumnType("text");
+
                     b.Property<string>("ChannelUserName")
                         .IsRequired()
                         .HasColumnType("text");

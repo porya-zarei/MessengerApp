@@ -1,11 +1,13 @@
 import {useContext, useEffect, useRef, useState} from "react";
 import {UserContext} from "../../../../../context/user-context/user-context";
+import {ViewContext} from "../../../../../context/view-context/view-context";
 import {fetcher} from "../../../../../hooks/fetcher";
 import classes from "./burgeredituser.module.scss";
 
 const EditUser = () => {
     const [showForm, setShowForm] = useState(false);
     const {user, token, setUser} = useContext(UserContext);
+    const {theme} = useContext(ViewContext);
     const [userName, setUserName] = useState("");
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
@@ -39,7 +41,7 @@ const EditUser = () => {
         console.log("detail befor update user => ", token, data);
         var form_data = new FormData();
         for (var key in data) {
-            if (data[key]!== null) {
+            if (data[key] !== null) {
                 form_data.append(key, data[key]);
             }
         }
@@ -66,18 +68,30 @@ const EditUser = () => {
                         setShowForm((p) => !p);
                     }}
                     className={`${classes.btn} btn btn-outline-dark`}>
-                        Edit your info
-                    </button>
+                    Edit your info
+                </button>
             </div>
             <div
-                style={{display: showForm ? "block" : "none"}}
+                style={{
+                    display: showForm ? "block" : "none",
+                    backgroundColor: theme.dark,
+                }}
                 className={`${classes.editUserFormContainer}`}>
                 <div className={`${classes.title}`}>
-                    <div className="text-white-50">Editing your info</div>
+                    <div
+                        style={{
+                            color: theme.textGray,
+                        }}>
+                        Editing your info
+                    </div>
                     <button
                         onClick={() => setShowForm(false)}
-                        className="btn btn-danger hw-40px rounded rounded-circle">
-                        <i className="bi bi-x"></i>
+                        className="btn hw-40px rounded rounded-circle"
+                        style={{
+                            backgroundColor: theme.danger,
+                            color: theme.text,
+                        }}>
+                        <i className="bi bi-x fs-larger center"></i>
                     </button>
                 </div>
 
@@ -87,8 +101,16 @@ const EditUser = () => {
                         value={firstName}
                         type="text"
                         className={`${classes.input}`}
+                        style={{
+                            color: theme.text,
+                        }}
                     />
-                    <div className="text-white-50">FirstName : </div>
+                    <div
+                        style={{
+                            color: theme.textGray,
+                        }}>
+                        FirstName :{" "}
+                    </div>
                 </div>
                 <div className={`${classes.inputContainer}`}>
                     <input
@@ -96,8 +118,16 @@ const EditUser = () => {
                         value={lastName}
                         type="text"
                         className={`${classes.input}`}
+                        style={{
+                            color: theme.text,
+                        }}
                     />
-                    <div className="text-white-50">LastName : </div>
+                    <div
+                        style={{
+                            color: theme.textGray,
+                        }}>
+                        LastName :{" "}
+                    </div>
                 </div>
                 <div className={`${classes.inputContainer}`}>
                     <input
@@ -105,8 +135,16 @@ const EditUser = () => {
                         value={userName}
                         type="text"
                         className={`${classes.input}`}
+                        style={{
+                            color: theme.text,
+                        }}
                     />
-                    <div className="text-white-50">UserName : </div>
+                    <div
+                        style={{
+                            color: theme.textGray,
+                        }}>
+                        UserName :{" "}
+                    </div>
                 </div>
                 <div className={`${classes.inputContainer}`}>
                     <input
@@ -114,8 +152,16 @@ const EditUser = () => {
                         value={email}
                         type="text"
                         className={`${classes.input}`}
+                        style={{
+                            color: theme.text,
+                        }}
                     />
-                    <div className="text-white-50">Email : </div>
+                    <div
+                        style={{
+                            color: theme.textGray,
+                        }}>
+                        Email :{" "}
+                    </div>
                 </div>
                 <div className={`${classes.inputContainer}`}>
                     <input
@@ -123,8 +169,16 @@ const EditUser = () => {
                         value={password}
                         type="text"
                         className={`${classes.input}`}
+                        style={{
+                            color: theme.text,
+                        }}
                     />
-                    <div className="text-white-50">Password : </div>
+                    <div
+                        style={{
+                            color: theme.textGray,
+                        }}>
+                        Password :{" "}
+                    </div>
                 </div>
                 <div className={`${classes.inputContainer}`}>
                     <input
@@ -132,8 +186,16 @@ const EditUser = () => {
                         value={description}
                         type="text"
                         className={`${classes.input}`}
+                        style={{
+                            color: theme.text,
+                        }}
                     />
-                    <div className="text-white-50">Bio : </div>
+                    <div
+                        style={{
+                            color: theme.textGray,
+                        }}>
+                        Bio :{" "}
+                    </div>
                 </div>
                 <div className={`${classes.imageContainer}`}>
                     <input
@@ -146,14 +208,22 @@ const EditUser = () => {
                         onClick={() => {
                             imageRef.current.click();
                         }}
-                        className={`${classes.imageBtn}`}>
+                        className={`${classes.imageBtn}`}
+                        style={{
+                            color: theme.text,
+                            backgroundColor:theme.info
+                        }}>
                         <i className="bi bi-image"></i>
                     </button>
                 </div>
                 <div className={`${classes.sendBtnContainer}`}>
                     <button
                         onClick={handleUpdateUser}
-                        className={`${classes.sendBtn}`}>
+                        className={`${classes.sendBtn}`}
+                        style={{
+                            color: theme.text,
+                            backgroundColor: theme.primary,
+                        }}>
                         send
                     </button>
                 </div>

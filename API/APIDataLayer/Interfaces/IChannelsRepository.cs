@@ -37,5 +37,6 @@ namespace APIDataLayer.Interfaces
         void SaveChanges();
 
         Task SaveChangesAsync();
+        Task<bool> UpdateChannel(UpdateChannel updateChannel, string profileImage, Guid userId);
     }
 }

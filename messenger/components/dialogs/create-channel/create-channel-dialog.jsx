@@ -100,7 +100,7 @@ const CreateChannelDialog = () => {
                         <div className="form-control p-1 w-100 my-2">
                             <img
                                 src="/assets/images/svg/create.svg"
-                                height="240px"
+                                height="200px"
                                 className="w-100"
                             />
                         </div>

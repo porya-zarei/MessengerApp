@@ -37,5 +37,6 @@ namespace APIDataLayer.Interfaces
         Task SaveChangesAsync();
 
         Task<Group> GetGroupWithGroupID(Guid id);
+        Task<bool> UpdateGroup(UpdateGroup updateGroup, string profileImage, Guid userId);
     }
 }

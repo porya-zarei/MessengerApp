@@ -1,0 +1,45 @@
+.updateGroupFormContainer{
+    height: auto;
+    width: 100%;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.control{
+    height: auto;
+    width: 100%;
+    padding: 10px;
+    margin: 0;
+    display: inline-flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    &>label{
+        width: 20%;
+        height: 100%;
+        font-size: 10px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    &>input{
+        width: 70%;
+        height: 100%;
+        outline: none;
+        border-width: 2px;
+        border-style: solid;
+        border-radius: 30px;
+        padding: 5px 15px;
+    }
+    &>button{
+        height: 100%;
+        width: 70%;
+        border: 0 solid transparent;
+        border-radius: 30px;
+    }
+}

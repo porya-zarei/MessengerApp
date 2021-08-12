@@ -7,7 +7,7 @@ const HeaderLayout = () => {
     return (
         <header
             style={{zIndex: "1050", position: "fixed", top: "0", left: "0"}}
-            className="p-0 bg-dark h-auto w-100 text-white-50">
+            className="p-0 h-auto w-100">
             {isLoged ? <Header /> : null}
         </header>
     );

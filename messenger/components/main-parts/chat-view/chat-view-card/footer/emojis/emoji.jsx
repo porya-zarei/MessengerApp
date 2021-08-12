@@ -1,11 +1,11 @@
-const Emoji = ({emoji, setText}) => {
+const Emoji = ({emoji,onClick}) => {
     return (
-        <span
+        <div
             role="img"
-            onClick={() => setText((p) => `${p + emoji}`)}
+            onClick={onClick}
             className="curser-pointer">
             {emoji}
-        </span>
+        </div>
     );
 };
 

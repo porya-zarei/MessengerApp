@@ -1,8 +1,12 @@
 .burgerList {
     list-style: none;
+    height: 350px;
+    width: 100%;
+    overflow-y:auto;
+    overflow-x: hidden;
 }
 
 .burgerListItem {
-    height: 50px;
+    height: auto;
     width: 100%;
 }

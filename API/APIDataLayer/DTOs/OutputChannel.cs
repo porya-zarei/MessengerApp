@@ -14,6 +14,8 @@ namespace APIDataLayer.DTOs
 
         public string ChannelDescription { get; set; } = "";
 
+        public string ChannelProfileImage { get; set; } = "";
+
         public string Name { get; set; }
 
         public string CreatorName { get; set; }

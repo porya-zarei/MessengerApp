@@ -4,7 +4,7 @@
     left: -180px;
     height: 200px;
     width: 190px;
-    background-color: rgb(31, 27, 87);
+    background-color: rgb(77, 75, 105);
     padding: 7px 7px;
     border: 0 solid transparent;
     border-radius: 15px;
@@ -16,10 +16,11 @@
     overflow-y: scroll;
     overflow-x: hidden;
     display: flex;
-    justify-content: center;
-    align-items: center;
+    justify-content: space-evenly;
+    align-items: flex-start;
     flex-wrap: wrap;
-    &>button{
+    flex-direction: row;
+    &>div{
         height: 20px;
         width: 20px;
         padding: 2.5px;

@@ -12,7 +12,7 @@ import {
 import classes from "./cvch.module.scss";
 
 const ChatViewCardHeader = () => {
-    const {chatsToShow, isMobile, setIsInChat,setShowHeaderInfo} = useContext(ViewContext);
+    const {chatsToShow, isMobile, setIsInChat,setShowHeaderInfo,theme} = useContext(ViewContext);
     const {userId, token} = useContext(UserContext);
     const [settingShow, setSettingShow] = useState(false);
     const [voiceChatShow, setVoiceChatShow] = useState(false);
@@ -88,13 +88,18 @@ const ChatViewCardHeader = () => {
             <AnimatePresence>
                 <motion.div
                     drag="x"
-                    style={{x: xPosition, opacity}}
+                    style={{
+                        x: xPosition,
+                        opacity,
+                        backgroundColor: theme.primarier,
+                        color: theme.textGray,
+                    }}
                     dragConstraints={{
                         left: 0,
                         right: 0,
                     }}
                     onDragEnd={() => isMobile && handleDragEnd()}
-                    onClick={()=> setShowHeaderInfo(p=>!p)}
+                    
                     className={`${classes.cardHeader}`}>
                     <div className={`${classes.userAvatar} center`}>
                         <div className="center m-auto hw-70px">
@@ -111,7 +116,7 @@ const ChatViewCardHeader = () => {
                             />
                         </div>
                     </div>
-                    <div className={`${classes.userName}`}>
+                    <div onClick={() => setShowHeaderInfo((p) => !p)} className={`${classes.userName}`}>
                         <marquee
                             className="w-100 h-100"
                             behavior="scroll"
@@ -131,13 +136,17 @@ const ChatViewCardHeader = () => {
                         </button>
                         {settingShow && (
                             <div
-                                className={`${classes.chatSettingListContainer}`}>
+                                className={`${classes.chatSettingListContainer}`}
+                                style={{backgroundColor: theme.info}}>
                                 <ul className={`${classes.chatSettingList}`}>
                                     <li
                                         className={`${classes.chatSettingListItem}`}>
                                         <button
                                             onClick={handleLeaving}
-                                            className={`${classes.chatSettingListItemBtn} btn btn-danger h-100 w-100 center`}>
+                                            style={{
+                                                backgroundColor: theme.danger,
+                                            }}
+                                            className={`${classes.chatSettingListItemBtn} btn h-100 w-100 center`}>
                                             {loading ? (
                                                 <i className="spinner-border"></i>
                                             ) : (
@@ -148,21 +157,36 @@ const ChatViewCardHeader = () => {
                                     <li
                                         className={`${classes.chatSettingListItem}`}>
                                         <button
-                                            className={`${classes.chatSettingListItemBtn} btn btn-info h-100 w-100 center`}>
+                                            style={{
+                                                backgroundColor: theme.light,
+                                            }}
+                                            className={`${classes.chatSettingListItemBtn} btn h-100 w-100 center`}>
                                             Copy {chatsToShow.type} ID
                                         </button>
                                     </li>
                                     <li
                                         className={`${classes.chatSettingListItem}`}>
                                         <button
-                                            className={`${classes.chatSettingListItemBtn} btn btn-info h-100 w-100 center`}>
+                                            style={{
+                                                backgroundColor: theme.light,
+                                            }}
+                                            className={`${classes.chatSettingListItemBtn} btn h-100 w-100 center`}>
                                             {"<"} {chatsToShow.type} Members
-                                            <div>
+                                            <div
+                                                style={{
+                                                    backgroundColor:
+                                                        theme.primary,
+                                                }}>
                                                 <ul
                                                     className={`${classes.chatSettingList} h-100 w-100 overflow-y-scroll center`}>
                                                     {chatsToShow.MembersName.map(
                                                         (name) => (
                                                             <li
+                                                                style={{
+                                                                    backgroundColor:
+                                                                        theme.primaryLight,
+                                                                        color:theme.textGray
+                                                                }}
                                                                 className={`${classes.chatSettingListItem}`}>
                                                                 {name}
                                                             </li>

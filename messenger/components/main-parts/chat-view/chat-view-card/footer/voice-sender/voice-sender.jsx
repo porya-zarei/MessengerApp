@@ -1,10 +1,12 @@
-import {useEffect, useRef, useState} from "react";
+import {useContext, useEffect, useRef, useState} from "react";
+import { ViewContext } from "../../../../../../context/view-context/view-context";
 
 const VoiceSender = ({voice, setVoice}) => {
     const [recordingState, setRecordingState] = useState(false);
     const [mediaRecorder, setMediaRecorder] = useState();
     const [url, setUrl] = useState("");
-    useEffect(() => {}, []);
+    
+    const {theme} = useContext(ViewContext);
 
     const blobToFile = (theBlob, fileName) => {
         try {
@@ -69,7 +71,9 @@ const VoiceSender = ({voice, setVoice}) => {
                 onClick={handleRecoding}
                 title="send voice"
                 className="btn bg-transparent text-white-50 emoji-button">
-                <i className="bi bi-soundwave text-white-50 fs-larger"></i>
+                <i
+                    style={{color: theme.textGray}}
+                    className="bi bi-soundwave fs-larger"></i>
             </button>
             <audio hidden="true" src={url} autoPlay controls></audio>
         </>

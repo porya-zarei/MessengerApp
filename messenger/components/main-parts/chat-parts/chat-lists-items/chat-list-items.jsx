@@ -6,7 +6,7 @@ import ChatListItem from "../chat-list-item/chat-list-item";
 
 import classes from "./chatlistitems.module.scss";
 const ChatListItems = () => {
-    const {setIsInChat, setChatsToShow} = useContext(ViewContext);
+    const {setIsInChat, setChatsToShow,theme} = useContext(ViewContext);
     const {rooms, groups, channels} = useContext(UserDataContext);
     const {userId, user} = useContext(UserContext);
 
@@ -186,7 +186,7 @@ const ChatListItems = () => {
                 </li>
             ))}
             <li className={`w-100`} key={"nothing"}>
-                <div className="p-2 my-3 text-white-50">what do you want ?</div>
+                <div className="p-2 my-3" style={{color:theme.textGray}}>what do you want ?</div>
             </li>
         </ul>
     );

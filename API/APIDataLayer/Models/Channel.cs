@@ -24,6 +24,8 @@ namespace APIDataLayer.Models
 
         public string ChannelDescription { get; set; } = "";
 
+        public string ChannelProfileImage { get; set; } = "";
+
         public List<Guid> AdminsID { get; set; }
 
         public List<Guid> ChannelUsersID { get; set; }

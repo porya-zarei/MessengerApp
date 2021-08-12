@@ -12,7 +12,13 @@ const Emojis = ({setText}) => {
             <div className={`${classes.emojis}`}>
                 {emojis.map((emoji) => {
                     let key = `${Math.random() * 1000}-${emoji}`;
-                    return <Emoji key={key} setText={setText} emoji={emoji} />;
+                    return (
+                        <Emoji
+                            key={key}
+                            onClick={() => setText((p) => `${p + emoji}`)}
+                            emoji={emoji}
+                        />
+                    );
                 })}
             </div>
         </div>

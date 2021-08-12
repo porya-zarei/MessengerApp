@@ -172,6 +172,42 @@ namespace APIDataLayer.Services
             }
         }
 
+        public async Task<bool> UpdateGroup(UpdateGroup updateGroup, string profileImage, Guid userId)
+        {
+            try
+            {
+                var group = await GetGroupWithGroupID(updateGroup.GroupID);
+                bool isCreator = group.CreatorID == userId;
+                if (!isCreator)
+                {
+                    return false;
+                }
+
+                if (updateGroup.Name != null && updateGroup.Name.Length > 0)
+                {
+                    group.Name = updateGroup.Name;
+                }
+                if (updateGroup.GroupUserName != null && updateGroup.GroupUserName.Length > 0)
+                {
+                    group.GroupUserName = updateGroup.GroupUserName;
+                }
+                if (updateGroup.GroupDescription != null && updateGroup.GroupDescription.Length > 0)
+                {
+                    group.GroupDescription = updateGroup.GroupDescription;
+                }
+                if (profileImage != null)
+                {
+                    group.GroupProfileImage = profileImage;
+                }
+                await SaveChangesAsync();
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
         public async Task<Guid> GetGroupCreatorID(Guid id)
         {
             return (await context.Groups.FindAsync(id)).CreatorID;
