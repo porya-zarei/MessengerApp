@@ -19,16 +19,6 @@ const HeaderInfo = () => {
     const opacityRange = [0, 1, 0];
     const opacity = useTransform(xPosition, xRange, opacityRange);
 
-   
-    let imgSrc = "";
-    if (chatsToShow.type === "room") {
-        imgSrc = "https://localhost:44389/files/images/profiles/" + chatsToShow.Image;
-    } else if (chatsToShow.type === "group") {
-        imgSrc = "https://localhost:44389/files/images/groups/" + chatsToShow.Image;
-    } else {
-        imgSrc = "https://localhost:44389/files/images/channels/" + chatsToShow.Image;
-    }
-
     const handleDragEnd = () => {
         if (xPosition.get() > 70) {
             setShowHeaderInfo(false);
@@ -54,14 +44,7 @@ const HeaderInfo = () => {
                         onDragEnd={() => handleDragEnd()}
                         className={`${classes.headerInfo}`}>
                         <div className={`${classes.imageContainer}`}>
-                            <img
-                                src={
-                                    chatsToShow.Image.length > 0
-                                        ? imgSrc
-                                        : "/assets/images/jpg/dasht.jpg"
-                                }
-                                className={`${classes.image}`}
-                            />
+                            <img src={chatsToShow.Image} className={`${classes.image}`} />
                             <div
                                 style={{
                                     backgroundColor: theme.primary,
@@ -111,7 +94,7 @@ const HeaderInfo = () => {
                                     style={{
                                         backgroundColor: theme.dark,
                                         color: theme.text,
-                                        border:`2px solid ${theme.text}`
+                                        border: `2px solid ${theme.text}`,
                                     }}>
                                     <i className="bi-chat"></i>
                                 </button>
@@ -128,7 +111,7 @@ const HeaderInfo = () => {
                             </div>
                         )}
                         <div className={`${classes.mediaContainer}`}>
-                            <Medias/>
+                            <Medias />
                         </div>
                     </motion.div>
                 </AnimatePresence>

@@ -92,7 +92,7 @@ const CreateGroupDialog = () => {
                         <div className="form-control border-0 bg-transparent p-1 w-100 my-2">
                             <input
                                 name="groupDescription"
-                                placeholder="your group userName"
+                                placeholder="your group description"
                                 type="text"
                                 value={groupDescription}
                                 onChange={(e) => {

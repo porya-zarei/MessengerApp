@@ -25,20 +25,6 @@ const ChatViewCardHeader = () => {
     const opacityRange = [0, 1, 0];
     const opacity = useTransform(xPosition, xRange, opacityRange);
 
-    let imgSrc = "";
-    if (chatsToShow.type === "room") {
-        imgSrc =
-            "https://localhost:44389/files/images/profiles/" +
-            chatsToShow.Image;
-    } else if (chatsToShow.type === "group") {
-        imgSrc =
-            "https://localhost:44389/files/images/groups/" + chatsToShow.Image;
-    } else {
-        imgSrc =
-            "https://localhost:44389/files/images/channels/" +
-            chatsToShow.Image;
-    }
-
     const handleLeaving = async () => {
         setLoading(true);
         if (chatsToShow.type === "channel") {
@@ -126,12 +112,7 @@ const ChatViewCardHeader = () => {
                     <div className={`${classes.userAvatar} center`}>
                         <div className="center m-auto hw-70px">
                             <img
-                                src={
-                                    chatsToShow.Image !== "" &&
-                                    chatsToShow.Image !== null
-                                        ? imgSrc
-                                        : "/assets/images/png/avatar.png"
-                                }
+                                src={chatsToShow.Image}
                                 height="66px"
                                 width="66px"
                                 className="h-100 w-100 img-circle"

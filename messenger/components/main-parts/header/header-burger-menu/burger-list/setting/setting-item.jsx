@@ -52,7 +52,7 @@ const SettingItem = () => {
     return (
         <div className="h-100 w-100">
             <button
-                className="btn w-100 h-auto"
+                className="btn shadow-none w-100 h-auto"
                 style={{
                     color: theme.textGray,
                     backgroundColor: theme.dark,
@@ -60,16 +60,19 @@ const SettingItem = () => {
                 onClick={() => setShowSetting((p) => !p)}>
                 <div className="row h-100 p-0 m-0 justify-content-center align-items-center">
                     <div className="col-2 center h-100">
-                        <i className="bi bi-gear h-100 center big-icon"></i>
+                        <i
+                            style={{color: theme.text}}
+                            className="bi bi-gear-fill h-100 center big-icon"></i>
                     </div>
                     <div className="col-10 d-flex align-items-center fs-larger">
                         <span className="mx-2"> Setting </span>
-                        <i className="bi bi-arrow-bar-right"></i>
                     </div>
                 </div>
             </button>
             {showSetting && (
-                <div className="m-0 p-0 h-auto w-100">
+                <div
+                    style={{backgroundColor: "#ffffff2b"}}
+                    className="m-0 p-0 h-auto w-100">
                     <div className={`${classes.rowContainer}`}>
                         <div className={`${classes.palletsContainer}`}>
                             <div
@@ -79,7 +82,6 @@ const SettingItem = () => {
                             </div>
                             <div
                                 onClick={() => {
-                                    
                                     localStorage.setItem(
                                         "theme",
                                         JSON.stringify(darkTheme),
@@ -96,11 +98,11 @@ const SettingItem = () => {
                             </div>
                             <div
                                 onClick={() => {
-                                    
                                     localStorage.setItem(
                                         "theme",
                                         JSON.stringify(lightGreenTheme),
-                                    );setTheme(lightGreenTheme);
+                                    );
+                                    setTheme(lightGreenTheme);
                                 }}
                                 className={`${classes.pallet}`}>
                                 {showingColors.map((color) => (

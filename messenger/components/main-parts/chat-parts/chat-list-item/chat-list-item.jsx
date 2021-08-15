@@ -35,28 +35,6 @@ const ChatListItem = ({
             onDragEnd(item);
         }
     };
-
-    let imgSrc = "";
-    if (detail.type === "room") {
-        if (image && image?.length > 0) {
-            imgSrc = "https://localhost:44389/files/images/profiles/" + image;
-        } else {
-            imgSrc = "/assets/images/png/avatar.png";
-        }
-    } else if (detail.type === "group") {
-        if (image && image?.length > 0) {
-            imgSrc = "https://localhost:44389/files/images/groups/" + image;
-        } else {
-            imgSrc = "/assets/images/png/avatar.png";
-        }
-    } else {
-        if (image && image?.length > 0) {
-            imgSrc = "https://localhost:44389/files/images/channels/" + image;
-        } else {
-            imgSrc = "/assets/images/png/avatar.png";
-        }
-    }
-
     return (
         <div
             className={`${classes.itemHeight} p-0 m-0 p-1px w-100`}
@@ -76,7 +54,7 @@ const ChatListItem = ({
                         className="center m-auto h-100 rounded overflow-hidden rounded-circle">
                         <img
                             aria-listitemdetail={JSON.stringify(detail)}
-                            src={imgSrc}
+                            src={image}
                             className="h-100 w-100 img-circle"
                         />
                     </div>
@@ -100,7 +78,7 @@ const ChatListItem = ({
                         <i className="bi bi-check-all"></i>
                     </span>
                     <span
-                    style={{color:theme.textGray}}
+                        style={{color: theme.textGray}}
                         aria-listitemdetail={JSON.stringify(detail)}
                         className={`${classes.lastChatSpan}`}>
                         {lastText}
