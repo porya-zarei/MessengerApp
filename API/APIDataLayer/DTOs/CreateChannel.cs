@@ -25,7 +25,8 @@ namespace APIDataLayer.DTOs
                 AdminsID = new List<Guid>() { CreatorID },
                 ChannelUsersID = new List<Guid>() { CreatorID },
                 ChannelChatsID = new List<Guid>() { },
-                ChannelDescription = ChannelDescription
+                ChannelDescription = ChannelDescription,
+                ChannelProfileImage = ""
             };
         }
     }

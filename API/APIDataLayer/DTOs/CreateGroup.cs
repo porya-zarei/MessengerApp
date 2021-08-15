@@ -12,6 +12,7 @@ namespace APIDataLayer.DTOs
         public string Name { get; set; }
         public string GroupUserName { get; set; }
         public Guid CreatorID { get; set; }
+        public string GroupDescription {get;set;}
 
         public Group CreateGroupToGroup()
         {
@@ -21,6 +22,8 @@ namespace APIDataLayer.DTOs
                 Name = Name,
                 GroupUserName = GroupUserName,
                 CreatorID = CreatorID,
+                GroupDescription = GroupDescription,
+                GroupProfileImage = "",
                 GroupAdminsID = new List<Guid>() { CreatorID },
                 GroupMembersID = new List<Guid>() { CreatorID },
                 GroupChatsID = new List<Guid>() { }

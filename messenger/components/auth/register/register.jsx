@@ -4,6 +4,7 @@ import {useContext, useEffect, useState} from "react";
 import {MainContext} from "../../../context/main-context";
 import {UserContext} from "../../../context/user-context/user-context";
 import {fetcher} from "../../../hooks/fetcher";
+import {toast} from "react-toastify";
 import classes from "./register.module.scss";
 const Register = () => {
     const router = useRouter();
@@ -16,11 +17,28 @@ const Register = () => {
     const [password, setPassword] = useState("");
 
     const [userNameError, setUserNameError] = useState("");
+    const [userNameConfirmed, setUserNameConfirmed] = useState("");
     const [emailError, setEmailError] = useState("");
     const [passwordError, setPasswordError] = useState("");
 
     const [loading, setLoading] = useState(false);
-    const handleBlur = (type) => {
+
+    const testUserName = async () => {
+        const {result} = await fetcher(
+            "GET",
+            "Main/TestUserName?userName=" + userName,
+            null,
+        );
+        if (result !== undefined && result !== null && result) {
+            setUserNameError("");
+            setUserNameConfirmed("user name is unique");
+        } else {
+            setUserNameError("user name is not unique");
+            setUserNameConfirmed("");
+        }
+    };
+
+    const handleBlur = async (type) => {
         if (type === "email") {
             let err = "";
             if (!email.includes("@")) {
@@ -37,13 +55,25 @@ const Register = () => {
                 err += "password is too short";
             }
             if (passwordError != err) setPasswordError(err);
-        } else {
-            let err = "";
-            if (userName.length < 5) {
-                err += "userName is too Short and must be unique";
-            }
-            if (userNameError != err) setUserNameError(err);
         }
+    };
+
+    const handleAllError = () => {
+        let flag = false;
+        if (userNameError.length > 0) {
+            toast.error("username must be unique !");
+            flag = true;
+        }
+        if (!email.includes("@") || !email.includes(".")) {
+            toast.error("email must be valid !");
+            flag = true;
+        }
+        if (password.length < 5) {
+            toast.error("password must be strong !");
+            flag= true;
+        }
+
+        return flag;
     };
 
     useEffect(() => {
@@ -52,37 +82,40 @@ const Register = () => {
 
     const handlingSubmit = async (e) => {
         e.preventDefault();
-        setLoading(true);
-        const data = {
-            Email: email,
-            Password: password,
-            UserName: userName,
-            FirstName: firstName,
-            LastName: lastName,
-            ConnectionID: connectionId,
-        };
-        try {
-            console.log("in handle reg => ", data);
-            const {result, isError} = await fetcher(
-                "POST",
-                "Auth/Register",
-                data,
-            );
-            console.log("in registering => ", result, isError);
-            if (!isError && result !== null && result !== undefined) {
-                setIsLoged(true);
-                setToken(result);
-                if (document) {
-                    let cookie = `Token=${result};path=/;`;
-                    console.log("cookie set in login => ", cookie);
-                    document.cookie = cookie;
+
+        if (!handleAllError()) {
+            setLoading(true);
+            const data = {
+                Email: email,
+                Password: password,
+                UserName: userName,
+                FirstName: firstName,
+                LastName: lastName,
+                ConnectionID: connectionId,
+            };
+            try {
+                console.log("in handle reg => ", data);
+                const {result, isError} = await fetcher(
+                    "POST",
+                    "Auth/Register",
+                    data,
+                );
+                console.log("in registering => ", result, isError);
+                if (!isError && result !== null && result !== undefined) {
+                    setIsLoged(true);
+                    setToken(result);
+                    if (document) {
+                        let cookie = `Token=${result};path=/;`;
+                        console.log("cookie set in login => ", cookie);
+                        document.cookie = cookie;
+                    }
+                    router.replace("/Messanger/");
                 }
-                router.replace("/Messanger/");
+            } catch (error) {
+                console.log("error in register =>", error);
             }
-        } catch (error) {
-            console.log("error in register =>", error);
+            setLoading(false);
         }
-        setLoading(false);
     };
 
     return (
@@ -136,11 +169,18 @@ const Register = () => {
                     placeholder="UserUniqueName"
                     onChange={(e) => setUserName(e.target.value)}
                     value={userName}
-                    onBlur={() => handleBlur("username")}
+                    onBlur={testUserName}
                     required
                 />
                 <label htmlFor="UserUniqueNameRegister">UserName</label>
-                <span className="text-danger my-3 mx-1">{userNameError}</span>
+                <span
+                    className={`my-3 mx-1 ${
+                        userNameConfirmed.length > 0
+                            ? "text-success"
+                            : "text-danger"
+                    }`}>
+                    {userNameConfirmed || userNameError}
+                </span>
             </div>
             <div className="form-floating my-2">
                 <input

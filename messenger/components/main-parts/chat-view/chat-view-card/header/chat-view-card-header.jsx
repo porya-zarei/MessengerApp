@@ -10,10 +10,12 @@ import {
     useTransform,
 } from "framer-motion";
 import classes from "./cvch.module.scss";
+import {toast} from "react-toastify";
 
 const ChatViewCardHeader = () => {
-    const {chatsToShow, isMobile, setIsInChat,setShowHeaderInfo,theme} = useContext(ViewContext);
-    const {userId, token} = useContext(UserContext);
+    const {chatsToShow, isMobile, setIsInChat, setShowHeaderInfo, theme} =
+        useContext(ViewContext);
+    const {userId, token, connection} = useContext(UserContext);
     const [settingShow, setSettingShow] = useState(false);
     const [voiceChatShow, setVoiceChatShow] = useState(false);
     const [loading, setLoading] = useState(false);
@@ -22,6 +24,20 @@ const ChatViewCardHeader = () => {
     const xRange = [-200, 0, 200];
     const opacityRange = [0, 1, 0];
     const opacity = useTransform(xPosition, xRange, opacityRange);
+
+    let imgSrc = "";
+    if (chatsToShow.type === "room") {
+        imgSrc =
+            "https://localhost:44389/files/images/profiles/" +
+            chatsToShow.Image;
+    } else if (chatsToShow.type === "group") {
+        imgSrc =
+            "https://localhost:44389/files/images/groups/" + chatsToShow.Image;
+    } else {
+        imgSrc =
+            "https://localhost:44389/files/images/channels/" +
+            chatsToShow.Image;
+    }
 
     const handleLeaving = async () => {
         setLoading(true);
@@ -71,15 +87,22 @@ const ChatViewCardHeader = () => {
         }
     };
 
+    const sendNotification = () => {
+        connection
+            .invoke("NotifyUser", userId, chatsToShow.userName)
+            .then((r) => {
+                toast.success("sended successfully");
+            });
+    };
+
     useEffect(() => {
-        
         const handleBackButton = () => {
             console.log("in back button");
-        }
-        window.addEventListener("backbutton",handleBackButton);
+        };
+        window.addEventListener("backbutton", handleBackButton);
 
         return () => {
-            window.removeEventListener("backbutton",handleBackButton);
+            window.removeEventListener("backbutton", handleBackButton);
         };
     }, []);
 
@@ -99,15 +122,14 @@ const ChatViewCardHeader = () => {
                         right: 0,
                     }}
                     onDragEnd={() => isMobile && handleDragEnd()}
-                    
                     className={`${classes.cardHeader}`}>
                     <div className={`${classes.userAvatar} center`}>
                         <div className="center m-auto hw-70px">
                             <img
                                 src={
-                                    chatsToShow.Image !== ""
-                                        ? "https://localhost:44389/files/images/profiles/" +
-                                          chatsToShow.Image
+                                    chatsToShow.Image !== "" &&
+                                    chatsToShow.Image !== null
+                                        ? imgSrc
                                         : "/assets/images/png/avatar.png"
                                 }
                                 height="66px"
@@ -116,7 +138,9 @@ const ChatViewCardHeader = () => {
                             />
                         </div>
                     </div>
-                    <div onClick={() => setShowHeaderInfo((p) => !p)} className={`${classes.userName}`}>
+                    <div
+                        onClick={() => setShowHeaderInfo((p) => !p)}
+                        className={`${classes.userName}`}>
                         <marquee
                             className="w-100 h-100"
                             behavior="scroll"
@@ -185,7 +209,7 @@ const ChatViewCardHeader = () => {
                                                                 style={{
                                                                     backgroundColor:
                                                                         theme.primaryLight,
-                                                                        color:theme.textGray
+                                                                    color: theme.textGray,
                                                                 }}
                                                                 className={`${classes.chatSettingListItem}`}>
                                                                 {name}
@@ -198,6 +222,9 @@ const ChatViewCardHeader = () => {
                                     </li>
                                     {chatsToShow.type === "group" && (
                                         <li
+                                            style={{
+                                                backgroundColor: theme.light,
+                                            }}
                                             className={`${classes.chatSettingListItem}`}>
                                             <button
                                                 onClick={() =>
@@ -214,6 +241,19 @@ const ChatViewCardHeader = () => {
                                                     type={chatsToShow.type}
                                                 />
                                             )}
+                                        </li>
+                                    )}
+                                    {chatsToShow.type === "room" && (
+                                        <li
+                                            style={{
+                                                backgroundColor: theme.primary,
+                                            }}
+                                            className={`${classes.chatSettingListItem}`}>
+                                            <button
+                                                onClick={sendNotification}
+                                                className={`${classes.chatSettingListItemBtn} btn h-100 w-100 center`}>
+                                                send notification
+                                            </button>
                                         </li>
                                     )}
                                 </ul>

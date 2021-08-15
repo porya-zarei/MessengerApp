@@ -11,8 +11,27 @@ const BurgerCard = () => {
     const [source, setSource] = useState(
         "url(/assets/images/jpg/avatar-bg.jpg)",
     );
-    useEffect(() => {}, []);
+
+    const toBase64 = (file) =>
+        new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = () => resolve(reader.result);
+            reader.onerror = (error) => reject(error);
+        });
+
+    // useEffect(() => {
+    //     // if (localStorage.getItem("cardBgR")) {
+    //     //     console.log("base64 cardbg => ", localStorage.getItem("cardBg"));
+    //     //     setSource(localStorage.getItem("cardBg"));
+    //     // }
+    // }, []);
     const handleSetCardBg = () => {
+        // toBase64(cardBgRef.current.files[0]).then((r) => {
+        //     localStorage.setItem("cardBg", r);
+        //     console.log("b64 => ", r);
+        //     setSource(r);
+        // });
         let blob = window.URL.createObjectURL(cardBgRef.current.files[0]);
         console.log("blob => ", blob);
         setSource(`url(${blob})`);

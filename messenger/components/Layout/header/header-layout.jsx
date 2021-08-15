@@ -3,12 +3,11 @@ import {UserContext} from "../../../context/user-context/user-context";
 import Header from "../../main-parts/header/header";
 
 const HeaderLayout = () => {
-    const {isLoged} = useContext(UserContext);
     return (
         <header
             style={{zIndex: "1050", position: "fixed", top: "0", left: "0"}}
             className="p-0 h-auto w-100">
-            {isLoged ? <Header /> : null}
+            <Header />
         </header>
     );
 };

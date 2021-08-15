@@ -208,6 +208,124 @@ namespace APIDataLayer.Services
             }
         }
 
+        public async Task<List<OutputUser>> GetGroupUsers(Guid groupId)
+        {
+            try
+            {
+                var group = await context.Groups.FindAsync(groupId);
+                var users = context.Users.ToList();
+                var res = users.Where(u => group.GroupMembersID.Contains(u.UserID)).Select(u => new OutputUser
+                {
+                    UserID = u.UserID,
+                    FirstName = u.FirstName,
+                    LastName = u.LastName,
+                    Description = u.Description,
+                    UserName = u.UserName,
+                    ProfileImage = u.ProfileImage,
+                    IsAdmin = group.GroupAdminsID.Contains(u.UserID)
+                }).ToList();
+                return res;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+
+        public async Task<bool> IsAdmin(Guid groupId, Guid userId)
+        {
+            try
+            {
+                var group = await context.Groups.FindAsync(groupId);
+                return group.GroupAdminsID.Contains(userId);
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
+        public async Task<bool> IsCreator(Guid groupId, Guid userId)
+        {
+            try
+            {
+                var group = await context.Groups.FindAsync(groupId);
+                return group.CreatorID == userId;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
+        public async Task<bool> AddAdminToGroup(Guid groupId, Guid senderId, Guid userId)
+        {
+            try
+            {
+                if (await IsCreator(groupId, senderId))
+                {
+                    var group = await context.Groups.FindAsync(groupId);
+                    if (!group.GroupAdminsID.Contains(userId))
+                    {
+                        group.GroupAdminsID.Add(userId);
+                        await SaveChangesAsync();
+                    }
+                    return true;
+                }
+                return false;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
+        public async Task<bool> RemoveAdminFromGroup(Guid groupId, Guid senderId, Guid userId)
+        {
+            try
+            {
+                if (await IsCreator(groupId, senderId))
+                {
+                    var group = await context.Groups.FindAsync(groupId);
+                    if (group.GroupAdminsID.Contains(userId))
+                    {
+                        group.GroupAdminsID.Remove(userId);
+                        await SaveChangesAsync();
+                    }
+                    return true;
+                }
+                return false;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
+        public async Task<bool> RemoveUserFromGroup(Guid userId, Guid groupId)
+        {
+            try
+            {
+                var user = await context.Users.FindAsync(userId);
+                var group = await context.Groups.FindAsync(groupId);
+                user.UserGroupsID.Remove(groupId);
+                if (group.GroupAdminsID.Contains(userId))
+                {
+                    group.GroupAdminsID.Remove(userId);
+                }
+                if (group.GroupMembersID.Contains(userId))
+                {
+                    group.GroupMembersID.Remove(userId);
+                }
+                await SaveChangesAsync();
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
         public async Task<Guid> GetGroupCreatorID(Guid id)
         {
             return (await context.Groups.FindAsync(id)).CreatorID;

@@ -8,7 +8,7 @@ import {sendRequest} from "./send-request";
 import VoiceSender from "./voice-sender/voice-sender";
 
 const ChatViewCardFooter = () => {
-    const {chatsToShow,theme} = useContext(ViewContext);
+    const {chatsToShow, theme} = useContext(ViewContext);
     const {userId, token, user} = useContext(UserContext);
     const [text, setText] = useState("");
     const file = useRef();
@@ -16,9 +16,7 @@ const ChatViewCardFooter = () => {
     const video = useRef();
     const [voice, setVoice] = useState();
     const handleSendChat = async () => {
-        console.log("chatsToShow => ", chatsToShow, userId);
-
-        const {result, isError, resStatus, error} = await sendRequest(
+        const {isError} = await sendRequest(
             {...chatsToShow},
             token,
             text,
@@ -26,18 +24,18 @@ const ChatViewCardFooter = () => {
             file.current.files[0],
             image.current.files[0],
             video.current.files[0],
-            voice
+            voice,
         );
-        console.log(
-            "result in card footer => ",
-            result,
-            isError,
-            resStatus,
-            error,
-            file,
-            image,
-            video,
-        );
+        // console.log(
+        //     "result in card footer => ",
+        //     result,
+        //     isError,
+        //     resStatus,
+        //     error,
+        //     file,
+        //     image,
+        //     video,
+        // );
         if (!isError) {
             file.current.value = null;
             image.current.value = null;
@@ -73,7 +71,10 @@ const ChatViewCardFooter = () => {
                                     onChange={(e) => {
                                         setText(e.target.value);
                                     }}
-                                    style={{borderColor:theme.text}}
+                                    style={{
+                                        borderColor: theme.text,
+                                        color: theme.text,
+                                    }}
                                 />
                             </div>
                             <button
@@ -94,7 +95,9 @@ const ChatViewCardFooter = () => {
                                 </svg>
                             </button>
                             <button className="btn bg-transparent text-white-50 emoji-button">
-                                <i style={{color:theme.textGray}} className="bi bi-emoji-laughing fs-larger"></i>
+                                <i
+                                    style={{color: theme.textGray}}
+                                    className="bi bi-emoji-laughing fs-larger"></i>
                                 <Emojis setText={setText} />
                             </button>
                             <VoiceSender voice={voice} setVoice={setVoice} />

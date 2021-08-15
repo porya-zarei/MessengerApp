@@ -1,4 +1,5 @@
 import {useContext, useState} from "react";
+import {toast} from "react-toastify";
 import {UserContext} from "../../../context/user-context/user-context";
 import {ViewContext} from "../../../context/view-context/view-context";
 import {fetcher} from "../../../hooks/fetcher";
@@ -10,7 +11,7 @@ const CreateChannelDialog = () => {
     const [channelName, setChannelName] = useState("");
     const [channelDescription, setChannelDescription] = useState("");
     const [loading, setLoading] = useState(false);
-    const [successfull, setSuccessfull] = useState("");
+    
     const handleClose = () => {
         setShowCreateChannel(false);
     };
@@ -21,7 +22,7 @@ const CreateChannelDialog = () => {
             Name: channelName,
             ChannelUserName: channelUserName,
             CreatorID: userId,
-            ChannelDescription : channelDescription,
+            ChannelDescription: channelDescription,
         };
         const {result, isError, resStatus} = await fetcher(
             "POST",
@@ -30,7 +31,10 @@ const CreateChannelDialog = () => {
             token,
         );
         if (resStatus === "201" || !isError) {
-            setSuccessfull("Created");
+            setChannelDescription("");
+            setChannelName("");
+            setChannelUserName("");
+            toast.success("channel created successfully");
         }
         setLoading(false);
     };
@@ -109,7 +113,7 @@ const CreateChannelDialog = () => {
                                 type="submit"
                                 className="btn btn-outline-info w-100">
                                 {!loading ? (
-                                    "Send" + " " + successfull
+                                    "Send"
                                 ) : (
                                     <i className="spinner-border"></i>
                                 )}

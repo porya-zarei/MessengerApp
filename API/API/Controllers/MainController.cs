@@ -51,5 +51,11 @@ namespace API.Controllers
         {
             return usersRepository.GetAllData();
         }
+
+        [HttpGet("TestUserName")]
+        public bool TestUserName(string userName)
+        {
+            return usersRepository.IsUserNameUnique(userName);
+        }
     }
 }

@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useMemo } from "react";
 import { ViewContext } from "../../../context/view-context/view-context";
 import BurgerBtn from "./header-burger-menu/burger-btn/burger-btn";
 import BurgerMenu from "./header-burger-menu/burger-menu";
@@ -7,7 +7,9 @@ import SearchInput from "./search-input/search-input";
 
 
 const Header = () => {
+    
     const {theme} = useContext(ViewContext);
+
     return (
         <div className={`${classes.header} m-0 w-100`}
             style={{backgroundColor:theme.dark}}

@@ -1,30 +1,33 @@
 import {motion, useMotionValue, AnimatePresence} from "framer-motion";
-import {useContext, useEffect, useRef, useState} from "react";
+import {useCallback, useContext, useEffect, useRef, useState} from "react";
 import classes from "./burgermenu.module.scss";
 import BurgerCard from "./burger-card/burger-card";
 import BurgerList from "./burger-list/burger-list";
 import EditUser from "./burger-edit-user/burger-edit-user";
-import { ViewContext } from "../../../../context/view-context/view-context";
+import {ViewContext} from "../../../../context/view-context/view-context";
 const BurgerMenu = () => {
     const constraintsRef = useRef(null);
     const burger = useRef(null);
-    const {showBurgerMenu, setShowBurgerMenu,theme} = useContext(ViewContext);
+    const {showBurgerMenu, setShowBurgerMenu, theme} = useContext(ViewContext);
     const xPosition = useMotionValue(0);
 
-    const handleShowNavbar = () => {
+    const handleShowNavbar = useCallback(() => {
         setShowBurgerMenu((p) => !p);
-    };
+    }, []);
 
     const handleDragEnd = () => {
         if (xPosition.get() < -50) {
             handleShowNavbar();
         }
     };
-    const handleMainContainerClick = (event) => {
+    const handleMainContainerClick = useCallback((event) => {
         if (event.target.id === "mainContainerInNavbar") {
             handleShowNavbar();
         }
-    };
+    }, []);
+
+    useEffect(() => {}, []);
+
     return (
         <motion.div
             id="mainContainerInNavbar"
@@ -39,7 +42,7 @@ const BurgerMenu = () => {
                     drag="x"
                     style={{transformOrigin: "left"}}
                     dragConstraints={{left: 0, right: 0}}
-                    style={{x: xPosition,backgroundColor:theme.dark}}
+                    style={{x: xPosition, backgroundColor: theme.dark}}
                     onDragEnd={handleDragEnd}
                     initial={{scaleX: 0}}
                     animate={{scaleX: 1}}
@@ -49,9 +52,9 @@ const BurgerMenu = () => {
                         easings: "easeInOut",
                     }}>
                     <div className="p-0 m-0">
-                        <BurgerCard/>
-                        <EditUser/>
-                        <BurgerList/>
+                        <BurgerCard />
+                        <EditUser />
+                        <BurgerList />
                     </div>
                 </motion.div>
             </AnimatePresence>

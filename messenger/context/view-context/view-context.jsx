@@ -1,4 +1,4 @@
-import {createContext, useEffect, useState} from "react";
+import {createContext, useEffect, useMemo, useState} from "react";
 
 export const ViewContext = createContext({
     isInChat: false,
@@ -93,7 +93,7 @@ const ViewContextProvider = ({children}) => {
     const [showBurgerMenu, setShowBurgerMenu] = useState(false);
     const [showHeaderInfo, setShowHeaderInfo] = useState(false);
 
-    const [theme, setTheme] = useState({
+    const [th, setTheme] = useState({
         name: "dark",
         light: "#DDDDDD",
         primary: "#30475E",
@@ -110,6 +110,7 @@ const ViewContextProvider = ({children}) => {
         bubble1: "#577399",
         bubble2: "#495867",
     });
+    const theme = useMemo(() => th, [th.name]);
     const [chatBackground, setChatBackground] = useState(
         "/assets/images/webp/background.webp",
     );

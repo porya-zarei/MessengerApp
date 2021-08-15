@@ -71,9 +71,15 @@ const VoiceSender = ({voice, setVoice}) => {
                 onClick={handleRecoding}
                 title="send voice"
                 className="btn bg-transparent text-white-50 emoji-button">
-                <i
-                    style={{color: theme.textGray}}
-                    className="bi bi-soundwave fs-larger"></i>
+                {!recordingState ? (
+                    <i
+                        style={{color: theme.textGray}}
+                        className="bi bi-soundwave fs-larger"></i>
+                ) : (
+                    <i
+                        style={{color: theme.textGray}}
+                        className="spinner-border fs-larger"></i>
+                )}
             </button>
             <audio hidden="true" src={url} autoPlay controls></audio>
         </>

@@ -3,6 +3,7 @@ import classes from "./chupdate.module.scss";
 import {ViewContext} from "../../../../../../../context/view-context/view-context";
 import {UserContext} from "../../../../../../../context/user-context/user-context";
 import {fetcher} from "../../../../../../../hooks/fetcher";
+import { toast } from "react-toastify";
 
 const ChUpdate = () => {
     const {theme, chatsToShow} = useContext(ViewContext);
@@ -29,7 +30,9 @@ const ChUpdate = () => {
         const formData = new FormData();
 
         for (var key in data) {
-            form_data.append(key, data[key]);
+            if (data[key] !== null && data[key] !== "null") {
+                formData.append(key, data[key]);
+            }
         }
 
         if (imageRef.current.files[0] !== null) {
@@ -39,9 +42,12 @@ const ChUpdate = () => {
         const {result, error, isError} = await fetcher(
             "POST",
             "Channels/UpdateChannel",
-            data,
+            formData,
             token,
         );
+        if(!isError){
+            toast.success("channel updated successfully");
+        }
         console.log("result in update channel => ", result, error);
     };
 
@@ -113,7 +119,16 @@ const ChUpdate = () => {
                 </button>
             </div>
             <div className={classes.control}>
-                <button onClick={handleUpdateChannel}>Send</button>
+                <button
+                    className="w-100"
+                    style={{
+                        backgroundColor: theme.info,
+                        color: theme.text,
+                        height: "40px",
+                    }}
+                    onClick={handleUpdateChannel}>
+                    Send
+                </button>
             </div>
         </div>
     );

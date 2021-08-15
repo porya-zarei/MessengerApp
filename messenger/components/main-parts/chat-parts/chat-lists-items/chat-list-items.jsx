@@ -1,4 +1,4 @@
-import {useContext} from "react";
+import {useContext, useMemo} from "react";
 import {UserDataContext} from "../../../../context/data-context/data-context";
 import {ViewContext} from "../../../../context/view-context/view-context";
 import {UserContext} from "../../../../context/user-context/user-context";
@@ -6,7 +6,7 @@ import ChatListItem from "../chat-list-item/chat-list-item";
 
 import classes from "./chatlistitems.module.scss";
 const ChatListItems = () => {
-    const {setIsInChat, setChatsToShow,theme} = useContext(ViewContext);
+    const {setIsInChat, setChatsToShow, theme} = useContext(ViewContext);
     const {rooms, groups, channels} = useContext(UserDataContext);
     const {userId, user} = useContext(UserContext);
 
@@ -56,52 +56,60 @@ const ChatListItems = () => {
 
     let channelsList;
     if (channels.length !== 0) {
-        channelsList = channels.map((ch) => {
-            return {
-                Name: ch?.Name,
-                LastChatText:
-                    ch?.Chats.length !== 0
-                        ? ch?.Chats[ch?.Chats.length - 1]?.Text
-                        : "",
-                lastChatSendingTime:
-                    ch?.Chats.length !== 0
-                        ? ch?.Chats[ch?.Chats?.length - 1]?.SendingTime
-                        : "",
-                Id: ch?.ChannelID,
-                Image: "",
-                UserAccess: ch?.AdminsUserName?.includes(user.UserName),
-                chatsCount: ch?.Chats?.length,
-                MembersName: ch?.AdminsUserName,
-                userName: ch?.ChannelUserName,
-                description: ch?.ChannelDescription,
-            };
-        });
+        channelsList = useMemo(
+            () =>
+                channels.map((ch) => {
+                    return {
+                        Name: ch?.Name,
+                        LastChatText:
+                            ch?.Chats.length !== 0
+                                ? ch?.Chats[ch?.Chats.length - 1]?.Text
+                                : "",
+                        lastChatSendingTime:
+                            ch?.Chats.length !== 0
+                                ? ch?.Chats[ch?.Chats?.length - 1]?.SendingTime
+                                : "",
+                        Id: ch?.ChannelID,
+                        Image: ch?.ChannelProfileImage,
+                        UserAccess: ch?.AdminsUserName?.includes(user.UserName),
+                        chatsCount: ch?.Chats?.length,
+                        MembersName: ch?.AdminsUserName,
+                        userName: ch?.ChannelUserName,
+                        description: ch?.ChannelDescription,
+                    };
+                }),
+            [channels],
+        );
     }
 
     let groupsList;
     if (groups.length !== 0) {
-        groupsList = groups.map((gr) => {
-            return {
-                Name: gr?.Name,
-                LastChatText:
-                    gr.Chats.length !== 0
-                        ? gr?.Chats[gr?.Chats?.length - 1]?.Text
-                        : "",
-                lastChatSendingTime:
-                    gr?.Chats.length !== 0
-                        ? gr?.Chats[gr?.Chats?.length - 1]?.SendingTime
-                        : "",
-                Id: gr?.GroupID,
-                Image: gr?.GroupProfileImage,
-                UserAccess: gr?.GroupMembersName?.includes(
-                    user?.FirstName + " " + user?.LastName,
-                ),
-                chatsCount: gr?.Chats.length,
-                MembersName: gr?.GroupMembersName,
-                userName: gr?.GroupUserName,
-                description: gr?.GroupDescription,
-            };
-        });
+        groupsList = useMemo(
+            () =>
+                groups.map((gr) => {
+                    return {
+                        Name: gr?.Name,
+                        LastChatText:
+                            gr.Chats.length !== 0
+                                ? gr?.Chats[gr?.Chats?.length - 1]?.Text
+                                : "",
+                        lastChatSendingTime:
+                            gr?.Chats.length !== 0
+                                ? gr?.Chats[gr?.Chats?.length - 1]?.SendingTime
+                                : "",
+                        Id: gr?.GroupID,
+                        Image: gr?.GroupProfileImage,
+                        UserAccess: gr?.GroupMembersName?.includes(
+                            user?.FirstName + " " + user?.LastName,
+                        ),
+                        chatsCount: gr?.Chats.length,
+                        MembersName: gr?.GroupMembersName,
+                        userName: gr?.GroupUserName,
+                        description: gr?.GroupDescription,
+                    };
+                }),
+            [groups],
+        );
     }
 
     let roomsList;
@@ -186,7 +194,9 @@ const ChatListItems = () => {
                 </li>
             ))}
             <li className={`w-100`} key={"nothing"}>
-                <div className="p-2 my-3" style={{color:theme.textGray}}>what do you want ?</div>
+                <div className="p-2 my-3" style={{color: theme.textGray}}>
+                    what do you want ?
+                </div>
             </li>
         </ul>
     );

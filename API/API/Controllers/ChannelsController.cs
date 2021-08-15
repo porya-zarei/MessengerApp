@@ -266,12 +266,111 @@ namespace API.Controllers
             if (res)
             {
                 var channel = await channelsRepository.GetChannelWithChannelID(updateChannel.ChannelID);
+                var output = channelsRepository.ChannelToOutputChannel(channel);
                 var connections = channelsRepository.GetChannelUsersConnectionID(updateChannel.ChannelID);
-                await usersHub.Clients.Clients(connections).SendAsync("ChannelUpdated", channel);
+                await usersHub.Clients.Clients(connections).SendAsync("ChannelUpdated", output);
                 return Ok(res);
             }
             else
                 return BadRequest(res);
+        }
+
+        [Authorize]
+        [HttpPost("GetChannelUsers")]
+        public async Task<IActionResult> GetChannelUsers(ID id)
+        {
+            var userId = new Guid(User.FindFirst("UserID").Value);
+            if (await channelsRepository.IsAdmin(id.Id, userId))
+            {
+                var res = await channelsRepository.GetChannelUsers(id.Id);
+                if (res == null)
+                    return BadRequest();
+                return Ok(res);
+            }
+            return BadRequest();
+        }
+
+        [Authorize]
+        [HttpPost("AddAdminToChannel")]
+        public async Task<IActionResult> AddAdmin(ChangeChannelAdmin change)
+        {
+            var userId = new Guid(User.FindFirst("UserID").Value);
+            var res = await channelsRepository.AddAdminToChannel(change.ChannelID, userId, change.UserID);
+
+            if (!res)
+                return BadRequest(res);
+
+            var channel = await channelsRepository.GetChannelWithChannelID(change.ChannelID);
+            var output = channelsRepository.ChannelToOutputChannel(channel);
+            var connections = channelsRepository.GetChannelUsersConnectionID(change.ChannelID);
+            var users = await channelsRepository.GetChannelUsers(change.ChannelID);
+            await usersHub.Clients.Clients(connections).SendAsync("ChannelUpdated", output);
+            return Ok(users);
+        }
+
+        [Authorize]
+        [HttpPost("RemoveAdminFromChannel")]
+        public async Task<IActionResult> RemoveAdmin(ChangeChannelAdmin change)
+        {
+            var userId = new Guid(User.FindFirst("UserID").Value);
+            var res = await channelsRepository.RemoveAdminFromChannel(change.ChannelID, userId, change.UserID);
+
+            if (!res)
+                return BadRequest(res);
+
+            var channel = await channelsRepository.GetChannelWithChannelID(change.ChannelID);
+            var output = channelsRepository.ChannelToOutputChannel(channel);
+            var connections = channelsRepository.GetChannelUsersConnectionID(change.ChannelID);
+            var users = await channelsRepository.GetChannelUsers(change.ChannelID);
+            await usersHub.Clients.Clients(connections).SendAsync("ChannelUpdated", output);
+            return Ok(users);
+        }
+
+        [Authorize]
+        [HttpPost("RemoveUserFromChannel")]
+        public async Task<IActionResult> RemoveUserFromChannel(LeaveTheChannel leaveChannel)
+        {
+            var authId = new Guid(User.FindFirst("UserID").Value);
+            try
+            {
+                if (
+                    (
+                        (await channelsRepository.IsAdmin(leaveChannel.ChannelID, authId)) &&
+                        !(await channelsRepository.IsCreator(leaveChannel.ChannelID, leaveChannel.UserID)) &&
+                        !(await channelsRepository.IsAdmin(leaveChannel.ChannelID, leaveChannel.UserID)
+                    )
+                    ||
+                    (
+                        await channelsRepository.IsCreator(leaveChannel.ChannelID, authId)) &&
+                        !(await channelsRepository.IsCreator(leaveChannel.ChannelID, leaveChannel.UserID))
+                    )
+                   )
+                {
+                    var res = await channelsRepository.RemoveUserFromChannel(leaveChannel.UserID, leaveChannel.ChannelID);
+                    if (res)
+                    {
+                        var userConnection = await channelsRepository.GetConnectionIdWithUserId(leaveChannel.UserID);
+                        var otherConnectionsId = channelsRepository.GetChannelUsersConnectionID(leaveChannel.ChannelID);
+                        var channel = await channelsRepository.GetChannelWithChannelID(leaveChannel.ChannelID);
+                        var users = await channelsRepository.GetChannelUsers(leaveChannel.ChannelID);
+                        await usersHub.Clients.Clients(otherConnectionsId).SendAsync("UserLeavedChannel", channelsRepository.ChannelToOutputChannel(channel));
+                        await usersHub.Clients.Client(userConnection).SendAsync("ChannelRemoved", leaveChannel.ChannelID);
+                        return Ok(users);
+                    }
+                    else
+                    {
+                        return BadRequest();
+                    }
+                }
+                else
+                {
+                    return BadRequest();
+                }
+            }
+            catch (Exception)
+            {
+                return BadRequest();
+            }
         }
     }
 }

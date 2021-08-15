@@ -20,7 +20,9 @@ namespace APIDataLayer.Interfaces
         string GetUserToken(Dictionary<string, string> pairs, IConfiguration _configuration);
 
         User GetUserWithEmailPassword(string email, string password);
-
+        Task<User> GetUserWithUserID(Guid id);
+        User GetUserWithUserName(string userName);
+        bool IsUserNameUnique(string userName);
         string LoginUserAuth(LoginUser loginUser, IConfiguration configuration);
 
         Task<string> RegisterUserAuth(RegisterUser registerUser, IConfiguration configuration);

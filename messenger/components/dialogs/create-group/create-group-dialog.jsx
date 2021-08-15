@@ -1,4 +1,5 @@
 import {useContext, useState} from "react";
+import { toast } from "react-toastify";
 import {UserContext} from "../../../context/user-context/user-context";
 import {ViewContext} from "../../../context/view-context/view-context";
 import {fetcher} from "../../../hooks/fetcher";
@@ -8,8 +9,9 @@ const CreateGroupDialog = () => {
     const {userId, token} = useContext(UserContext);
     const [groupUserName, setGroupUserName] = useState("");
     const [groupName, setGroupName] = useState("");
+    const [groupDescription, setGroupDescription] = useState("");
     const [loading, setLoading] = useState(false);
-    const [successfull, setSuccessfull] = useState("");
+
     const handleClose = () => {
         setShowCreateGroup(false);
     };
@@ -19,6 +21,7 @@ const CreateGroupDialog = () => {
         const data = {
             Name: groupName,
             GroupUserName: groupUserName,
+            GroupDescription: groupDescription,
             CreatorID: userId,
         };
         const {result, isError, resStatus} = await fetcher(
@@ -28,7 +31,10 @@ const CreateGroupDialog = () => {
             token,
         );
         if (resStatus === "201" || !isError) {
-            setSuccessfull("Created");
+            setGroupName("");
+            setGroupUserName("");
+            setGroupDescription("");
+            toast.success("group created successfully");
         }
         setLoading(false);
     };
@@ -83,10 +89,22 @@ const CreateGroupDialog = () => {
                                 className="w-100 outline-none border-0 rounded-pill p-2"
                             />
                         </div>
+                        <div className="form-control border-0 bg-transparent p-1 w-100 my-2">
+                            <input
+                                name="groupDescription"
+                                placeholder="your group userName"
+                                type="text"
+                                value={groupDescription}
+                                onChange={(e) => {
+                                    setGroupDescription(e.target.value);
+                                }}
+                                className="w-100 outline-none border-0 rounded-pill p-2"
+                            />
+                        </div>
                         <div className="form-control p-1 w-100 my-2">
                             <img
                                 src="/assets/images/svg/create.svg"
-                                height="240px"
+                                height="200px"
                                 className="w-100"
                             />
                         </div>
@@ -95,7 +113,7 @@ const CreateGroupDialog = () => {
                                 type="submit"
                                 className="btn btn-outline-info w-100">
                                 {!loading ? (
-                                    "Send" + " " + successfull
+                                    "Send"
                                 ) : (
                                     <i className="spinner-border"></i>
                                 )}

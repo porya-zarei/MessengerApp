@@ -3,6 +3,7 @@ import * as SignalR from "@microsoft/signalr";
 import {UserDataContext} from "../data-context/data-context";
 import {fetcher} from "../../hooks/fetcher";
 import {ViewContext} from "../view-context/view-context";
+import {toast} from "react-toastify";
 export const UserContext = createContext({
     user: {},
     setUser: () => {},
@@ -259,6 +260,25 @@ const UserContextProvider = ({children}) => {
             console.log("in after delete chat => ,", data, chatsToShow);
         });
 
+        userConnection.on("ChannelUpdated", (channel) => {
+            console.log("in channelUpdated => ", channel);
+            channelsDispatcher({
+                type: "updateChannel",
+                payload: {Channel: channel},
+            });
+        });
+
+        userConnection.on("GroupUpdated", (group) => {
+            console.log("in groupUpdated => ", group);
+            groupsDispatcher({
+                type: "updateGroup",
+                payload: {Group: group},
+            });
+        });
+        userConnection.on("GetNotification", (message) => {
+            toast.dark(message);
+        });
+
         userConnection.on("NewForwardChatsSended", (data) => {
             if (data.OutputRoomsChats.length > 0) {
                 roomsDispatcher({
@@ -312,7 +332,7 @@ const UserContextProvider = ({children}) => {
                 );
                 console.log("reConnetion => ", connId, "\n res =>", result);
                 if (result === connId) {
-                    console.log("re connected successFully => ",connId);
+                    console.log("re connected successFully => ", connId);
                     setConnectionId(connId);
                 }
             }

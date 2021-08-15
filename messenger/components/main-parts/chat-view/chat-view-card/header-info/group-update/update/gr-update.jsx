@@ -27,7 +27,9 @@ const GrUpdate = () => {
         const formData = new FormData();
 
         for (var key in data) {
-            form_data.append(key, data[key]);
+            if (data[key] !== null && data[key] !== "null") {
+                formData.append(key, data[key]);
+            }
         }
 
         if (imageRef.current.files[0] !== null) {
@@ -41,6 +43,9 @@ const GrUpdate = () => {
             token,
             "multipart/form-data",
         );
+        if (!isError) {
+            toast.success("group updated successfully");
+        }
         console.log("result in update group => ", result, error);
     };
 
@@ -107,7 +112,16 @@ const GrUpdate = () => {
                 </button>
             </div>
             <div className={classes.control}>
-                <button onClick={handleUpdateGroup}>Send</button>
+                <button
+                    className="w-100"
+                    style={{
+                        backgroundColor: theme.info,
+                        color: theme.text,
+                        height: "40px",
+                    }}
+                    onClick={handleUpdateGroup}>
+                    Send
+                </button>
             </div>
         </div>
     );

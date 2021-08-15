@@ -56,7 +56,7 @@ const Home = () => {
                             <div className={classes.chatsBody}>
                                 <div className={classes.chats}>
                                     {chats.map((ch, i) => (
-                                        <div className={classes.chat}>
+                                        <div key={ch+i} className={classes.chat}>
                                             <div
                                                 style={{
                                                     marginLeft:

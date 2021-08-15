@@ -9,6 +9,7 @@ import {
 import classes from "./headerinfo.module.scss";
 import ChannelUpdate from "./channel-update/channel-update";
 import GroupUpdate from "./group-update/group-update";
+import Medias from "./medias/medias";
 
 const HeaderInfo = () => {
     const {showHeaderInfo, setShowHeaderInfo, chatsToShow, theme} =
@@ -18,52 +19,22 @@ const HeaderInfo = () => {
     const opacityRange = [0, 1, 0];
     const opacity = useTransform(xPosition, xRange, opacityRange);
 
-    const [mediaImages, setMediaImages] = useState([""]);
-    const [mediaVideos, setMediaVideos] = useState([{}]);
-    const [mediaFiles, setMediaFiles] = useState([{}]);
-    const [mediaVoices, setMediaVoices] = useState([{}]);
-
-    const [currentMedia, setCurrentMedia] = useState("images");
+   
+    let imgSrc = "";
+    if (chatsToShow.type === "room") {
+        imgSrc = "https://localhost:44389/files/images/profiles/" + chatsToShow.Image;
+    } else if (chatsToShow.type === "group") {
+        imgSrc = "https://localhost:44389/files/images/groups/" + chatsToShow.Image;
+    } else {
+        imgSrc = "https://localhost:44389/files/images/channels/" + chatsToShow.Image;
+    }
 
     const handleDragEnd = () => {
         if (xPosition.get() > 70) {
             setShowHeaderInfo(false);
         }
     };
-    useEffect(() => {
-        let images = chatsToShow?.chats
-            ?.filter((chat) => chat?.Image !== null && chat?.Image?.length > 0)
-            .map((chat) => chat.Image);
-        let videos = chatsToShow?.chats
-            ?.filter((chat) => chat?.Video !== null && chat?.Video?.length > 0)
-            .map((chat) => {
-                return {
-                    name: chat.Video,
-                    size: chat.VideoSize,
-                    id: chat.ChatID,
-                };
-            });
-        let voices = chatsToShow?.chats
-            ?.filter((chat) => chat?.Voice !== null && chat?.Voice?.length > 0)
-            .map((chat) => {
-                return {
-                    name: chat.Voice,
-                    size: chat.VoiceSize,
-                    id: chat.ChatID,
-                };
-            });
 
-        let files = chatsToShow?.chats
-            ?.filter((chat) => chat?.File !== null && chat?.File?.length > 0)
-            .map((chat) => {
-                return {name: chat.File, size: chat.FileSize, id: chat.ChatID};
-            });
-
-        setMediaImages(images);
-        setMediaVideos(videos);
-        setMediaVoices(voices);
-        setMediaFiles(files);
-    }, [chatsToShow, chatsToShow.chats]);
     return (
         showHeaderInfo && (
             <div className={`${classes.headerInfoContainer}`}>
@@ -86,7 +57,7 @@ const HeaderInfo = () => {
                             <img
                                 src={
                                     chatsToShow.Image.length > 0
-                                        ? `https://localhost:44389/files/images/profiles/${chatsToShow.Image}`
+                                        ? imgSrc
                                         : "/assets/images/jpg/dasht.jpg"
                                 }
                                 className={`${classes.image}`}
@@ -140,6 +111,7 @@ const HeaderInfo = () => {
                                     style={{
                                         backgroundColor: theme.dark,
                                         color: theme.text,
+                                        border:`2px solid ${theme.text}`
                                     }}>
                                     <i className="bi-chat"></i>
                                 </button>
@@ -156,82 +128,7 @@ const HeaderInfo = () => {
                             </div>
                         )}
                         <div className={`${classes.mediaContainer}`}>
-                            <div className={classes.mediaTitle}>
-                                <button
-                                    style={{
-                                        backgroundColor:
-                                            currentMedia === "images"
-                                                ? theme.primarier
-                                                : "transparent",
-                                        color: theme.textGray,
-                                    }}
-                                    onClick={() => setCurrentMedia("images")}
-                                    className={classes.mediaBtnActive}>
-                                    images
-                                </button>
-                                <button
-                                    onClick={() => setCurrentMedia("voices")}
-                                    style={{
-                                        backgroundColor:
-                                            currentMedia === "voices"
-                                                ? theme.primarier
-                                                : "transparent",
-                                        color: theme.textGray,
-                                    }}
-                                    className={classes.mediaBtnActive}>
-                                    Voices
-                                </button>
-                                <button
-                                    onClick={() => setCurrentMedia("files")}
-                                    style={{
-                                        backgroundColor:
-                                            currentMedia === "files"
-                                                ? theme.primarier
-                                                : "transparent",
-                                        color: theme.textGray,
-                                    }}
-                                    className={classes.mediaBtnActive}>
-                                    files
-                                </button>
-                            </div>
-                            <div className={`${classes.media}`}>
-                                {currentMedia === "images" &&
-                                    mediaImages.map((image) => (
-                                        <img
-                                            className={classes.mediaImage}
-                                            src={`https://localhost:44389/files/images/${image}`}
-                                        />
-                                    ))}
-                                {currentMedia === "images" &&
-                                    mediaVideos.map((video) => (
-                                        <video
-                                            controls
-                                            className={classes.mediaImage}
-                                            src={`https://localhost:44389/files/videos/${video.name}`}></video>
-                                    ))}
-                                {currentMedia === "voices" &&
-                                    mediaVoices.map((voice) => (
-                                        <div className={classes.mediaVoice}>
-                                            <a
-                                                target="_blank"
-                                                href={`https://localhost:44389/files/voices/${voice.name}}`}>
-                                                name : {voice.name}
-                                            </a>
-                                            <div>size : {voice.size}</div>
-                                        </div>
-                                    ))}
-                                {currentMedia === "files" &&
-                                    mediaFiles.map((file) => (
-                                        <div className={classes.mediaVoice}>
-                                            <a
-                                                target="_blank"
-                                                href={`https://localhost:44389/files/files/${file.name}}`}>
-                                                name : {file.name}
-                                            </a>
-                                            <div>size : {file.size}</div>
-                                        </div>
-                                    ))}
-                            </div>
+                            <Medias/>
                         </div>
                     </motion.div>
                 </AnimatePresence>

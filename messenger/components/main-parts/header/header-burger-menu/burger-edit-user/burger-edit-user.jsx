@@ -1,4 +1,4 @@
-import {useContext, useEffect, useRef, useState} from "react";
+import {useCallback, useContext, useEffect, useRef, useState} from "react";
 import {UserContext} from "../../../../../context/user-context/user-context";
 import {ViewContext} from "../../../../../context/view-context/view-context";
 import {fetcher} from "../../../../../hooks/fetcher";
@@ -15,6 +15,21 @@ const EditUser = () => {
     const [password, setPassword] = useState("");
     const [description, setDescription] = useState("");
     const imageRef = useRef();
+    const [userNameConfirmed, setUserNameConfirmed] = useState(false);
+
+    const testUserName = useCallback(async () => {
+        const {result} = await fetcher(
+            "GET",
+            "Main/TestUserName?userName=" + userName,
+            null,
+        );
+        if (result !== undefined && result !== null && result) {
+            setUserNameConfirmed(true);
+        } else {
+            setUserNameConfirmed(false);
+        }
+    }, [userName]);
+
     useEffect(() => {
         console.log("user in edit => ", user);
         setUserName(user?.UserName);
@@ -135,6 +150,7 @@ const EditUser = () => {
                         value={userName}
                         type="text"
                         className={`${classes.input}`}
+                        onBlur={testUserName}
                         style={{
                             color: theme.text,
                         }}
@@ -144,6 +160,11 @@ const EditUser = () => {
                             color: theme.textGray,
                         }}>
                         UserName :{" "}
+                        {userNameConfirmed ? (
+                            <i className="bi-check text-success"></i>
+                        ) : (
+                            <i className="bi-x text-danger"></i>
+                        )}
                     </div>
                 </div>
                 <div className={`${classes.inputContainer}`}>
@@ -211,7 +232,7 @@ const EditUser = () => {
                         className={`${classes.imageBtn}`}
                         style={{
                             color: theme.text,
-                            backgroundColor:theme.info
+                            backgroundColor: theme.info,
                         }}>
                         <i className="bi bi-image"></i>
                     </button>

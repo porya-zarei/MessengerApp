@@ -6,7 +6,7 @@ const MetaLayout = () => {
         <>
             <Head>
                 <title>PZE Messager</title>
-                <meta charset="utf-8" />
+                <meta charSet="utf-8" />
                 {/* <meta http-equiv="content-language" content="en-us" /> */}
                 <meta
                     name="viewport"

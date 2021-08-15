@@ -414,12 +414,9 @@ namespace APIDataLayer.Services
                 {
                     user.Description = updateUser.Description;
                 }
-                if (updateUser.UserName != null && updateUser.UserName != user.UserName && updateUser.UserName != "")
+                if (updateUser.UserName != null && updateUser.UserName != user.UserName && updateUser.UserName != "" && IsUserNameUnique(updateUser.UserName))
                 {
-                    if (!context.Users.Any(u => u.UserName == updateUser.UserName))
-                    {
-                        user.UserName = updateUser.UserName;
-                    }
+                    user.UserName = updateUser.UserName;
                 }
                 if (imageName != null)
                 {
@@ -432,6 +429,31 @@ namespace APIDataLayer.Services
             {
                 return null;
             }
+        }
+
+        public bool IsUserNameUnique(string userName)
+        {
+            try
+            {
+                var unique = !context.Users.Any(u => u.UserName == userName);
+                return unique;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
+        public async Task<User> GetUserWithUserID(Guid id)
+        {
+            var user = await context.Users.FindAsync(id);
+            return user;
+        }
+
+        public User GetUserWithUserName(string userName)
+        {
+            var user = context.Users.ToList().Find(u => u.UserName == userName);
+            return user;
         }
     }
 }

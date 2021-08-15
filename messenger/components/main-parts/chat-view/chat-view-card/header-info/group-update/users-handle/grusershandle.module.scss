@@ -1,0 +1,38 @@
+.handleUsersContainer {
+    height: 400px;
+    width: 100%;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+.handleUsersTitle {
+    width: 100%;
+    height: 20px;
+    padding: 2px;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.handleUsers {
+    height: auto;
+    width: 100%;
+    padding: 10px;
+    margin: 0;
+}
+.usersList {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+}
+.usersListItem {
+    width: 100%;
+    height: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

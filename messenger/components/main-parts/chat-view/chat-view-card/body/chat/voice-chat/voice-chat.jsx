@@ -58,7 +58,7 @@ const VoiceChat = ({voiceName, voiceSize}) => {
                         )}
                     </button>
                     <div className={classes.volumeRange}>
-                        <i className="bi-volume-up"></i>
+                        <i className="bi-volume-up text-dark"></i>
                         <input
                             onChange={handleChange}
                             type="range"

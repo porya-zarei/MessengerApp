@@ -123,7 +123,7 @@ namespace APIDataLayer.Services
             {
                 var user = await context.Users.FindAsync(userId);
                 var channel = await context.Channels.FindAsync(channelId);
-                user.UserGroupsID.Remove(channelId);
+                user.UserChannelsID.Remove(channelId);
                 if (channel.AdminsID.Contains(userId))
                 {
                     channel.AdminsID.Remove(userId);
@@ -195,6 +195,124 @@ namespace APIDataLayer.Services
                 if (profileImage != null)
                 {
                     channel.ChannelProfileImage = profileImage;
+                }
+                await SaveChangesAsync();
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
+        public async Task<List<OutputUser>> GetChannelUsers(Guid channelId)
+        {
+            try
+            {
+                var channel = await context.Channels.FindAsync(channelId);
+                var users = context.Users.ToList();
+                var res = users.Where(u => channel.ChannelUsersID.Contains(u.UserID)).Select(u => new OutputUser
+                {
+                    UserID = u.UserID,
+                    FirstName = u.FirstName,
+                    LastName = u.LastName,
+                    Description = u.Description,
+                    UserName = u.UserName,
+                    ProfileImage = u.ProfileImage,
+                    IsAdmin = channel.AdminsID.Contains(u.UserID)
+                }).ToList();
+                return res;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+
+        public async Task<bool> IsAdmin(Guid channelId, Guid userId)
+        {
+            try
+            {
+                var channel = await context.Channels.FindAsync(channelId);
+                return channel.AdminsID.Contains(userId);
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
+        public async Task<bool> IsCreator(Guid channelId, Guid userId)
+        {
+            try
+            {
+                var channel = await context.Channels.FindAsync(channelId);
+                return channel.CreatorID == userId;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
+        public async Task<bool> AddAdminToChannel(Guid channelId, Guid senderId, Guid userId)
+        {
+            try
+            {
+                if (await IsCreator(channelId, senderId))
+                {
+                    var channel = await context.Channels.FindAsync(channelId);
+                    if (!channel.AdminsID.Contains(userId))
+                    {
+                        channel.AdminsID.Add(userId);
+                        await SaveChangesAsync();
+                    }
+                    return true;
+                }
+                return false;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
+        public async Task<bool> RemoveAdminFromChannel(Guid channelId, Guid senderId, Guid userId)
+        {
+            try
+            {
+                if (await IsCreator(channelId, senderId))
+                {
+                    var channel = await context.Channels.FindAsync(channelId);
+                    if (channel.AdminsID.Contains(userId))
+                    {
+                        channel.AdminsID.Remove(userId);
+                        await SaveChangesAsync();
+                    }
+                    return true;
+                }
+                return false;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
+        public async Task<bool> RemoveUserFromChannel(Guid userId, Guid channelId)
+        {
+            try
+            {
+                var user = await context.Users.FindAsync(userId);
+                var channel = await context.Channels.FindAsync(channelId);
+                user.UserChannelsID.Remove(channelId);
+                if (channel.AdminsID.Contains(userId))
+                {
+                    channel.AdminsID.Remove(userId);
+                }
+                if (channel.ChannelUsersID.Contains(userId))
+                {
+                    channel.ChannelUsersID.Remove(userId);
                 }
                 await SaveChangesAsync();
                 return true;

@@ -269,12 +269,111 @@ namespace API.Controllers
             if (res)
             {
                 var group = await groupsRepository.GetGroupWithGroupID(updateGroup.GroupID);
+                var output = groupsRepository.GroupToOutputGroup(group);
                 var connections = groupsRepository.GetGroupUsersConnectionID(updateGroup.GroupID);
-                await usersHub.Clients.Clients(connections).SendAsync("GroupUpdated", group);
+                await usersHub.Clients.Clients(connections).SendAsync("GroupUpdated", output);
                 return Ok(res);
             }
             else
                 return BadRequest(res);
+        }
+
+        [Authorize]
+        [HttpPost("GetGroupUsers")]
+        public async Task<IActionResult> GetGroupUsers(ID id)
+        {
+            var userId = new Guid(User.FindFirst("UserID").Value);
+            if (await groupsRepository.IsAdmin(id.Id, userId))
+            {
+                var res = await groupsRepository.GetGroupUsers(id.Id);
+                if (res == null)
+                    return BadRequest();
+                return Ok(res);
+            }
+            return BadRequest();
+        }
+
+        [Authorize]
+        [HttpPost("AddAdminToGroup")]
+        public async Task<IActionResult> AddAdmin(ChangeGroupAdmin change)
+        {
+            var userId = new Guid(User.FindFirst("UserID").Value);
+            var res = await groupsRepository.AddAdminToGroup(change.GroupID, userId, change.UserID);
+
+            if (!res)
+                return BadRequest(res);
+
+            var group = await groupsRepository.GetGroupWithGroupID(change.GroupID);
+            var output = groupsRepository.GroupToOutputGroup(group);
+            var connections = groupsRepository.GetGroupUsersConnectionID(change.GroupID);
+            var users = await groupsRepository.GetGroupUsers(change.GroupID);
+            await usersHub.Clients.Clients(connections).SendAsync("GroupUpdated", output);
+            return Ok(users);
+        }
+
+        [Authorize]
+        [HttpPost("RemoveAdminFromGroup")]
+        public async Task<IActionResult> RemoveAdmin(ChangeGroupAdmin change)
+        {
+            var userId = new Guid(User.FindFirst("UserID").Value);
+            var res = await groupsRepository.RemoveAdminFromGroup(change.GroupID, userId, change.UserID);
+
+            if (!res)
+                return BadRequest(res);
+
+            var group = await groupsRepository.GetGroupWithGroupID(change.GroupID);
+            var output = groupsRepository.GroupToOutputGroup(group);
+            var connections = groupsRepository.GetGroupUsersConnectionID(change.GroupID);
+            var users = await groupsRepository.GetGroupUsers(change.GroupID);
+            await usersHub.Clients.Clients(connections).SendAsync("GroupUpdated", group);
+            return Ok(users);
+        }
+
+        [Authorize]
+        [HttpPost("RemoveUserFromGroup")]
+        public async Task<IActionResult> RemoveUserFromGroup(LeaveTheGroup leaveGroup)
+        {
+            var authId = new Guid(User.FindFirst("UserID").Value);
+            try
+            {
+                if (
+                    (
+                        (await groupsRepository.IsAdmin(leaveGroup.GroupID, authId)) &&
+                        !(await groupsRepository.IsCreator(leaveGroup.GroupID, leaveGroup.UserID)) &&
+                        !(await groupsRepository.IsAdmin(leaveGroup.GroupID, leaveGroup.UserID)
+                    )
+                    ||
+                    (
+                        await groupsRepository.IsCreator(leaveGroup.GroupID, authId)) &&
+                        !(await groupsRepository.IsCreator(leaveGroup.GroupID, leaveGroup.UserID))
+                    )
+                   )
+                {
+                    var res = await groupsRepository.RemoveUserFromGroup(leaveGroup.UserID, leaveGroup.GroupID);
+                    if (res)
+                    {
+                        var userConnection = await groupsRepository.GetConnectionIdWithUserId(leaveGroup.UserID);
+                        var otherConnectionsId = groupsRepository.GetGroupUsersConnectionID(leaveGroup.GroupID);
+                        var group = await groupsRepository.GetGroupWithGroupID(leaveGroup.GroupID);
+                        var users = await groupsRepository.GetGroupUsers(leaveGroup.GroupID);
+                        await usersHub.Clients.Clients(otherConnectionsId).SendAsync("UserLeavedGroup", groupsRepository.GroupToOutputGroup(group));
+                        await usersHub.Clients.Client(userConnection).SendAsync("GroupRemoved", leaveGroup.GroupID);
+                        return Ok(users);
+                    }
+                    else
+                    {
+                        return BadRequest();
+                    }
+                }
+                else
+                {
+                    return BadRequest();
+                }
+            }
+            catch (Exception)
+            {
+                return BadRequest();
+            }
         }
     }
 }

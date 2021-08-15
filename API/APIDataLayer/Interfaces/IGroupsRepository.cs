@@ -37,6 +37,19 @@ namespace APIDataLayer.Interfaces
         Task SaveChangesAsync();
 
         Task<Group> GetGroupWithGroupID(Guid id);
+
         Task<bool> UpdateGroup(UpdateGroup updateGroup, string profileImage, Guid userId);
+
+        Task<List<OutputUser>> GetGroupUsers(Guid groupId);
+
+        Task<bool> IsAdmin(Guid groupId, Guid userId);
+
+        Task<bool> IsCreator(Guid groupId, Guid userId);
+
+        Task<bool> AddAdminToGroup(Guid groupId, Guid senderId, Guid userId);
+
+        Task<bool> RemoveAdminFromGroup(Guid groupId, Guid senderId, Guid userId);
+
+        Task<bool> RemoveUserFromGroup(Guid userId, Guid groupId);
     }
 }

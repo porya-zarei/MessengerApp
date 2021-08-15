@@ -111,5 +111,16 @@ namespace API.Hubs
         //        await Clients.Group(groupId.ToString()).SendAsync("GetGroupVoiceChat", item);
         //    }
         //}
+
+        public async Task NotifyUser(Guid senderId, string receiverUserName)
+        {
+            var receiver = usersRepository.GetUserWithUserName(receiverUserName);
+            var sender = await usersRepository.GetUserWithUserID(senderId);
+            if (sender != null && receiver != null)
+            {
+                string notification = $"user {sender.FirstName} {sender.LastName} : see my messages !";
+                await Clients.Client(receiver.CurrentConnectionID).SendAsync("GetNotification", notification);
+            }
+        }
     }
 }
