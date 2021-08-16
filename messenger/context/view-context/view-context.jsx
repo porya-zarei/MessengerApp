@@ -84,7 +84,7 @@ const ViewContextProvider = ({children}) => {
         type: "",
         Id: "",
         Name: "",
-        Image: "",
+        Image: "/assets/images/png/avatar.png",
         UserAccess: false,
         MembersName: [],
         userName: "",

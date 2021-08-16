@@ -43,7 +43,7 @@ const FileSender = ({file, image, video}) => {
                     id="ImageInputInChatView"
                     className="display-none"
                     type="file"
-                    hidden="true"
+                    hidden={true}
                 />
                 <input
                     ref={file}
@@ -51,7 +51,7 @@ const FileSender = ({file, image, video}) => {
                     id="FileInputInChatView"
                     className="display-none"
                     type="file"
-                    hidden="true"
+                    hidden={true}
                 />
                 <input
                     ref={video}
@@ -59,7 +59,7 @@ const FileSender = ({file, image, video}) => {
                     id="VideoInputInChatView"
                     className="display-none"
                     type="file"
-                    hidden="true"
+                    hidden={true}
                 />
             </div>
         </div>

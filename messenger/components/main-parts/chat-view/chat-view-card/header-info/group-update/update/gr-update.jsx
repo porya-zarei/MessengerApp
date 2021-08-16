@@ -101,7 +101,7 @@ const GrUpdate = () => {
             </div>
             <div className={classes.control}>
                 <label style={{color: theme.text}}>profile : </label>
-                <input name="GroupProfile" ref={imageRef} type="file" hidden />
+                <input name="GroupProfile" ref={imageRef} type="file" hidden={true} />
                 <button
                     onClick={() => imageRef.current.click()}
                     style={{

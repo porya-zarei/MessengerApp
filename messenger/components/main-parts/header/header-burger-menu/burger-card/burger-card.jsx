@@ -67,7 +67,7 @@ const BurgerCard = () => {
                                 handleSetCardBg();
                             }}
                             type="file"
-                            hidden="true"
+                            hidden={true}
                             style={{display: "none"}}
                             ref={cardBgRef}
                         />

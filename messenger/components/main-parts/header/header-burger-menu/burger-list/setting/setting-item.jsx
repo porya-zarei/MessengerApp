@@ -133,7 +133,7 @@ const SettingItem = () => {
                                 onChange={handleSetChatBackground}
                                 ref={chatbgRef}
                                 type="file"
-                                hidden
+                                hidden={true}
                             />
                         </div>
                     </div>

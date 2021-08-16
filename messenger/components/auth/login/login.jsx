@@ -51,7 +51,7 @@ const Login = () => {
     };
 
     useEffect(() => {
-        router.prefetch("/Messanger/");
+        router.prefetch("/Messenger/");
         let timeOut = setTimeout(()=>{
             if (
                 connectionId.length > 0 &&
@@ -94,7 +94,7 @@ const Login = () => {
                 console.log("cookie set in Auto login => ", cookie);
                 document.cookie = cookie;
             }
-            router.replace("/Messanger/");
+            router.replace("/Messenger/");
         }
     };
 
@@ -137,7 +137,7 @@ const Login = () => {
                             JSON.stringify({Email: email, Password: password}),
                         );
                     }
-                    router.replace("/Messanger/");
+                    router.replace("/Messenger/");
                 }
             } catch (error) {
                 console.log("error in login =>", error);

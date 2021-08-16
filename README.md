@@ -16,7 +16,7 @@ Nextjs with Asp .net Core API + SignalR
 
 ## features
 
-- PWA ( Not Yet )
+- PWA
 - Full Responsive
 - Like Telegram
 
@@ -24,6 +24,11 @@ Nextjs with Asp .net Core API + SignalR
 **for upgrading send your helps**
 ---
 
-![Messenger-image1](./screenshots/ss1.jpg)
-![Messenger-image2](./screenshots/ss2.jpg)
-![Messenger-image3](./screenshots/ss3.jpg)
+![Messenger-image1](./messenger/public/assets/images/screenshots/screenshot1.png)
+![Messenger-image2](./messenger/public/assets/images/screenshots/screenshot2.png)
+![Messenger-image3](./messenger/public/assets/images/screenshots/screenshot3.png)
+![Messenger-image1](./messenger/public/assets/images/screenshots/screenshot4.png)
+![Messenger-image2](./messenger/public/assets/images/screenshots/screenshot5.png)
+![Messenger-image3](./messenger/public/assets/images/screenshots/screenshot6.png)
+![Messenger-image1](./messenger/public/assets/images/screenshots/screenshot7.png)
+![Messenger-image2](./messenger/public/assets/images/screenshots/screenshot8.png)

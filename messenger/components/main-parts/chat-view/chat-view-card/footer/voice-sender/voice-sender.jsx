@@ -81,7 +81,7 @@ const VoiceSender = ({voice, setVoice}) => {
                         className="spinner-border fs-larger"></i>
                 )}
             </button>
-            <audio hidden="true" src={url} autoPlay controls></audio>
+            <audio hidden={true} src={url} autoPlay controls></audio>
         </>
     );
 };

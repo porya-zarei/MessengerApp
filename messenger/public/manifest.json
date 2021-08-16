@@ -1,0 +1,156 @@
+{
+    "short_name": "PZE",
+    "name": "Porya Zarei Messenger App",
+    "start_url": "/index.html",
+    "scope": "/",
+    "description": "Porya Zarei's Application. Hello , Welcome to my Messenger App.Register and start Chatting with your friends",
+    "categories": ["technology", "messenger", "programming", "Porya Zarei"],
+    "icons": [
+        {
+            "src": "./assets/icons/MessengerApp.svg",
+            "type": "vector/svg",
+            "sizes": "*x*"
+        },
+        {
+            "src": "./assets/icons/MessengerApp48.png",
+            "sizes": "48x48",
+            "type": "image/png"
+        },
+        {
+            "src": "./assets/icons/MessengerApp72.png",
+            "sizes": "72x72",
+            "type": "image/png"
+        },
+        {
+            "src": "./assets/icons/MessengerApp96.png",
+            "sizes": "96x96",
+            "type": "image/png"
+        },
+        {
+            "src": "./assets/icons/MessengerApp128.png",
+            "type": "image/png",
+            "sizes": "128x128"
+        },
+        {
+            "src": "./assets/icons/MessengerApp256.png",
+            "type": "image/png",
+            "sizes": "256x256"
+        },
+        {
+            "src": "./assets/icons/MessengerApp512.png",
+            "type": "image/png",
+            "sizes": "512x512",
+            "purpose": "any maskable"
+        },
+        {
+            "src": "./assets/icons/MessengerApp512.png",
+            "type": "image/png",
+            "sizes": "512x512",
+            "purpose": "maskable"
+        },
+        {
+            "src": "./assets/icons/MessengerApp1024.png",
+            "type": "image/png",
+            "sizes": "1024x1024"
+        },
+        {
+            "src": "./assets/icons/MessengerApp1024.png",
+            "type": "image/png",
+            "sizes": "1024x1024",
+            "purpose": "maskable"
+        },
+        {
+            "src": "./assets/icons/chrome-MessengerApp128.png",
+            "type": "image/png",
+            "sizes": "128x128",
+            "purpose": "maskable"
+        }
+    ],
+    "display": "standalone",
+    "orientation": "any",
+    "theme_color": "#000000",
+    "background_color": "#000000",
+    "dir": "ltr",
+    "lang": "en-us",
+    "shortcuts": [
+        {
+            "name": "Register",
+            "url": "/Auth/Register",
+            "description": "Register Page",
+            "icons": [
+                {"src": "./assets/icons/MessengerApp96.png", "sizes": "96x96"}
+            ]
+        },
+        {
+            "name": "Login",
+            "url": "/Auth/Login",
+            "description": "Login Page",
+            "icons": [
+                {"src": "./assets/icons/MessengerApp96.png", "sizes": "96x96"}
+            ]
+        },
+        {
+            "name": "Home",
+            "url": "/",
+            "description": "Home Page",
+            "icons": [
+                {"src": "./assets/icons/MessengerApp96.png", "sizes": "96x96"}
+            ]
+        },
+        {
+            "name": "Messenger",
+            "url": "/Messenger",
+            "description": "Main Page",
+            "icons": [
+                {"src": "./assets/icons/MessengerApp96.png", "sizes": "96x96"}
+            ]
+        }
+    ],
+    "screenshots": [
+        {
+            "src": "/assets/icons/MessengerApp1024.png",
+            "type": "image/png",
+            "sizes": "1024x1024"
+        },
+        {
+            "src": "/assets/images/screenshots/screenshot1.png",
+            "type": "image/png",
+            "sizes": "1280x652"
+        },
+        {
+            "src": "/assets/images/screenshots/screenshot2.png",
+            "type": "image/png",
+            "sizes": "1280x651"
+        },
+        {
+            "src": "/assets/images/screenshots/screenshot3.png",
+            "type": "image/png",
+            "sizes": "1280x649"
+        },
+        {
+            "src": "/assets/images/screenshots/screenshot4.png",
+            "type": "image/png",
+            "sizes": "1280x651"
+        },
+        {
+            "src": "/assets/images/screenshots/screenshot5.png",
+            "type": "image/png",
+            "sizes": "1280x650"
+        },
+        {
+            "src": "/assets/images/screenshots/screenshot6.png",
+            "type": "image/png",
+            "sizes": "1280x646"
+        },
+        {
+            "src": "/assets/images/screenshots/screenshot7.png",
+            "type": "image/png",
+            "sizes": "540x1000"
+        },
+        {
+            "src": "/assets/images/screenshots/screenshot8.png",
+            "type": "image/png",
+            "sizes": "540x1000"
+        }
+    ]
+}

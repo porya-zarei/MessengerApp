@@ -128,9 +128,10 @@ const SearchInput = () => {
                     style={{backgroundColor: theme.primaryLight}}>
                     {filteredLists.Channels.map((ch) => (
                         <li
+                        key={ch.ChannelID}
                             title="click for join channel"
                             className={`${classes.searchListItem}`}>
-                            <button
+                            <div
                                 style={{
                                     backgroundColor: theme.primary,
                                     color: theme.textGray,
@@ -149,14 +150,15 @@ const SearchInput = () => {
                                         "Join"
                                     )}
                                 </button>
-                            </button>
+                            </div>
                         </li>
                     ))}
                     {filteredLists.Groups.map((gr) => (
                         <li
+                        key={gr.GroupID}
                             title="click for join group"
                             className={`${classes.searchListItem}`}>
-                            <button
+                            <div
                                 style={{
                                     backgroundColor: theme.primary,
                                     color: theme.textGray,
@@ -175,7 +177,7 @@ const SearchInput = () => {
                                         "Join"
                                     )}
                                 </button>
-                            </button>
+                            </div>
                         </li>
                     ))}
                 </ul>

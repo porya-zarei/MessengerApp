@@ -56,64 +56,56 @@ const ChatListItems = () => {
 
     let channelsList;
     if (channels.length !== 0) {
-        channelsList = useMemo(
-            () =>
-                channels.map((ch) => {
-                    return {
-                        Name: ch?.Name,
-                        LastChatText:
-                            ch?.Chats.length !== 0
-                                ? ch?.Chats[ch?.Chats.length - 1]?.Text
-                                : "",
-                        lastChatSendingTime:
-                            ch?.Chats.length !== 0
-                                ? ch?.Chats[ch?.Chats?.length - 1]?.SendingTime
-                                : "",
-                        Id: ch?.ChannelID,
-                        Image: ch?.ChannelProfileImage
-                            ? `https://localhost:44389/files/images/channels/${ch.ChannelProfileImage}`
-                            : "/assets/images/png/avatar.png",
-                        UserAccess: ch?.AdminsUserName?.includes(user.UserName),
-                        chatsCount: ch?.Chats?.length,
-                        MembersName: ch?.AdminsUserName,
-                        userName: ch?.ChannelUserName,
-                        description: ch?.ChannelDescription,
-                    };
-                }),
-            [channels],
-        );
+        channelsList = channels.map((ch) => {
+            return {
+                Name: ch?.Name,
+                LastChatText:
+                    ch?.Chats.length !== 0
+                        ? ch?.Chats[ch?.Chats.length - 1]?.Text
+                        : "",
+                lastChatSendingTime:
+                    ch?.Chats.length !== 0
+                        ? ch?.Chats[ch?.Chats?.length - 1]?.SendingTime
+                        : "",
+                Id: ch?.ChannelID,
+                Image: ch?.ChannelProfileImage
+                    ? `https://localhost:44389/files/images/channels/${ch.ChannelProfileImage}`
+                    : "/assets/images/png/avatar.png",
+                UserAccess: ch?.AdminsUserName?.includes(user.UserName),
+                chatsCount: ch?.Chats?.length,
+                MembersName: ch?.AdminsUserName,
+                userName: ch?.ChannelUserName,
+                description: ch?.ChannelDescription,
+            };
+        });
     }
 
     let groupsList;
     if (groups.length !== 0) {
-        groupsList = useMemo(
-            () =>
-                groups.map((gr) => {
-                    return {
-                        Name: gr?.Name,
-                        LastChatText:
-                            gr.Chats.length !== 0
-                                ? gr?.Chats[gr?.Chats?.length - 1]?.Text
-                                : "",
-                        lastChatSendingTime:
-                            gr?.Chats.length !== 0
-                                ? gr?.Chats[gr?.Chats?.length - 1]?.SendingTime
-                                : "",
-                        Id: gr?.GroupID,
-                        Image: gr?.GroupProfileImage
-                            ? `https://localhost:44389/files/images/groups/${gr.GroupProfileImage}`
-                            : "/assets/images/png/avatar.png",
-                        UserAccess: gr?.GroupMembersName?.includes(
-                            user?.FirstName + " " + user?.LastName,
-                        ),
-                        chatsCount: gr?.Chats.length,
-                        MembersName: gr?.GroupMembersName,
-                        userName: gr?.GroupUserName,
-                        description: gr?.GroupDescription,
-                    };
-                }),
-            [groups],
-        );
+        groupsList = groups.map((gr) => {
+            return {
+                Name: gr?.Name,
+                LastChatText:
+                    gr.Chats.length !== 0
+                        ? gr?.Chats[gr?.Chats?.length - 1]?.Text
+                        : "",
+                lastChatSendingTime:
+                    gr?.Chats.length !== 0
+                        ? gr?.Chats[gr?.Chats?.length - 1]?.SendingTime
+                        : "",
+                Id: gr?.GroupID,
+                Image: gr?.GroupProfileImage
+                    ? `https://localhost:44389/files/images/groups/${gr.GroupProfileImage}`
+                    : "/assets/images/png/avatar.png",
+                UserAccess: gr?.GroupMembersName?.includes(
+                    user?.FirstName + " " + user?.LastName,
+                ),
+                chatsCount: gr?.Chats.length,
+                MembersName: gr?.GroupMembersName,
+                userName: gr?.GroupUserName,
+                description: gr?.GroupDescription,
+            };
+        });
     }
 
     let roomsList;
@@ -143,7 +135,7 @@ const ChatListItems = () => {
     return (
         <ul className={`${classes.ulDecorationNone} w-100 p-0 m-0`}>
             {roomsList?.map((item) => (
-                <li className={`w-100`} key={item.name}>
+                <li className={`w-100`} key={item.Name}>
                     <button
                         onClick={() => handleRoomClick(item)}
                         className="btn w-100 h-100 p-0 m-0">

@@ -107,7 +107,7 @@ const ChUpdate = () => {
                     name="ChannelProfile"
                     ref={imageRef}
                     type="file"
-                    hidden
+                    hidden={true}
                 />
                 <button
                     onClick={() => imageRef.current.click()}

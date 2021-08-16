@@ -223,7 +223,7 @@ const EditUser = () => {
                         ref={imageRef}
                         type="file"
                         className={`${classes.image}`}
-                        hidden="true"
+                        hidden={true}
                     />
                     <button
                         onClick={() => {

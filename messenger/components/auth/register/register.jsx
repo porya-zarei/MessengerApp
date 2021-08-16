@@ -77,7 +77,7 @@ const Register = () => {
     };
 
     useEffect(() => {
-        router.prefetch("/Messanger/");
+        router.prefetch("/Messenger/");
     }, []);
 
     const handlingSubmit = async (e) => {
@@ -109,7 +109,7 @@ const Register = () => {
                         console.log("cookie set in login => ", cookie);
                         document.cookie = cookie;
                     }
-                    router.replace("/Messanger/");
+                    router.replace("/Messenger/");
                 }
             } catch (error) {
                 console.log("error in register =>", error);
