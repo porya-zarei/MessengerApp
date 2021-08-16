@@ -1,27 +1,27 @@
-# Nextjs Messenger
+# Messenger App
 
-Full Stack Messenger
-Nextjs with Asp .net Core API + SignalR
+Full Stack Application
+Nextjs+ Asp .net Core Web API + SignalR
 
 ## tools
 
-- Nextjs (Reactjs Framework)
-- Context
-- bootstrap + css( scss ) module
-- Asp .net core API
-- SignalR (RealTime Connection)
-- jwt token
-- Postgresql Database + Redis ( BackPlane )
-- EfCore ORM
+-   Nextjs (Reactjs Framework)
+-   Context
+-   bootstrap + css( scss ) module
+-   Asp .net core Web API
+-   SignalR (RealTime Connection)
+-   jwt authorize
+-   Postgresql Database + Redis ( BackPlane )
+-   Ef Core ORM
 
 ## features
 
-- PWA
-- Full Responsive
-- Like Telegram
+-   PWA
+-   Full Responsive
 
-**use it and rate it**
-**for upgrading send your helps**
+**for upgrading send your suggestions**
+
+---
 ---
 
 ![Messenger-image1](./messenger/public/assets/images/screenshots/screenshot1.png)
