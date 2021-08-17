@@ -3,6 +3,7 @@ import classes from "./searchinput.module.scss";
 import {fetcher} from "../../../../hooks/fetcher";
 import {UserContext} from "../../../../context/user-context/user-context";
 import {ViewContext} from "../../../../context/view-context/view-context";
+import { api_url } from "../../../../configs/configs";
 const SearchInput = () => {
     const [filteredLists, setFilteredLists] = useState({
         Groups: [],
@@ -19,7 +20,7 @@ const SearchInput = () => {
     useEffect(() => {
         // fetcher("GET", "Main/GetAllData", null, token)
         if (token.length > 0) {
-            fetch("https://localhost:44389/api/Main/GetAllData", {
+            fetch(`${api_url}/Main/GetAllData`, {
                 method: "GET",
                 headers: {Authorization: `Bearer ${token}`},
             })

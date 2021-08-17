@@ -1,8 +1,9 @@
 import {useEffect, useRef, useState} from "react";
+import { files_url } from "../../../../../../../configs/configs";
 import classes from "./voicechat.module.scss";
 
 const VoiceChat = ({voiceName, voiceSize}) => {
-    const source = `https://localhost:44389/files/voices/${voiceName}`;
+    const source = `${files_url}/voices/${voiceName}`;
     const audioRef = useRef();
     const [play, setPlay] = useState(false);
     const [volume, setVolume] = useState(50);

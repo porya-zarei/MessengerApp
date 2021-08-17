@@ -1,4 +1,5 @@
 import {useContext, useEffect, useState} from "react";
+import { files_url } from "../../../../../../configs/configs";
 import {ViewContext} from "../../../../../../context/view-context/view-context";
 import classes from "./medias.module.scss";
 
@@ -92,7 +93,7 @@ const Medias = () => {
                     mediaImages.map((image) => (
                         <img
                             className={classes.mediaImage}
-                            src={`https://localhost:44389/files/images/${image}`}
+                            src={`${files_url}/images/${image}`}
                         />
                     ))}
                 {currentMedia === "images" &&
@@ -100,14 +101,14 @@ const Medias = () => {
                         <video
                             controls
                             className={classes.mediaImage}
-                            src={`https://localhost:44389/files/videos/${video.name}`}></video>
+                            src={`${files_url}/videos/${video.name}`}></video>
                     ))}
                 {currentMedia === "voices" &&
                     mediaVoices.map((voice) => (
                         <div className={classes.mediaVoice}>
                             <a
                                 target="_blank"
-                                href={`https://localhost:44389/files/voices/${voice.name}}`}>
+                                href={`${files_url}/voices/${voice.name}}`}>
                                 name : {voice.name}
                             </a>
                             <div>size : {voice.size}</div>
@@ -118,7 +119,7 @@ const Medias = () => {
                         <div className={classes.mediaVoice}>
                             <a
                                 target="_blank"
-                                href={`https://localhost:44389/files/files/${file.name}}`}>
+                                href={`${files_url}/main/${file.name}}`}>
                                 name : {file.name}
                             </a>
                             <div>size : {file.size}</div>

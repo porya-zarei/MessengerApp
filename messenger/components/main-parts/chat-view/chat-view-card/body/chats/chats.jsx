@@ -54,7 +54,7 @@ const Chats = ({type = "", chats, userId}) => {
             <>
                 {chats.map((chat) => (
                     <Chat
-                        me={false}
+                        me={chat.SenderID === userId ? true : false}
                         content={chat?.Text}
                         fileName={chat?.File}
                         fileSize={chat?.FileSize}
@@ -65,7 +65,7 @@ const Chats = ({type = "", chats, userId}) => {
                         videoName={chat?.Video}
                         videoSize={chat?.VideoSize}
                         key={chat.ChatID}
-                        type={"Channel"}
+                        type={"channel"}
                         chatId={chat.ChatID}
                         id={chat.ChannelID}
                         time={chat.SendingTime}

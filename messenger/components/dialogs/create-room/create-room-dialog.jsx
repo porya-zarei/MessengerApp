@@ -6,7 +6,7 @@ import classes from "./crd.module.scss";
 const CreateRoomDialog = () => {
     const {showCreateRoom, setShowCreateRoom} = useContext(ViewContext);
     const {userId, token} = useContext(UserContext);
-    const [receiverId, setReceiverId] = useState("");
+    const [receiverUserName, setReceiverUserName] = useState("");
     const [loading, setLoading] = useState(false);
     const [successfull, setSuccessfull] = useState("");
     const handleClose = () => {
@@ -17,7 +17,7 @@ const CreateRoomDialog = () => {
         e.preventDefault();
         const data = {
             SenderUserID:userId,
-            ReceiverUserID:receiverId
+            ReceiverUserName:receiverUserName
         };
         const {result, isError, resStatus} = await fetcher(
             "POST",
@@ -58,12 +58,12 @@ const CreateRoomDialog = () => {
                         </div>
                         <div className="form-control border-0 p-1 bg-transparent w-100 my-2">
                             <input
-                                name="receiverId"
-                                placeholder="your Friend id"
+                                name="receiverUserName"
+                                placeholder="your Friend Username"
                                 type="text"
-                                value={receiverId}
+                                value={receiverUserName}
                                 onChange={(e) => {
-                                    setReceiverId(e.target.value);
+                                    setReceiverUserName(e.target.value);
                                 }}
                                 title="unique id"
                                 className="w-100 border-0 outline-none rounded-pill p-2"

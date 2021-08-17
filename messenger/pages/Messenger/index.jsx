@@ -1,24 +1,21 @@
 import {useRouter} from "next/router";
-import {useContext, useEffect, useState} from "react";
-import ChatLists from "../../components/main-parts/chat-lists/chat-lists";
-import ChatView from "../../components/main-parts/chat-view/chat-view";
+import {useContext, useEffect} from "react";
 import {UserDataContext} from "../../context/data-context/data-context";
 import {UserContext} from "../../context/user-context/user-context";
 import Cookies from "cookies";
-import {ViewContext} from "../../context/view-context/view-context";
 import Container from "../../components/container/container";
-import HeaderLayout from "../../components/Layout/header/header-layout";
-import MainLayout from "../../components/Layout/main/main-layout";
-import Dialogs from "../../components/dialogs/dialogs";
-import ContextMenu from "../../components/context-menu/context-menu";
-import {ToastContainer} from "react-toastify";
+import {api_url} from "../../configs/configs";
+import {fetcher} from "../../hooks/fetcher";
+import {toast} from "react-toastify";
+import {getCookieValue} from "../../helpers/getCookie";
+import {decodeToken} from "../../helpers/jwt-helper";
 
 const MainPage = ({userData, isError}) => {
     const router = useRouter();
     const {roomsDispatcher, groupsDispatcher, channelsDispatcher} =
         useContext(UserDataContext);
 
-    const {isLoged} = useContext(UserContext);
+    const {userId, connectionId, setToken} = useContext(UserContext);
 
     console.log("in messenger index");
 
@@ -27,7 +24,42 @@ const MainPage = ({userData, isError}) => {
     }
 
     useEffect(() => {
-        if (!isLoged || isError) {
+        const tkn = getCookieValue("Token", document.cookie);
+        const decodedToken = decodeToken(tkn);
+        console.log(
+            "in index js useEffect => ",
+            userId,
+            connectionId,
+            tkn,
+            decodedToken,
+        );
+
+        if (tkn.length < 1) {
+            router.replace("/Auth/Login");
+        } else if (connectionId.length > 0) {
+            console.log("in index js useEffect => ", userId, connectionId, tkn);
+            const data = {
+                UserID: decodedToken?.payload?.UserID,
+                ConnectionID: connectionId,
+            };
+            fetcher("POST", "Users/SetUserConnectionId", data, tkn)
+                .then(({isError, result, error}) => {
+                    if (result !== connectionId || isError) {
+                        console.log("error in set Connection ", error, result);
+                        router.replace("/Auth/Login");
+                    } else {
+                        toast.dark("realtime connection started");
+                        setToken(tkn);
+                    }
+                })
+                .catch((err) => {
+                    console.log("error in set Connection ", err);
+                });
+        }
+    }, [connectionId]);
+
+    useEffect(() => {
+        if (isError) {
             router.replace("/Auth/Login");
         }
         if (userData !== null && userData !== undefined) {
@@ -47,39 +79,48 @@ const MainPage = ({userData, isError}) => {
 export default MainPage;
 
 export async function getServerSideProps({req, res}) {
-    let cookies = new Cookies(req, res);
-    const token = cookies.get("Token");
-    process.env["NODE_TLS_REJECT_UNAUTHORIZED"] = 0;
-    console.log(`token in serverside => `, token);
+    try {
+        let cookies = new Cookies(req, res);
+        const token = cookies.get("Token");
+        process.env["NODE_TLS_REJECT_UNAUTHORIZED"] = 0;
+        console.log(`token in serverside => `, token);
 
-    if (token === null) {
-        return {
-            props: {isError: true},
-        };
-    }
+        if (token === null) {
+            return {
+                props: {isError: true},
+            };
+        }
 
-    const resp = await fetch(
-        "https://localhost:44389/api/Main/GetUserInitialData",
-        {
+        const resp = await fetch(`${api_url}/Main/GetUserInitialData`, {
             headers: {
                 Authorization: `Bearer ${token}`,
                 "Content-Type": "application/json",
             },
             method: "GET",
-        },
-    );
+        });
 
-    const result = await resp.json();
+        if (!resp.json) {
+            return {
+                props: {isError: true},
+            };
+        }
 
-    console.log("in Messanger => ", result);
-    if (result === undefined || result === null) {
+        const result = await resp.json();
+
+        console.log("in Messanger => ", result);
+        if (result === undefined || result === null) {
+            return {
+                props: {isError: true},
+            };
+        }
+        return {
+            props: {
+                userData: result,
+            },
+        };
+    } catch (error) {
         return {
             props: {isError: true},
         };
     }
-    return {
-        props: {
-            userData: result,
-        },
-    };
 }

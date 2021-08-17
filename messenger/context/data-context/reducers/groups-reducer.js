@@ -32,8 +32,10 @@ export const groupsReducer = (state = [], action) => {
                     (g) => g.GroupID === action.payload.Chat.GroupID,
                 ),
             };
-            if (
-                group.Chats[group.Chats?.length - 1].ChatID !==
+            if (group.Chats?.length == 0) {
+                group.Chats.push(action.payload.Chat);
+            } else if (
+                group.Chats[group.Chats?.length - 1]?.ChatID !==
                 action.payload.Chat?.ChatID
             ) {
                 group.Chats.push(action.payload.Chat);

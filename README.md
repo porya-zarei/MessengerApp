@@ -1,6 +1,8 @@
+![Messenger-icon](./messenger/public/assets/icons/MessengerApp96.png)
+
 # Messenger App
 
-Full Stack Application
+Full Stack Application<br/>
 Nextjs+ Asp .net Core Web API + SignalR
 
 ## tools

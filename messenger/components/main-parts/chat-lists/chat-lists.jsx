@@ -11,7 +11,7 @@ const ChatLists = () => {
                 height: "100%",
                 overflowY: "scroll",
                 zIndex: "0",
-                padding: "50px 0 0 0",
+                padding: "70px 0 0 0",
                 backgroundColor: theme.dark,
             }}>
             <ChatListItems />

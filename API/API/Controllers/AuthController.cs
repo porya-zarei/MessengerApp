@@ -55,7 +55,7 @@ namespace API.Controllers
                 };
                 Response.Cookies.Append("Token", token, cookieConfig);
 
-                await usersRepository.SetConnectionId(registeredUser.UserID, registerUser.ConnectionID);
+                //await usersRepository.SetConnectionId(registeredUser.UserID, registerUser.ConnectionID);
 
                 await usersHub.Clients.Client(registerUser.ConnectionID).SendAsync("GetMainUserData", registeredUser);
 
@@ -89,7 +89,7 @@ namespace API.Controllers
             };
             Response.Cookies.Append("Token", token, cookieConfig);
 
-            await usersRepository.SetConnectionId(loginedUser.UserID, loginUser.ConnectionID);
+            //await usersRepository.SetConnectionId(loginedUser.UserID, loginUser.ConnectionID);
 
             await usersHub.Clients.Client(loginUser.ConnectionID).SendAsync("GetMainUserData", loginedUser);
 

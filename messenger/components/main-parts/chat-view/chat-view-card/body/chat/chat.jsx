@@ -38,9 +38,7 @@ const Chat = ({
     if (!me) {
         style.backgroundColor = theme.bubble2;
     }
-    if (fileName) {
-        console.log("file name => ", fileName, fileSize);
-    }
+
     let orgText = content;
     let chatDetail = {
         chatId,

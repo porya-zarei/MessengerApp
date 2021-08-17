@@ -1,13 +1,14 @@
 import {useEffect, useState} from "react";
+import { files_url } from "../../../../../../../configs/configs";
 
 const ImageChat = ({imageName}) => {
     const [source, setSource] = useState("");
     const [show, setShow] = useState(false);
     const handleShowImage = () => {
-        setSource(`https://localhost:44389/files/images/${imageName}`);
+        setSource(`${files_url}/images/${imageName}`);
         localStorage.setItem(
             `${imageName}`,
-            `https://localhost:44389/files/images/${imageName}`,
+            `${files_url}/images/${imageName}`,
         );
         setShow(true);
     };

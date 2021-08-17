@@ -1,7 +1,7 @@
-import Image from "next/image";
 import {useContext, useEffect, useRef, useState} from "react";
 import {UserContext} from "../../../../../context/user-context/user-context";
 import {ViewContext} from "../../../../../context/view-context/view-context";
+import {files_url} from '../../../../../configs/configs'
 import classes from "./burgercard.module.scss";
 
 const BurgerCard = () => {
@@ -48,7 +48,7 @@ const BurgerCard = () => {
                         <img
                             src={
                                 user?.ProfileImage?.length > 0
-                                    ? `https://localhost:44389/files/images/profiles/${user.ProfileImage}`
+                                    ? `${files_url}/images/profiles/${user.ProfileImage}`
                                     : "/assets/images/png/avatar.png"
                             }
                             height="66px"

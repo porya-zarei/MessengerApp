@@ -10,13 +10,6 @@ namespace API.Utils
 {
     public class Uploader
     {
-        private IWebHostEnvironment webHostEnvironment;
-
-        //public Uploader(IWebHostEnvironment _webHostEnvironment)
-        //{
-        //    webHostEnvironment = _webHostEnvironment;
-        //}
-
         public async Task<string> UploadImage(IFormFile image, string webRootPath)
         {
             try

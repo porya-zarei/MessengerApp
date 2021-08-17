@@ -18,15 +18,19 @@ const EditUser = () => {
     const [userNameConfirmed, setUserNameConfirmed] = useState(false);
 
     const testUserName = useCallback(async () => {
-        const {result} = await fetcher(
-            "GET",
-            "Main/TestUserName?userName=" + userName,
-            null,
-        );
-        if (result !== undefined && result !== null && result) {
-            setUserNameConfirmed(true);
-        } else {
+        if (userName.length<5) {
             setUserNameConfirmed(false);
+        }else{
+            const {result} = await fetcher(
+                "GET",
+                "Main/TestUserName?userName=" + userName,
+                null,
+            );
+            if (result !== undefined && result !== null && result) {
+                setUserNameConfirmed(true);
+            } else {
+                setUserNameConfirmed(false);
+            }
         }
     }, [userName]);
 
@@ -54,12 +58,14 @@ const EditUser = () => {
                     : imageRef.current.files[0],
         };
         console.log("detail befor update user => ", token, data);
+
         var form_data = new FormData();
         for (var key in data) {
             if (data[key] !== null) {
                 form_data.append(key, data[key]);
             }
         }
+        
         const {result, isError, error} = await fetcher(
             "POST",
             "Users/UpdateUser",

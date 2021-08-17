@@ -23,8 +23,10 @@ export const roomsReducer = (state = {}, action) => {
             let room = {
                 ...rooms.find((r) => r.RoomID === action.payload.Chat.RoomID),
             };
-            if (
-                room.Chats[room.Chats?.length - 1].ChatID !==
+            if (room.Chats.length == 0) {
+                room.Chats.push(action.payload.Chat);
+            } else if (
+                room.Chats[room.Chats?.length - 1]?.ChatID !==
                 action.payload.Chat?.ChatID
             ) {
                 room.Chats.push(action.payload.Chat);

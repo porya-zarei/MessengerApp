@@ -5,6 +5,7 @@ import {UserContext} from "../../../../context/user-context/user-context";
 import ChatListItem from "../chat-list-item/chat-list-item";
 
 import classes from "./chatlistitems.module.scss";
+import { files_url } from "../../../../configs/configs";
 const ChatListItems = () => {
     const {setIsInChat, setChatsToShow, theme} = useContext(ViewContext);
     const {rooms, groups, channels} = useContext(UserDataContext);
@@ -69,7 +70,7 @@ const ChatListItems = () => {
                         : "",
                 Id: ch?.ChannelID,
                 Image: ch?.ChannelProfileImage
-                    ? `https://localhost:44389/files/images/channels/${ch.ChannelProfileImage}`
+                    ? `${files_url}/images/channels/${ch.ChannelProfileImage}`
                     : "/assets/images/png/avatar.png",
                 UserAccess: ch?.AdminsUserName?.includes(user.UserName),
                 chatsCount: ch?.Chats?.length,
@@ -95,7 +96,7 @@ const ChatListItems = () => {
                         : "",
                 Id: gr?.GroupID,
                 Image: gr?.GroupProfileImage
-                    ? `https://localhost:44389/files/images/groups/${gr.GroupProfileImage}`
+                    ? `${files_url}/images/groups/${gr.GroupProfileImage}`
                     : "/assets/images/png/avatar.png",
                 UserAccess: gr?.GroupMembersName?.includes(
                     user?.FirstName + " " + user?.LastName,
@@ -123,7 +124,7 @@ const ChatListItems = () => {
                         : "",
                 Id: ro?.RoomID,
                 Image: ro?.OtherUserImage
-                    ? `https://localhost:44389/files/images/profiles/${ro.OtherUserImage}`
+                    ? `${files_url}/images/profiles/${ro.OtherUserImage}`
                     : "/assets/images/png/avatar.png",
                 chatsCount: ro?.Chats?.length,
                 MembersName: [ro?.SenderName, ro?.ReceiverName],

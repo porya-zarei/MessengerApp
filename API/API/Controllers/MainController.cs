@@ -55,6 +55,8 @@ namespace API.Controllers
         [HttpGet("TestUserName")]
         public bool TestUserName(string userName)
         {
+            if (userName.Length < 5)
+                return false;
             return usersRepository.IsUserNameUnique(userName);
         }
     }

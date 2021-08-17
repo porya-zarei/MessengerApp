@@ -31,8 +31,10 @@ export const channelsReducer = (state = {}, action) => {
                     (c) => c.ChannelID === action.payload.Chat.ChannelID,
                 ),
             };
-            if (
-                channel.Chats[channel.Chats?.length - 1].ChatID !==
+            if (channel.Chats?.length == 0) {
+                channel.Chats.push(action.payload.Chat);
+            } else if (
+                channel.Chats[channel.Chats?.length - 1]?.ChatID !==
                 action.payload.Chat?.ChatID
             ) {
                 channel.Chats.push(action.payload.Chat);

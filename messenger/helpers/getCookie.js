@@ -1,7 +1,7 @@
 export const getcookie = (req, key) => {
     try {
-        let stringCookie = req.headers.cookie||req.cookies;
-        console.log("string cookie => ",stringCookie);
+        let stringCookie = req.headers.cookie || req.cookies;
+        console.log("string cookie => ", stringCookie);
         if (stringCookie?.length === 0) {
             return null;
         }
@@ -21,4 +21,19 @@ export const getcookie = (req, key) => {
     } catch (error) {
         return null;
     }
+};
+
+// function getCookieValue(name) {
+//     const value = `; ${document.cookie}`;
+//     const parts = value.split(`; ${name}=`);
+//     if (parts.length === 2) return parts.pop().split(";").shift();
+// }
+
+export const getCookieValue = (name, cookies) => {
+    let cookieValue = "";
+    cookieValue = cookies
+        .split("; ")
+        .find((row) => row.startsWith(`${name}=`))
+        .split("=")[1];
+    return cookieValue;
 };

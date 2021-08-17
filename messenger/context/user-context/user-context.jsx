@@ -4,6 +4,7 @@ import {UserDataContext} from "../data-context/data-context";
 import {fetcher} from "../../hooks/fetcher";
 import {ViewContext} from "../view-context/view-context";
 import {toast} from "react-toastify";
+import { hubs_url } from "../../configs/configs";
 export const UserContext = createContext({
     user: {},
     setUser: () => {},
@@ -24,7 +25,6 @@ export const UserContext = createContext({
 const UserContextProvider = ({children}) => {
     const {channelsDispatcher, groupsDispatcher, roomsDispatcher} =
         useContext(UserDataContext);
-    const {chatsToShow, setChatsToShow} = useContext(ViewContext);
 
     const [user, setUser] = useState({});
     const [token, setToken] = useState("");
@@ -38,7 +38,7 @@ const UserContextProvider = ({children}) => {
         const userConnection = new SignalR.HubConnectionBuilder()
             .configureLogging(SignalR.LogLevel.Trace)
             .withAutomaticReconnect()
-            .withUrl("https://localhost:44389/hubs/users")
+            .withUrl(hubs_url.users)
             .build();
 
         userConnection.on("GetMainUserData", (data) => {
@@ -249,7 +249,6 @@ const UserContextProvider = ({children}) => {
         });
 
         userConnection.on("RoomChatDeleted", (data) => {
-            console.log("data in delete room chat => ", data);
             roomsDispatcher({
                 type: "deleteRoomChat",
                 payload: {
@@ -257,11 +256,9 @@ const UserContextProvider = ({children}) => {
                     RoomID: data.RoomID,
                 },
             });
-            console.log("in after delete chat => ,", data, chatsToShow);
         });
 
         userConnection.on("ChannelUpdated", (channel) => {
-            console.log("in channelUpdated => ", channel);
             channelsDispatcher({
                 type: "updateChannel",
                 payload: {Channel: channel},
@@ -269,7 +266,6 @@ const UserContextProvider = ({children}) => {
         });
 
         userConnection.on("GroupUpdated", (group) => {
-            console.log("in groupUpdated => ", group);
             groupsDispatcher({
                 type: "updateGroup",
                 payload: {Group: group},

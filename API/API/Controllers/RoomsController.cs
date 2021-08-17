@@ -36,17 +36,27 @@ namespace API.Controllers
         [HttpPost("CreateRoom")]
         public async Task<IActionResult> UserCreateRoom(CreateRoom createRoom)
         {
-            var ro = createRoom.CreateRoomToRoom();
+            var receiver = roomsRepository.GetUserWithUserName(createRoom.ReceiverUserName);
+            var ro = createRoom.CreateRoomToRoom(receiver.UserID);
             var res = await roomsRepository.CreateRoom(ro);
             var userId = new Guid(User.FindFirst("UserID").Value);
             if (!res)
             {
                 return BadRequest();
             }
-            await usersHub.Clients
-                    .Clients(roomsRepository.GetRoomUsersConnectionID(ro.RoomID))
-                    .SendAsync("NewRoom", roomsRepository.RoomToOutputRoom(ro, userId));
-            return Created("createRoom", "Room Created successfully");
+
+            var connections = roomsRepository.GetRoomUsersConnectionID(ro.RoomID, ro.SenderUserID, ro.ReceiverUserID);
+            if (connections != null)
+            {
+                await usersHub.Clients
+                        .Client(connections[0])
+                        .SendAsync("NewRoom", roomsRepository.RoomToOutputRoom(ro, ro.SenderUserID));
+                await usersHub.Clients
+                        .Client(connections[1])
+                        .SendAsync("NewRoom", roomsRepository.RoomToOutputRoom(ro, ro.ReceiverUserID));
+                return Created("createRoom", "Room Created successfully");
+            }
+            return BadRequest();
         }
 
         [Authorize]
@@ -87,10 +97,13 @@ namespace API.Controllers
                 // end upload
                 await roomsChatsRepository.AddChatToRoom(roomChat);
                 var rc = roomsChatsRepository.GetOutputRoomChat(roomChat);
+
                 rc.SenderID = userID;
+
                 await usersHub.Clients
                     .Clients(roomsRepository.GetRoomUsersConnectionID(sendRoomChat.RoomID))
                     .SendAsync("NewRoomChat", rc);
+
                 return Created("Created at SendRoomChat", "created successfully");
             }
             else

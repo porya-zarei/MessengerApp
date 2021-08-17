@@ -24,17 +24,20 @@ const Register = () => {
     const [loading, setLoading] = useState(false);
 
     const testUserName = async () => {
-        const {result} = await fetcher(
-            "GET",
-            "Main/TestUserName?userName=" + userName,
-            null,
-        );
-        if (result !== undefined && result !== null && result) {
-            setUserNameError("");
-            setUserNameConfirmed("user name is unique");
+        if (userName.length<5) {
+            setUserNameError("user name is too short must be greater than 5 character");
         } else {
-            setUserNameError("user name is not unique");
-            setUserNameConfirmed("");
+            const {result} = await fetcher(
+                "GET",
+                "Main/TestUserName?userName=" + userName,
+                null,
+            );
+            if (result !== undefined && result !== null && result) {
+                setUserNameError("");
+            } else {
+                setUserNameError("user name is not unique");
+
+            }
         }
     };
 
@@ -175,11 +178,13 @@ const Register = () => {
                 <label htmlFor="UserUniqueNameRegister">UserName</label>
                 <span
                     className={`my-3 mx-1 ${
-                        userNameConfirmed.length > 0
-                            ? "text-success"
-                            : "text-danger"
+                        userNameError.length > 0
+                            ? "text-danger"
+                            : "text-success"
                     }`}>
-                    {userNameConfirmed || userNameError}
+                    {userNameError.length > 0
+                        ? userNameError
+                        : "user name confirmed"}
                 </span>
             </div>
             <div className="form-floating my-2">

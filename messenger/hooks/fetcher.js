@@ -1,4 +1,5 @@
 import {http} from "../axios/http";
+import {api_url} from "../configs/configs";
 
 export const fetcher = async (
     type = "",
@@ -7,7 +8,6 @@ export const fetcher = async (
     token = "",
     contentType = "application/json",
 ) => {
-    const base_Url = "https://localhost:44389/api";
     const options = {
         headers: {
             Authorization: `Bearer ${token}`,
@@ -19,13 +19,13 @@ export const fetcher = async (
         error,
         isError = false,
         resStatus;
-    console.log("in fetcher => ", type, `${base_Url}/${url}`, datas);
+    console.log("in fetcher => ", type, `${api_url}/${url}`, datas);
     switch (type) {
         case "GET":
             try {
-                console.log("in get => ", type, `${base_Url}/${url}`, options);
+                console.log("in get => ", type, `${api_url}/${url}`, options);
                 const {data, status} = await http.get(
-                    `${base_Url}/${url}`,
+                    `${api_url}/${url}`,
                     datas,
                     options,
                 );
@@ -39,9 +39,9 @@ export const fetcher = async (
 
         case "POST":
             try {
-                console.log("data in post => ", type, datas);
+                console.log("data in post => ", type, datas,token);
                 const {data, status} = await http.post(
-                    `${base_Url}/${url}`,
+                    `${api_url}/${url}`,
                     datas,
                     options,
                 );
@@ -58,7 +58,7 @@ export const fetcher = async (
         case "PUT":
             try {
                 const {data, status} = await http.put(
-                    `${base_Url}/${url}`,
+                    `${api_url}/${url}`,
                     datas,
                     options,
                 );
@@ -73,7 +73,7 @@ export const fetcher = async (
         case "DELET":
             try {
                 const {data, status} = await http.delete(
-                    `${base_Url}/${url}`,
+                    `${api_url}/${url}`,
                     datas,
                     options,
                 );

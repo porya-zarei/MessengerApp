@@ -1,4 +1,5 @@
 import {useContext, useState} from "react";
+import { files_url } from "../../configs/configs";
 import {ViewContext} from "../../context/view-context/view-context";
 import classes from "./contextmenu.module.scss";
 
@@ -58,7 +59,7 @@ const ContextMenu = () => {
                                         <button
                                             onClick={async () => {
                                                 await navigator.clipboard.writeText(
-                                                    `https://localhost:44389/files/videos/${contextMenu.chatData.Video}`,
+                                                    `${files_url}/videos/${contextMenu.chatData.Video}`,
                                                 );
                                                 setContextMenu({
                                                     show: false,
@@ -80,7 +81,7 @@ const ContextMenu = () => {
                                         <button
                                             onClick={async () => {
                                                 await navigator.clipboard.writeText(
-                                                    `https://localhost:44389/files/images/${contextMenu.chatData.Image}`,
+                                                    `${files_url}/images/${contextMenu.chatData.Image}`,
                                                 );
                                                 setContextMenu({
                                                     show: false,
@@ -102,7 +103,7 @@ const ContextMenu = () => {
                                         <button
                                             onClick={async () => {
                                                 await navigator.clipboard.writeText(
-                                                    `https://localhost:44389/files/main/${contextMenu.chatData.File}`,
+                                                    `${files_url}/main/${contextMenu.chatData.File}`,
                                                 );
                                                 setContextMenu({
                                                     show: false,
@@ -124,7 +125,7 @@ const ContextMenu = () => {
                                         <button
                                             onClick={async () => {
                                                 await navigator.clipboard.writeText(
-                                                    `https://localhost:44389/files/voices/${contextMenu.chatData.Voice}`,
+                                                    `${files_url}/voices/${contextMenu.chatData.Voice}`,
                                                 );
                                                 setContextMenu({
                                                     show: false,

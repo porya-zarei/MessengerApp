@@ -62,12 +62,40 @@ namespace APIDataLayer.Services
 
         public List<string> GetRoomUsersConnectionID(Guid roomID)
         {
-            var room = context.Rooms.Find(roomID);
-            return context.Users
-                .AsEnumerable()
-                .Where(u => u.UserID == room.ReceiverUserID || u.UserID == room.SenderUserID)
-                .Select(u => u.CurrentConnectionID)
-                .ToList();
+            try
+            {
+                var res = new List<string>() { };
+                var room = context.Rooms.Find(roomID);
+                var sender = context.Users.Find(room.SenderUserID);
+                var receiver = context.Users.Find(room.ReceiverUserID);
+
+                res.Add(sender.CurrentConnectionID);
+                res.Add(receiver.CurrentConnectionID);
+                return res;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+
+        public List<string> GetRoomUsersConnectionID(Guid roomID, Guid senderId, Guid receiverId)
+        {
+            try
+            {
+                var res = new List<string>() { };
+
+                var sender = context.Users.Find(senderId);
+                var receiver = context.Users.Find(receiverId);
+
+                res.Add(sender.CurrentConnectionID);
+                res.Add(receiver.CurrentConnectionID);
+                return res;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
         }
 
         public OutputRoom RoomToOutputRoom(Room room, Guid userId)
@@ -107,6 +135,12 @@ namespace APIDataLayer.Services
                 SenderID = ch.SenderID
             }).ToList();
             return result;
+        }
+
+        public User GetUserWithUserName(string userName)
+        {
+            var user = context.Users.ToList().Find(u => u.UserName == userName);
+            return user;
         }
 
         public async Task<Guid> GetRoomIDWithChatID(Guid id)

@@ -48,15 +48,17 @@ namespace API.Controllers
 
         [HttpPost("SetUserConnectionId")]
         [Authorize]
-        public async Task<IActionResult> SetUserConnectionId(ReconnectUser user)
+        public async Task<IActionResult> SetUserConnectionId(ReconnectUser reconnectUser)
         {
-            var userID = User.FindFirst("UserID").Value;
-            if (user.ConnectionID != null)
+            var userID = new Guid(User.FindFirst("UserID").Value);
+            if (reconnectUser.ConnectionID != null)
             {
-                bool res = await usersRepository.SetConnectionId(Guid.Parse(userID), user.ConnectionID);
+                bool res = await usersRepository.SetConnectionId(userID, reconnectUser.ConnectionID);
                 if (res)
                 {
-                    return Ok(user.ConnectionID);
+                    var user = await usersRepository.GetUserWithUserID(userID);
+                    await usersHub.Clients.Client(reconnectUser.ConnectionID).SendAsync("GetMainUserData", user);
+                    return Ok(reconnectUser.ConnectionID);
                 }
             }
             return BadRequest();

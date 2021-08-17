@@ -1,4 +1,5 @@
 import {useEffect, useState} from "react";
+import { files_url } from "../../../../../../../configs/configs";
 
 const VideoChat = ({videoName, videoSize}) => {
     const [source, setSource] = useState("");
@@ -13,10 +14,10 @@ const VideoChat = ({videoName, videoSize}) => {
     }
 
     const handleShowImage = () => {
-        setSource(`https://localhost:44389/files/videos/${videoName}`);
+        setSource(`${files_url}/videos/${videoName}`);
         localStorage.setItem(
             `${videoName}`,
-            `https://localhost:44389/files/videos/${videoName}`,
+            `${files_url}/videos/${videoName}`,
         );
         setShow(true);
     };

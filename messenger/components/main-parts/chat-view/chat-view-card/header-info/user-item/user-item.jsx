@@ -1,4 +1,5 @@
 import { useContext } from "react";
+import { files_url } from "../../../../../../configs/configs";
 import { ViewContext } from "../../../../../../context/view-context/view-context";
 import {handleAddAdmin, handleRemoveAdmin, handleRemoveUser} from "./handles";
 import classes from "./useritem.module.scss";
@@ -33,7 +34,7 @@ const UserItem = ({user, type, id, token, setUsers}) => {
                 <img
                     src={
                         user.ProfileImage && user.ProfileImage.length > 0
-                            ? `https://localhost:44389/files/images/profiles/${user.ProfileImage}`
+                            ? `${files_url}/images/profiles/${user.ProfileImage}`
                             : "/assets/images/png/avatar.png"
                     }
                 />

@@ -16,31 +16,28 @@ const ChatViewCardFooter = () => {
     const video = useRef();
     const [voice, setVoice] = useState();
     const handleSendChat = async () => {
-        const {isError} = await sendRequest(
-            {...chatsToShow},
-            token,
-            text,
-            userId,
-            file.current.files[0],
-            image.current.files[0],
-            video.current.files[0],
-            voice,
-        );
-        // console.log(
-        //     "result in card footer => ",
-        //     result,
-        //     isError,
-        //     resStatus,
-        //     error,
-        //     file,
-        //     image,
-        //     video,
-        // );
-        if (!isError) {
-            file.current.value = null;
-            image.current.value = null;
-            video.current.value = null;
-            setText("");
+        if (
+            (text.length > 0 || file.current.files[0] !== null,
+            image.current.files[0] !== null,
+            video.current.files[0] !== null,
+            voice !== null)
+        ) {
+            const {isError} = await sendRequest(
+                {...chatsToShow},
+                token,
+                text,
+                userId,
+                file.current.files[0],
+                image.current.files[0],
+                video.current.files[0],
+                voice,
+            );
+            if (!isError) {
+                file.current.value = null;
+                image.current.value = null;
+                video.current.value = null;
+                setText("");
+            }
         }
     };
     useEffect(() => {
