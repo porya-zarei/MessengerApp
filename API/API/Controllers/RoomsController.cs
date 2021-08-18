@@ -39,7 +39,7 @@ namespace API.Controllers
             var receiver = roomsRepository.GetUserWithUserName(createRoom.ReceiverUserName);
             var ro = createRoom.CreateRoomToRoom(receiver.UserID);
             var res = await roomsRepository.CreateRoom(ro);
-            var userId = new Guid(User.FindFirst("UserID").Value);
+            //var userId = new Guid(User.FindFirst("UserID").Value);
             if (!res)
             {
                 return BadRequest();

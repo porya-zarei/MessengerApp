@@ -1,13 +1,15 @@
 import {useContext, useEffect, useRef, useState} from "react";
 import {UserContext} from "../../../../../context/user-context/user-context";
 import {ViewContext} from "../../../../../context/view-context/view-context";
-import {files_url} from '../../../../../configs/configs'
+import {files_url} from "../../../../../configs/configs";
 import classes from "./burgercard.module.scss";
+import CheckUserConnection from "./check-user-connection/check-user-connection";
+import CardBgHandler from "./card-bg-handler/card-bg-handler";
 
 const BurgerCard = () => {
     const {user} = useContext(UserContext);
     const {theme} = useContext(ViewContext);
-    const cardBgRef = useRef();
+
     const [source, setSource] = useState(
         "url(/assets/images/jpg/avatar-bg.jpg)",
     );
@@ -20,22 +22,10 @@ const BurgerCard = () => {
             reader.onerror = (error) => reject(error);
         });
 
-    // useEffect(() => {
-    //     // if (localStorage.getItem("cardBgR")) {
-    //     //     console.log("base64 cardbg => ", localStorage.getItem("cardBg"));
-    //     //     setSource(localStorage.getItem("cardBg"));
-    //     // }
-    // }, []);
-    const handleSetCardBg = () => {
-        // toBase64(cardBgRef.current.files[0]).then((r) => {
-        //     localStorage.setItem("cardBg", r);
-        //     console.log("b64 => ", r);
-        //     setSource(r);
-        // });
-        let blob = window.URL.createObjectURL(cardBgRef.current.files[0]);
-        console.log("blob => ", blob);
-        setSource(`url(${blob})`);
+    const setCardBgSource = (src) => {
+        setSource(src);
     };
+
     return (
         <div className="p-0 m-0">
             <div
@@ -56,22 +46,11 @@ const BurgerCard = () => {
                             className="h-100 w-100 img-circle"
                         />
                     </div>
-                    <div className={`${classes.bgSetter}`}>
-                        <button
-                            onClick={() => cardBgRef.current.click()}
-                            className="btn  bg-transparent hw-40px">
-                            <i className="bi bi-image-fill text-white-50"></i>
-                        </button>
-                        <input
-                            onChange={() => {
-                                handleSetCardBg();
-                            }}
-                            type="file"
-                            hidden={true}
-                            style={{display: "none"}}
-                            ref={cardBgRef}
-                        />
-                    </div>
+                    <CardBgHandler
+                        className={classes.bgSetter}
+                        setSource={setCardBgSource}
+                    />
+                    <CheckUserConnection />
                 </div>
                 <div className={`${classes.burgerCardBody} col-12 p-0 m-0`}>
                     <div

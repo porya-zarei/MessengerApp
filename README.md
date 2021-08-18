@@ -9,10 +9,10 @@ Nextjs+ Asp .net Core Web API + SignalR
 
 -   Nextjs (Reactjs Framework)
 -   Context
--   bootstrap + css( scss ) module
+-   scss module + bootstrap
 -   Asp .net core Web API
 -   SignalR (RealTime Connection)
--   jwt authorize
+-   jwt
 -   Postgresql Database + Redis ( BackPlane )
 -   Ef Core ORM
 

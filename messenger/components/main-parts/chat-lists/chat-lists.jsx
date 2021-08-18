@@ -10,6 +10,7 @@ const ChatLists = () => {
             style={{
                 height: "100%",
                 overflowY: "scroll",
+                overflowX:"hidden",
                 zIndex: "0",
                 padding: "70px 0 0 0",
                 backgroundColor: theme.dark,

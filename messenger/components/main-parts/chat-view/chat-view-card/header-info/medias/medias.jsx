@@ -1,5 +1,5 @@
 import {useContext, useEffect, useState} from "react";
-import { files_url } from "../../../../../../configs/configs";
+import {files_url} from "../../../../../../configs/configs";
 import {ViewContext} from "../../../../../../context/view-context/view-context";
 import classes from "./medias.module.scss";
 
@@ -92,6 +92,7 @@ const Medias = () => {
                 {currentMedia === "images" &&
                     mediaImages.map((image) => (
                         <img
+                            key={image}
                             className={classes.mediaImage}
                             src={`${files_url}/images/${image}`}
                         />
@@ -99,6 +100,7 @@ const Medias = () => {
                 {currentMedia === "images" &&
                     mediaVideos.map((video) => (
                         <video
+                            key={video.name}
                             controls
                             className={classes.mediaImage}
                             src={`${files_url}/videos/${video.name}`}></video>
@@ -107,6 +109,7 @@ const Medias = () => {
                     mediaVoices.map((voice) => (
                         <div className={classes.mediaVoice}>
                             <a
+                                key={voice.name}
                                 target="_blank"
                                 href={`${files_url}/voices/${voice.name}}`}>
                                 name : {voice.name}
@@ -118,6 +121,7 @@ const Medias = () => {
                     mediaFiles.map((file) => (
                         <div className={classes.mediaVoice}>
                             <a
+                                key={file.name}
                                 target="_blank"
                                 href={`${files_url}/main/${file.name}}`}>
                                 name : {file.name}

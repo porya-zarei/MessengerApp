@@ -7,7 +7,6 @@ import ContextMenu from "../../../../context-menu/context-menu";
 import classes from "./cvcb.module.scss";
 
 const ChatViewCardBody = () => {
-
     const {chatsToShow, chatBackground} = useContext(ViewContext);
 
     const {userId} = useContext(UserContext);
@@ -17,7 +16,7 @@ const ChatViewCardBody = () => {
         backgroundRepeat: "no-repeat",
         backgroundSize: "cover",
     };
-    
+
     const chatsBody = useRef();
     const scrollButton = useRef();
 
@@ -27,7 +26,6 @@ const ChatViewCardBody = () => {
     };
 
     useEffect(() => {
-        handleScrollButton();
         chatsBody.current.onscroll = (e) => {
             if (
                 Number(chatsBody.current.scrollTop) <=
@@ -41,6 +39,13 @@ const ChatViewCardBody = () => {
                     scrollButton.current.style.display = "none";
                 }
             }
+        };
+        const timeout = setTimeout(() => {
+            console.log("in chat view body timeout =>");
+            handleScrollButton();
+        }, 500);
+        return () => {
+            clearTimeout(timeout);
         };
     }, []);
 

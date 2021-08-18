@@ -4,7 +4,7 @@ import {UserDataContext} from "../data-context/data-context";
 import {fetcher} from "../../hooks/fetcher";
 import {ViewContext} from "../view-context/view-context";
 import {toast} from "react-toastify";
-import { hubs_url } from "../../configs/configs";
+import {hubs_url} from "../../configs/configs";
 export const UserContext = createContext({
     user: {},
     setUser: () => {},
@@ -271,8 +271,17 @@ const UserContextProvider = ({children}) => {
                 payload: {Group: group},
             });
         });
+
         userConnection.on("GetNotification", (message) => {
             toast.dark(message);
+        });
+
+        userConnection.on("CheckThisUserStatus", (connectionId) => {
+            userConnection.send("GetCheckUserStatus", connectionId);
+        });
+
+        userConnection.on("ConnectionChecked",(connId)=>{
+            setConnectionId(connId);
         });
 
         userConnection.on("NewForwardChatsSended", (data) => {

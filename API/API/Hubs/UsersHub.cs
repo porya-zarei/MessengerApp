@@ -122,5 +122,38 @@ namespace API.Hubs
                 await Clients.Client(receiver.CurrentConnectionID).SendAsync("GetNotification", notification);
             }
         }
+
+        public async Task<string> ChackConnection(Guid userId, string connectionId)
+        {
+            var user = await usersRepository.GetUserWithUserID(userId);
+
+            if (user.CurrentConnectionID != connectionId)
+            {
+                var res = await usersRepository.SetConnectionId(userId, connectionId);
+                if (res)
+                {
+                    return connectionId;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            else
+            {
+                return connectionId;
+            }
+        }
+
+        public async Task SendCheckUserStatus(string userName, string connectionId)
+        {
+            var user = usersRepository.GetUserWithUserName(userName);
+            await Clients.Client(user.CurrentConnectionID).SendAsync("CheckThisUserStatus", connectionId);
+        }
+
+        public async Task GetCheckUserStatus(string connectionId)
+        {
+            await Clients.Client(connectionId).SendAsync("GetUserStatus", true);
+        }
     }
 }

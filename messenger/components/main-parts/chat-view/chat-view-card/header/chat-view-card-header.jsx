@@ -1,8 +1,6 @@
 import {useContext, useEffect, useState} from "react";
 import {UserContext} from "../../../../../context/user-context/user-context";
 import {ViewContext} from "../../../../../context/view-context/view-context";
-import {fetcher} from "../../../../../hooks/fetcher";
-import VoiceChat from "../voice-chat/voice-chat";
 import {
     motion,
     AnimatePresence,
@@ -10,62 +8,18 @@ import {
     useTransform,
 } from "framer-motion";
 import classes from "./cvch.module.scss";
-import {toast} from "react-toastify";
+import HeaderSetting from "./header-setting/header-setting";
 
 const ChatViewCardHeader = () => {
     const {chatsToShow, isMobile, setIsInChat, setShowHeaderInfo, theme} =
         useContext(ViewContext);
-    const {userId, token, connection} = useContext(UserContext);
+    const {connection, connectionId} = useContext(UserContext);
     const [settingShow, setSettingShow] = useState(false);
-    const [voiceChatShow, setVoiceChatShow] = useState(false);
-    const [loading, setLoading] = useState(false);
-
+    const [userIsOnline, setUserIsOnline] = useState(false);
     const xPosition = useMotionValue(0);
     const xRange = [-200, 0, 200];
     const opacityRange = [0, 1, 0];
     const opacity = useTransform(xPosition, xRange, opacityRange);
-
-    const handleLeaving = async () => {
-        setLoading(true);
-        if (chatsToShow.type === "channel") {
-            const data = {
-                ChannelID: chatsToShow.Id,
-                UserID: userId,
-            };
-
-            const {result, error} = await fetcher(
-                "POST",
-                "Channels/LeaveChannel",
-                data,
-                token,
-            );
-            console.log(
-                "result in leaving channel => ",
-                result,
-                error,
-                chatsToShow,
-            );
-        } else if (chatsToShow.type === "group") {
-            const data = {
-                GroupID: chatsToShow.Id,
-                UserID: userId,
-            };
-
-            const {result, error} = await fetcher(
-                "POST",
-                "Groups/LeaveGroup",
-                data,
-                token,
-            );
-            console.log(
-                "result in leaving group => ",
-                result,
-                error,
-                chatsToShow,
-            );
-        }
-        setLoading(false);
-    };
 
     const handleDragEnd = () => {
         if (xPosition.get() > 70) {
@@ -73,13 +27,30 @@ const ChatViewCardHeader = () => {
         }
     };
 
-    const sendNotification = () => {
-        connection
-            .invoke("NotifyUser", userId, chatsToShow.userName)
-            .then((r) => {
-                toast.success("sended successfully");
-            });
+    const sendCheckUserStatus = () => {
+        userIsOnline && setUserIsOnline(false);
+        connection.send(
+            "SendCheckUserStatus",
+            chatsToShow.userName,
+            connectionId,
+        );
     };
+    useEffect(() => {
+        if (
+            chatsToShow.type === "room" &&
+            chatsToShow.userName.length > 0 &&
+            connection.on !== null
+        ) {
+            connection?.on("GetUserStatus", (isOnline) => {
+                if (isOnline) {
+                    setUserIsOnline(true);
+                }
+            });
+            sendCheckUserStatus();
+        } else {
+            userIsOnline && setUserIsOnline(false);
+        }
+    }, [chatsToShow.userName]);
 
     useEffect(() => {
         const handleBackButton = () => {
@@ -110,7 +81,7 @@ const ChatViewCardHeader = () => {
                     onDragEnd={() => isMobile && handleDragEnd()}
                     className={`${classes.cardHeader}`}>
                     <div className={`${classes.userAvatar} center`}>
-                        <div className="center m-auto hw-70px">
+                        <div className="center m-auto">
                             <img
                                 src={chatsToShow.Image}
                                 height="66px"
@@ -119,6 +90,17 @@ const ChatViewCardHeader = () => {
                             />
                         </div>
                     </div>
+                    {chatsToShow.type === "room" ? (
+                        <button
+                            className={`${classes.userStatus}`}
+                            onClick={sendCheckUserStatus}
+                            title="user status,click to reload"
+                            style={{
+                                backgroundColor: userIsOnline
+                                    ? "#00bf00"
+                                    : "#6f6f6f",
+                            }}></button>
+                    ) : null}
                     <div
                         onClick={() => setShowHeaderInfo((p) => !p)}
                         className={`${classes.userName}`}>
@@ -139,107 +121,7 @@ const ChatViewCardHeader = () => {
                             className="btn btn-primary bg-transparent border-0 rounded rounded-circle">
                             <i className="bi bi-three-dots-vertical fs-large"></i>
                         </button>
-                        {settingShow && (
-                            <div
-                                className={`${classes.chatSettingListContainer}`}
-                                style={{backgroundColor: theme.info}}>
-                                <ul className={`${classes.chatSettingList}`}>
-                                    <li
-                                        className={`${classes.chatSettingListItem}`}>
-                                        <button
-                                            onClick={handleLeaving}
-                                            style={{
-                                                backgroundColor: theme.danger,
-                                            }}
-                                            className={`${classes.chatSettingListItemBtn} btn h-100 w-100 center`}>
-                                            {loading ? (
-                                                <i className="spinner-border"></i>
-                                            ) : (
-                                                <>Leave {chatsToShow.type}</>
-                                            )}
-                                        </button>
-                                    </li>
-                                    <li
-                                        className={`${classes.chatSettingListItem}`}>
-                                        <button
-                                            style={{
-                                                backgroundColor: theme.light,
-                                            }}
-                                            className={`${classes.chatSettingListItemBtn} btn h-100 w-100 center`}>
-                                            Copy {chatsToShow.type} ID
-                                        </button>
-                                    </li>
-                                    <li
-                                        className={`${classes.chatSettingListItem}`}>
-                                        <button
-                                            style={{
-                                                backgroundColor: theme.light,
-                                            }}
-                                            className={`${classes.chatSettingListItemBtn} btn h-100 w-100 center`}>
-                                            {"<"} {chatsToShow.type} Members
-                                            <div
-                                                style={{
-                                                    backgroundColor:
-                                                        theme.primary,
-                                                }}>
-                                                <ul
-                                                    className={`${classes.chatSettingList} h-100 w-100 overflow-y-scroll center`}>
-                                                    {chatsToShow.MembersName.map(
-                                                        (name) => (
-                                                            <li
-                                                                style={{
-                                                                    backgroundColor:
-                                                                        theme.primaryLight,
-                                                                    color: theme.textGray,
-                                                                }}
-                                                                className={`${classes.chatSettingListItem}`}>
-                                                                {name}
-                                                            </li>
-                                                        ),
-                                                    )}
-                                                </ul>
-                                            </div>
-                                        </button>
-                                    </li>
-                                    {chatsToShow.type === "group" && (
-                                        <li
-                                            style={{
-                                                backgroundColor: theme.light,
-                                            }}
-                                            className={`${classes.chatSettingListItem}`}>
-                                            <button
-                                                onClick={() =>
-                                                    setVoiceChatShow((p) => !p)
-                                                }
-                                                className={`${classes.chatSettingListItemBtn} btn btn-secondary h-100 w-100 center`}>
-                                                Join Voice Chat
-                                            </button>
-                                            {voiceChatShow && (
-                                                <VoiceChat
-                                                    show={voiceChatShow}
-                                                    setShow={setVoiceChatShow}
-                                                    id={chatsToShow.Id}
-                                                    type={chatsToShow.type}
-                                                />
-                                            )}
-                                        </li>
-                                    )}
-                                    {chatsToShow.type === "room" && (
-                                        <li
-                                            style={{
-                                                backgroundColor: theme.primary,
-                                            }}
-                                            className={`${classes.chatSettingListItem}`}>
-                                            <button
-                                                onClick={sendNotification}
-                                                className={`${classes.chatSettingListItemBtn} btn h-100 w-100 center`}>
-                                                send notification
-                                            </button>
-                                        </li>
-                                    )}
-                                </ul>
-                            </div>
-                        )}
+                        {settingShow && <HeaderSetting />}
                     </div>
                 </motion.div>
             </AnimatePresence>
