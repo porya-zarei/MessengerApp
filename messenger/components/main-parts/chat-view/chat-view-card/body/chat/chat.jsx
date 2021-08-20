@@ -100,7 +100,7 @@ const Chat = ({
     return (
         <div
             id={chatId}
-            aria-chatdetail={JSON.stringify(chatDetail)}
+            data-chatdetail={JSON.stringify(chatDetail)}
             className={`${
                 classes.chatContainer
             } text-white h-auto bg-transparent w-100 p-0 row ${

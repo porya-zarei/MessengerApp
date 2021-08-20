@@ -28,8 +28,8 @@ const MainLayout = ({children}) => {
             listItemData: {},
         };
 
-        if (e.target.getAttribute("aria-chatdetail")) {
-            const detail = JSON.parse(e.target.getAttribute("aria-chatdetail"));
+        if (e.target.getAttribute("data-chatdetail")) {
+            const detail = JSON.parse(e.target.getAttribute("data-chatdetail"));
             let chatData = {};
             if (detail.type === "room") {
                 chatData = rooms
@@ -46,9 +46,9 @@ const MainLayout = ({children}) => {
             }
             contextData.chatData = chatData;
         }
-        if (e.target.getAttribute("aria-listitemdetail")) {
+        if (e.target.getAttribute("data-listitemdetail")) {
             const detail = JSON.parse(
-                e.target.getAttribute("aria-listitemdetail"),
+                e.target.getAttribute("data-listitemdetail"),
             );
             let listItemData = {};
             console.log("detail in forwards => ",detail);

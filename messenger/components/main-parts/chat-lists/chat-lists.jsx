@@ -4,13 +4,14 @@ import ChatListItems from "../chat-parts/chat-lists-items/chat-list-items";
 
 const ChatLists = () => {
     const {theme} = useContext(ViewContext);
+
     return (
         <div
             className="m-0 w-100"
             style={{
                 height: "100%",
                 overflowY: "scroll",
-                overflowX:"hidden",
+                overflowX: "hidden",
                 zIndex: "0",
                 padding: "70px 0 0 0",
                 backgroundColor: theme.dark,
