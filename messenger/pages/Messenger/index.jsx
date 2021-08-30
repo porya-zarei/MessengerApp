@@ -9,6 +9,8 @@ import {fetcher} from "../../hooks/fetcher";
 import {toast} from "react-toastify";
 import {getCookieValue} from "../../helpers/getCookie";
 import {decodeToken} from "../../helpers/jwt-helper";
+import ContextProvider from "../../context/main-context";
+import Layout from "../../components/Layout/layout";
 
 const MainPage = ({userData, isError}) => {
     const router = useRouter();

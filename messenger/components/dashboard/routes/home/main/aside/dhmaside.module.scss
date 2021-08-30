@@ -1,0 +1,82 @@
+.asideContainer {
+    height: 100%;
+    overflow-y: scroll;
+    background-color: blueviolet;
+    z-index: 1;
+}
+.asideIsOpen {
+    @keyframes increaseWidth1 {
+        from {
+            width: 3%;
+        }
+        to {
+            width: 20%;
+        }
+    }
+    animation: increaseWidth1 1s 0.1s ease-in forwards;
+    @media screen and (max-width: 700px) {
+        @keyframes increaseWidth2 {
+            from {
+                width: 10%;
+            }
+            to {
+                width: 30%;
+            }
+        }
+        animation: increaseWidth2 1s 0.1s ease-in forwards;
+    }
+}
+.asideIsClose {
+    @keyframes decreaseWidth1 {
+        from {
+            width: 20%;
+        }
+        to {
+            width: 3%;
+        }
+    }
+    animation: decreaseWidth1 1s 0.1s ease-in forwards;
+    @media screen and (max-width: 700px) {
+        @keyframes decreaseWidth2 {
+            from {
+                width: 30%;
+            }
+            to {
+                width: 10%;
+            }
+        }
+        animation: decreaseWidth2 1s 0.1s ease-in forwards;
+    }
+}
+.aside {
+    height: 100%;
+    width: auto;
+}
+.asideToggleBtnContainer {
+    width: auto;
+    height: 5%;
+}
+.asideToggleBtn {
+    height: auto;
+    width: auto;
+    border: none;
+    background-color: transparent;
+    font-size: larger;
+    margin: auto;
+}
+.navContainer {
+    height: 95%;
+    width: auto;
+}
+.nav {
+    height: 100%;
+    width: auto;
+}
+.navItemBtnContainer {
+    padding: 5px;
+}
+.navItemBtn {
+    border: none;
+    background-color: transparent;
+    font-size: large;
+}

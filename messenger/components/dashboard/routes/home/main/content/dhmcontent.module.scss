@@ -1,0 +1,15 @@
+.contentSection{
+    height: 100%;
+}
+.contentAsideIsOpen{
+    width: 80%;
+    @media screen and (max-width:700px) {
+        width: 70%;
+    }
+}
+.contentAsideIsClose{
+    width: 97%;
+    @media screen and (max-width:700px) {
+        width: 90%;
+    }
+}

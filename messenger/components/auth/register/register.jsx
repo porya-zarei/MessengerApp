@@ -1,7 +1,6 @@
 import {useRouter} from "next/router";
 import Link from "next/link";
 import {useContext, useEffect, useState} from "react";
-import {MainContext} from "../../../context/main-context";
 import {UserContext} from "../../../context/user-context/user-context";
 import {fetcher} from "../../../hooks/fetcher";
 import {toast} from "react-toastify";
@@ -17,7 +16,6 @@ const Register = () => {
     const [password, setPassword] = useState("");
 
     const [userNameError, setUserNameError] = useState("");
-    const [userNameConfirmed, setUserNameConfirmed] = useState("");
     const [emailError, setEmailError] = useState("");
     const [passwordError, setPasswordError] = useState("");
 

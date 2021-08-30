@@ -1,6 +1,5 @@
 import {useRouter} from "next/router";
-import {useCallback, useContext, useEffect, useState} from "react";
-import {Formik} from "formik";
+import { useContext, useEffect, useState} from "react";
 import {UserContext} from "../../../context/user-context/user-context";
 import classes from "./login.module.scss";
 import {fetcher} from "../../../hooks/fetcher";
@@ -10,7 +9,7 @@ const Login = () => {
     const {setIsLoged, connectionId, setToken} = useContext(UserContext);
 
     const [email, setEmail] = useState("");
-    const [emailError, setErrorEmail] = useState("");
+    const [emailError, setErrorEmail] = useState("");           
     const [password, setPassword] = useState("");
     const [passwordError, setErrorPassword] = useState("");
     const [loading, setLoading] = useState(false);

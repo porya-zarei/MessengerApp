@@ -1,0 +1,86 @@
+.headerContainer {
+    height: auto;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: nowrap;
+    z-index: 2;
+}
+.header {
+    height: 60px;
+    width: 100%;
+    padding: 5px;
+    margin: 0;
+    display: inline-flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    font-size: 16px;
+    font-weight: bolder;
+    @media screen and (max-width: 700px) {
+        font-size: 13px;
+    }
+}
+.headerItemTitleContainer {
+    height: 100%;
+    width: 25%;
+    @media screen and (max-width: 700px) {
+        width: 30%;
+    }
+}
+.headerItemTitle {
+    height: 100%;
+    width: 100%;
+    border: none;
+}
+.headerItemBtnContainer {
+    height: 100%;
+    width: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.headerItemBtn {
+    border: none;
+    width: auto;
+    height: auto;
+    margin: 5px 15px;
+}
+.headerItemUserDetailContainer {
+    height: 100%;
+    width: 20%;
+    margin-left: auto;
+    @media screen and (max-width: 700px) {
+        width: 38%;
+    }
+    display: flex;
+    justify-content:center;
+    align-items: center;
+    flex-wrap: nowrap;
+    flex-direction: row;
+}
+.headerItemUserImage {
+    width: auto;
+    height: 100%;
+    border: none;
+    & > img {
+        height: 40px;
+        width: 40px;
+        border-radius: 50%;
+    }
+}
+.headerItemUserName {
+    width: auto;
+    height: 90%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 10px;
+}
+.headerItemUserNameBtn{
+    border: none;
+    height: 100%;
+    width: auto;
+}

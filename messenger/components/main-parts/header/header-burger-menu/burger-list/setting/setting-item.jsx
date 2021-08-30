@@ -1,8 +1,10 @@
 import {useContext, useRef, useState} from "react";
 import {ViewContext} from "../../../../../../context/view-context/view-context";
 import classes from "./settingitem.module.scss";
+import themeData from "../../../../../../data/theme.json";
 
 const SettingItem = () => {
+    const {darkTheme,lightGreenTheme} = themeData;
     const {theme, setTheme, setChatBackground} = useContext(ViewContext);
     const [showSetting, setShowSetting] = useState(false);
 
@@ -12,41 +14,6 @@ const SettingItem = () => {
     const handleSetChatBackground = () => {
         let blob = window.URL.createObjectURL(chatbgRef.current.files[0]);
         setChatBackground(blob);
-    };
-    const darkTheme = {
-        name: "dark",
-        light: "#DDDDDD",
-        primary: "#30475E",
-        primarier: "#0A043C",
-        primaryLight: "#1c6ce3",
-        dark: "#222831",
-        darker: "#171717",
-        danger: "#F05454",
-        warnig: "#FFD369",
-        info: "#03506F",
-        textGray: "#C4BBF0",
-        text: "#F5EDED",
-        textDark: "#151515",
-        bubble1: "#577399",
-        bubble2: "#495867",
-    };
-
-    const lightGreenTheme = {
-        name: "lightGreen",
-        light: "#DDDDDD",
-        primary: "#add2c2",
-        primarier: "#5fdd9d",
-        primaryLight: "#f5ffc6",
-        dark: "#7fb685",
-        darker: "#a5be00",
-        danger: "#ef6f6c",
-        warnig: "#ffd449",
-        info: "#3f4531",
-        textGray: "#466060",
-        text: "#12130f",
-        textDark: "#151515",
-        bubble1: "#b3e9c7",
-        bubble2: "#78de77",
     };
 
     return (
