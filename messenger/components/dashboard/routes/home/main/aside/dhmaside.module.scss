@@ -1,82 +1,138 @@
 .asideContainer {
     height: 100%;
     overflow-y: scroll;
-    background-color: blueviolet;
     z-index: 1;
 }
 .asideIsOpen {
-    @keyframes increaseWidth1 {
-        from {
-            width: 3%;
-        }
-        to {
-            width: 20%;
-        }
-    }
-    animation: increaseWidth1 1s 0.1s ease-in forwards;
+    width: 20%;
+    // @keyframes increaseWidth1 {
+    //     from {
+    //         width: 5%;
+    //     }
+    //     to {
+    //         width: 20%;
+    //     }
+    // }
+    // animation: increaseWidth1 1s 0.1s ease-in normal;
     @media screen and (max-width: 700px) {
-        @keyframes increaseWidth2 {
-            from {
-                width: 10%;
-            }
-            to {
-                width: 30%;
-            }
-        }
-        animation: increaseWidth2 1s 0.1s ease-in forwards;
+        width: 30%;
+        // @keyframes increaseWidth2 {
+        //     from {
+        //         width: 10%;
+        //     }
+        //     to {
+        //         width: 30%;
+        //     }
+        // }
+        // animation: increaseWidth2 1s 0.1s ease-in normal;
     }
 }
 .asideIsClose {
-    @keyframes decreaseWidth1 {
-        from {
-            width: 20%;
-        }
-        to {
-            width: 3%;
-        }
-    }
-    animation: decreaseWidth1 1s 0.1s ease-in forwards;
+    width: 5%;
+    // @keyframes decreaseWidth1 {
+    //     from {
+    //         width: 20%;
+    //     }
+    //     to {
+    //         width: 5%;
+    //     }
+    // }
+    // animation: decreaseWidth1 1s 0.1s ease-out normal;
     @media screen and (max-width: 700px) {
-        @keyframes decreaseWidth2 {
-            from {
-                width: 30%;
-            }
-            to {
-                width: 10%;
-            }
-        }
-        animation: decreaseWidth2 1s 0.1s ease-in forwards;
+        width: 10%;
+        // @keyframes decreaseWidth2 {
+        //     from {
+        //         width: 30%;
+        //     }
+        //     to {
+        //         width: 10%;
+        //     }
+        // }
+        // animation: decreaseWidth2 1s 0.1s ease-out normal;
     }
 }
 .aside {
     height: 100%;
-    width: auto;
+    width: 100%;
+    overflow: hidden;
 }
 .asideToggleBtnContainer {
     width: auto;
     height: 5%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 80px;
 }
 .asideToggleBtn {
-    height: auto;
-    width: auto;
+    height: 100%;
+    width: 100%;
     border: none;
     background-color: transparent;
     font-size: larger;
     margin: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 .navContainer {
     height: 95%;
-    width: auto;
+    width: 100%;
 }
 .nav {
     height: 100%;
-    width: auto;
+    width: 100%;
+    overflow: hidden;
 }
 .navItemBtnContainer {
-    padding: 5px;
+    height: 40px;
+    width: 100%;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 .navItemBtn {
+    width: 100%;
+    height: 100%;
     border: none;
+    padding: 0;
+    margin: 0;
     background-color: transparent;
     font-size: large;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    overflow-x: hidden;
+    & > i {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 20%;
+    }
+}
+
+.navItemBtnText {
+    overflow: hidden;
+    width: 70%;
+    background-color: transparent;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    @media screen and (max-width: 700px) {
+        font-size: 13px;
+    }
+    @keyframes textAnimation {
+        0% {
+            display: none;
+        }
+        100% {
+            display: flex;
+        }
+    }
+    animation: textAnimation 1s 0.3s normal
+        cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }

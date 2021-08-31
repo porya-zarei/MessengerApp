@@ -6,12 +6,13 @@ const DashboardHomeHeader = () => {
         <header
             className="h-auto w-100"
             style={{
-                backgroundColor: theme.darker,
+                backgroundColor: theme.dark,
                 color: theme.text,
                 position: "fixed",
                 top: "0",
                 left: "0",
-                zIndex:"10"
+                zIndex: "10",
+                boxShadow: "0px 1px 20px 0px #8080807d",
             }}>
             <DashboardHomeHeaderTop />
         </header>

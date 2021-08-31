@@ -1,0 +1,128 @@
+//* Simple Card
+.sc__cardContainer {
+    height: 100%;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    overflow: hidden;
+    border-radius: 5px;
+}
+.sc__card {
+    height: 100%;
+    width: 100%;
+    padding: 10px;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: baseline;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+.sc__cardTexts {
+    width: 100%;
+    height: 60px;
+    margin-bottom: 5px;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    flex-direction: row;
+    flex-wrap: nowrap;
+}
+.sc__cardMainTexts {
+    height: 100%;
+    width: 70%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    flex-wrap: nowrap;
+}
+.sc__cardMainText {
+    height: 100%;
+    width: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bolder;
+    font-size: 20px;
+    @media screen and (max-width: 700px) {
+        font-size: 18px;
+    }
+}
+.sc__cardDetailTextSuccess {
+    color: rgb(0, 161, 27);
+    height: auto;
+    width: auto;
+    margin-left: 7px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 12px;
+    @media screen and (max-width: 700px) {
+        font-size: 10px;
+    }
+}
+.sc__cardDetailTextError {
+    color: rgb(184, 0, 0);
+    height: auto;
+    width: auto;
+    margin-left: 7px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 12px;
+    @media screen and (max-width: 700px) {
+        font-size: 10px;
+    }
+}
+.sc__cardIconSuccess {
+    height: auto;
+    width: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    & > button {
+        font-size: 18px;
+        width: 40px;
+        height: 40px;
+        background-color: rgba(32, 116, 32, 0.438);
+        color: rgb(0, 161, 27);
+        border: 0 solid transparent;
+        border-radius: 7px;
+        &>i{
+        font-weight: bolder;
+        font-size: larger;
+    }
+    }
+}
+.sc__cardIconError {
+    height: auto;
+    width: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    & > button {
+        font-size: 18px;
+        width: 40px;
+        height: 40px;
+        background-color: rgba(177, 31, 31, 0.438);
+        color: rgb(184, 0, 0);
+        border: 0 solid transparent;
+        border-radius: 7px;
+    }
+}
+
+.sc__cardTitle {
+    height: 20px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 14px;
+    @media screen and (max-width: 700px) {
+        font-size: 12px;
+    }
+}
+//! Simple Card

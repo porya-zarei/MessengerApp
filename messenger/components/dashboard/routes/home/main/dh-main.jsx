@@ -16,18 +16,17 @@ const DashboardHomeMain = () => {
     return (
         <main
             style={{
-                backgroundColor: theme.dark,
+                backgroundColor: theme.darker,
                 color: theme.text,
-                height: "100vh",
+                height: "100%",
                 width: "100%",
-                marginTop: "58px",
-                padding: "10px 0",
                 display: "flex",
                 justifyContent: "flex-start",
                 alignItems: "center",
                 flexDirection: "row",
                 flexWrap: "nowrap",
                 zIndex: "0",
+                overflow:"hidden"
             }}>
             <DashboardHomeMainAside asideIsOpen={asideIsOpen} toggleAside={toggleAside} />
             <DashboardHomeMainContent asideIsOpen={asideIsOpen} />

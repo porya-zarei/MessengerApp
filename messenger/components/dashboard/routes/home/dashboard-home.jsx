@@ -9,10 +9,16 @@ import DashboardHomeMain from "./main/dh-main";
 const DashboardHome = () => {
     const theme = themeData.darkTheme;
     return (
-        <section className="h-auto w-100" style={{backgroundColor:theme.darker,color:theme.text}}>
-            <DashboardHomeHeader/>
-            <DashboardHomeMain/>
-            <DashboardHomeFooter/>
+        <section
+            className="w-100"
+            style={{
+                backgroundColor: theme.darker,
+                color: theme.text,
+                height: "100vh",
+            }}>
+            <DashboardHomeHeader />
+            <DashboardHomeMain />
+            {/* <DashboardHomeFooter /> */}
         </section>
     );
 };
