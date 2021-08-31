@@ -1,7 +1,9 @@
 import classes from "./dhhtop.module.scss";
-import themeData from "../../../../../../data/theme.json";
+import {useContext} from "react";
+import {DashboardContext} from "../../../../context/dashboard-context";
+import { files_url } from "../../../../../../configs/configs";
 const DashboardHomeHeaderTop = () => {
-    const theme = themeData.darkTheme;
+    const {dashTheme: theme, admin} = useContext(DashboardContext);
     return (
         <div className={classes.headerContainer}>
             <div className={classes.header}>
@@ -42,7 +44,13 @@ const DashboardHomeHeaderTop = () => {
                             backgroundColor: "transparent",
                         }}
                         className={classes.headerItemUserImage}>
-                        <img src="/assets/images/png/avatar.png" />
+                        <img
+                            src={
+                                admin?.ProfileImage
+                                    ? `${files_url}/images/profiles/${admin.ProfileImage}`
+                                    : "/assets/images/png/avatar.png"
+                            }
+                        />
                     </button>
                     <div className={classes.headerItemUserName}>
                         <button
@@ -51,7 +59,7 @@ const DashboardHomeHeaderTop = () => {
                                 backgroundColor: "transparent",
                             }}
                             className={classes.headerItemUserNameBtn}>
-                            Porya Zarei
+                            {admin?.FirstName + " " + admin?.LastName}
                             <i className="bi-arrow-down m-1"></i>
                         </button>
                     </div>

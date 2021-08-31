@@ -23,7 +23,6 @@ namespace API.Controllers
     public class AuthController : ControllerBase
     {
         private readonly IUsersRepository usersRepository;
-        private IHubContext<MainHub> hubContext;
         private ILogger<AuthController> logger;
         private IConfiguration configuration;
         private readonly IHubContext<UsersHub> usersHub;
@@ -31,7 +30,6 @@ namespace API.Controllers
         public AuthController(IHubContext<UsersHub> _usersHub, APIContext context, IHubContext<MainHub> _hubContext, ILogger<AuthController> _logger, IConfiguration _configuration)
         {
             usersRepository = new UsersRepository(context);
-            hubContext = _hubContext;
             logger = _logger;
             configuration = _configuration;
             usersHub = _usersHub;

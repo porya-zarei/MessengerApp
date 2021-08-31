@@ -1,7 +1,8 @@
-import themeData from "../../../../../data/theme.json";
+import {useContext} from "react";
 import DashboardHomeHeaderTop from "./nav/dhh-top";
+import {DashboardContext} from "../../../context/dashboard-context";
 const DashboardHomeHeader = () => {
-    const theme = themeData.darkTheme;
+    const {dashTheme: theme} = useContext(DashboardContext);
     return (
         <header
             className="h-auto w-100"

@@ -314,10 +314,51 @@ namespace APIDataLayer.Services
                 var channelsChats = context.ChannelsChats.AsEnumerable().ToList();
                 var groupsChats = context.GroupsChats.AsEnumerable().ToList();
 
-                var all = new AllData();
+                var all = new AllData
+                {
+                    Groups = new List<OutputGroup>() { },
+                    Channels = new List<OutputChannel>() { }
+                };
 
-                all.Groups = new List<OutputGroup>() { };
-                all.Channels = new List<OutputChannel>() { };
+                all.Groups.AddRange(groups.Select(g => new OutputGroup()
+                {
+                    GroupID = g.GroupID,
+                    Name = g.Name,
+                }).ToList());
+
+                all.Channels.AddRange(channels.Select(c => new OutputChannel()
+                {
+                    ChannelID = c.ChannelID,
+                    Name = c.Name,
+                }).ToList());
+
+                return all;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+
+        public AllData GetAllDataForAdmin()
+        {
+            try
+            {
+                var users = context.Users.AsEnumerable().ToList();
+                var channels = context.Channels.AsEnumerable().ToList();
+                var groups = context.Groups.AsEnumerable().ToList();
+                var rooms = context.Rooms.AsEnumerable().ToList();
+                var channelsChats = context.ChannelsChats.AsEnumerable().ToList();
+                var groupsChats = context.GroupsChats.AsEnumerable().ToList();
+                var roomsChats = context.RoomsChats.AsEnumerable().ToList();
+
+                var all = new AllData
+                {
+                    Groups = new List<OutputGroup>() { },
+                    Channels = new List<OutputChannel>() { },
+                    Rooms = new List<OutputRoom>() { },
+                    Users = new List<OutputUser>() { }
+                };
 
                 all.Groups
                     .AddRange(
@@ -332,26 +373,26 @@ namespace APIDataLayer.Services
                             AdminsUserName = users.Where(u => g.GroupAdminsID.Contains(u.UserID)).Select(u => u.UserName).ToList(),
                             AdminsName = users.Where(u => g.GroupAdminsID.Contains(u.UserID)).Select(u => u.FirstName + " " + u.LastName).ToList(),
                             GroupMembersName = users.Where(u => g.GroupMembersID.Contains(u.UserID)).Select(u => u.FirstName + " " + u.LastName).ToList(),
-                            Chats = groupsChats.Where(gc => g.GroupChatsID.Contains(gc.ChatID)).Select(gc => new OutputGroupChat()
-                            {
-                                ChatID = gc.ChatID,
-                                Image = gc.Image,
-                                File = gc.File,
-                                FileSize = gc.FileSize,
-                                ImageSize = gc.ImageSize,
-                                GroupChatStatus = gc.GroupChatStatus,
-                                GroupID = gc.GroupID,
-                                SendingTime = gc.SendingTime,
-                                Text = gc.Text,
-                                SenderID = gc.SenderID,
-                                Video = gc.Video,
-                                Voice = gc.Voice,
-                                VideoSize = gc.VideoSize,
-                                VoiceSize = gc.VoiceSize,
-                            }).OrderBy(ch => ch.SendingTime).ToList(),
+                            //Chats = groupsChats.Where(gc => g.GroupChatsID.Contains(gc.ChatID)).Select(gc => new OutputGroupChat()
+                            //{
+                            //    ChatID = gc.ChatID,
+                            //    Image = gc.Image,
+                            //    File = gc.File,
+                            //    FileSize = gc.FileSize,
+                            //    ImageSize = gc.ImageSize,
+                            //    GroupChatStatus = gc.GroupChatStatus,
+                            //    GroupID = gc.GroupID,
+                            //    SendingTime = gc.SendingTime,
+                            //    Text = gc.Text,
+                            //    SenderID = gc.SenderID,
+                            //    Video = gc.Video,
+                            //    Voice = gc.Voice,
+                            //    VideoSize = gc.VideoSize,
+                            //    VoiceSize = gc.VoiceSize,
+                            //}).OrderBy(ch => ch.SendingTime).ToList(),
                         }).ToList());
 
-                var chs = channels.Select(c => new OutputChannel()
+                all.Channels.AddRange(channels.Select(c => new OutputChannel()
                 {
                     ChannelID = c.ChannelID,
                     Name = c.Name,
@@ -359,27 +400,45 @@ namespace APIDataLayer.Services
                     ChannelDescription = c.ChannelDescription,
                     ChannelProfileImage = c.ChannelProfileImage,
                     AdminsUserName = users.Where(cu => c.AdminsID.Contains(cu.UserID)).Select(cu => cu.UserName).ToList(),
-                    CreatorName = (users.First(u => u.UserID == c.CreatorID).FirstName + " " + users.First(u => u.UserID == c.CreatorID).LastName) ?? "null ",
+                    CreatorName = (users.First(u => u.UserID == c.CreatorID).FirstName + " " + users.First(u => u.UserID == c.CreatorID).LastName) ?? "null",
                     ChannelChatsID = c.ChannelChatsID,
-                    Chats = channelsChats.Where(cc => c.ChannelChatsID.Contains(cc.ChatID)).Select(cc => new OutputChannelChat()
-                    {
-                        ChannelID = cc.ChannelID,
-                        ChatID = cc.ChatID,
-                        Image = cc.Image,
-                        File = cc.File,
-                        FileSize = cc.FileSize,
-                        ImageSize = cc.ImageSize,
-                        Text = cc.Text,
-                        Seens = cc.Seens,
-                        Video = cc.Video,
-                        Voice = cc.Voice,
-                        VideoSize = cc.VideoSize,
-                        VoiceSize = cc.VoiceSize,
-                        SendingTime = cc.SendingTime
-                    }).OrderBy(ch => ch.SendingTime).ToList()
-                }).ToList();
+                    //Chats = channelsChats.Where(cc => c.ChannelChatsID.Contains(cc.ChatID)).Select(cc => new OutputChannelChat()
+                    //{
+                    //    ChannelID = cc.ChannelID,
+                    //    ChatID = cc.ChatID,
+                    //    Image = cc.Image,
+                    //    File = cc.File,
+                    //    FileSize = cc.FileSize,
+                    //    ImageSize = cc.ImageSize,
+                    //    Text = cc.Text,
+                    //    Seens = cc.Seens,
+                    //    Video = cc.Video,
+                    //    Voice = cc.Voice,
+                    //    VideoSize = cc.VideoSize,
+                    //    VoiceSize = cc.VoiceSize,
+                    //    SendingTime = cc.SendingTime
+                    //}).OrderBy(ch => ch.SendingTime).ToList()
+                }).ToList());
 
-                chs.ForEach(c => all.Channels.Add(c));
+                all.Rooms.AddRange(rooms.Select(r => new OutputRoom()
+                {
+                    RoomID = r.RoomID,
+                    CreateDate = r.CreateDate,
+                    SenderName = (users.First(u => u.UserID == r.SenderUserID).FirstName + " " + users.First(u => u.UserID == r.SenderUserID).LastName) ?? "null",
+                    ReceiverName = (users.First(u => u.UserID == r.ReceiverUserID).FirstName + " " + users.First(u => u.UserID == r.ReceiverUserID).LastName) ?? "null",
+                    SenderUserID = r.SenderUserID,
+                    ReceiverUserID = r.ReceiverUserID
+                }).ToList());
+
+                all.Users.AddRange(users.Select(u => new OutputUser()
+                {
+                    UserID = u.UserID,
+                    FirstName = u.FirstName,
+                    LastName = u.LastName,
+                    Description = u.Description,
+                    UserName = u.UserName,
+                    ProfileImage = u.ProfileImage
+                }).ToList());
 
                 return all;
             }
@@ -454,6 +513,29 @@ namespace APIDataLayer.Services
         {
             var user = context.Users.ToList().Find(u => u.UserName == userName);
             return user;
+        }
+
+        public bool CheckAccessToAllData(Guid userId)
+        {
+            var user = context.Users.Find(userId);
+            if (user.Email == "pzeinstein@gmail.com" || user.Email == "user1@gmail.com")
+                return true;
+            else
+                return false;
+        }
+
+        public OutputUser GetOutputUser(Guid userId)
+        {
+            var user = context.Users.Find(userId);
+            return new OutputUser()
+            {
+                UserID = user.UserID,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                UserName = user.UserName,
+                Description = user.Description,
+                ProfileImage = user.ProfileImage
+            };
         }
     }
 }
