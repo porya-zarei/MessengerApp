@@ -1,3 +1,4 @@
+import { memo } from "react";
 import ListItemCard from "./list-card-item";
 import classes from "./listcard.module.scss";
 const ListCard = ({bgColor,textColors, items,title}) => {
@@ -18,6 +19,7 @@ const ListCard = ({bgColor,textColors, items,title}) => {
                                     iconClass={item.iconClass}
                                     iconColor={item.iconColor}
                                     textColors={textColors}
+                                    onClick={item.iconClick}
                                 />
                             </li>
                         ))}

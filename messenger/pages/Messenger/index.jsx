@@ -20,11 +20,22 @@ const MainPage = ({userData, isError}) => {
     const {userId, connectionId, setToken} = useContext(UserContext);
 
     console.log("in messenger index");
-
-    if (isError) {
-        return <div>im so sorry please relogin</div>;
-    }
-
+    useEffect(() => {
+        console.log("in first useEffect in messenger => ", isError, userData);
+        if (isError) {
+            console.log("in isError");
+            router.replace("/Auth/Login");
+        }
+        if (userData !== null && userData !== undefined) {
+            console.log("userData => ", userData);
+            roomsDispatcher({type: "Initial", payload: [...userData.Rooms]});
+            groupsDispatcher({type: "Initial", payload: [...userData.Groups]});
+            channelsDispatcher({
+                type: "Initial",
+                payload: [...userData.Channels],
+            });
+        }
+    }, []);
     useEffect(() => {
         const tkn = getCookieValue("Token", document.cookie);
         const decodedToken = decodeToken(tkn);
@@ -36,7 +47,7 @@ const MainPage = ({userData, isError}) => {
             decodedToken,
         );
 
-        if (tkn.length < 1) {
+        if (!tkn || ( !decodedToken || tkn?.length < 1)) {
             router.replace("/Auth/Login");
         } else if (connectionId.length > 0) {
             console.log("in index js useEffect => ", userId, connectionId, tkn);
@@ -60,21 +71,9 @@ const MainPage = ({userData, isError}) => {
         }
     }, [connectionId]);
 
-    useEffect(() => {
-        if (isError) {
-            router.replace("/Auth/Login");
-        }
-        if (userData !== null && userData !== undefined) {
-            console.log("userData => ", userData);
-            roomsDispatcher({type: "Initial", payload: [...userData.Rooms]});
-            groupsDispatcher({type: "Initial", payload: [...userData.Groups]});
-            channelsDispatcher({
-                type: "Initial",
-                payload: [...userData.Channels],
-            });
-        }
-    }, []);
-
+    if (isError) {
+        return <div>im so sorry please relogin</div>;
+    }
     return <Container />;
 };
 

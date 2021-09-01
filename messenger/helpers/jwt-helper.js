@@ -2,7 +2,8 @@
 import {TokenExpiredError, decode, verify} from "jsonwebtoken";
 
 export const decodeToken = (token) => {
-    return decode(token, {complete: true});
+    if (token) return decode(token, {complete: true});
+    else return null;
 };
 
 export const isExpired = (token) => {

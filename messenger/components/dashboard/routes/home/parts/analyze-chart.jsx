@@ -1,17 +1,16 @@
-import { memo } from "react";
-import { Doughnut } from "react-chartjs-2";
+import {memo} from "react";
+import {Doughnut} from "react-chartjs-2";
 
-const AnalyzeChart = ({data,options,bgColor,textColors}) => {
-    console.log("re mount")
+const AnalyzeChart = memo(({data, options, bgColor, textColors}) => {
+    console.log("re mount");
     return (
-        <div className="card w-100" style={{backgroundColor:bgColor,color:textColors[0]}}>
+        <div
+            className="card w-100"
+            style={{backgroundColor: bgColor, color: textColors[0]}}>
             <div className="card-body">
                 <h4 className="card-title">Transaction History</h4>
                 <div className="aligner-wrapper">
-                    <Doughnut
-                        data={data}
-                        options={options}
-                    />
+                    <Doughnut data={data} options={options} />
                     <div className="absolute center-content">
                         <h5 className="font-weight-normal text-whiite text-center mb-2 text-white">
                             1200
@@ -42,6 +41,6 @@ const AnalyzeChart = ({data,options,bgColor,textColors}) => {
             </div>
         </div>
     );
-}
- 
-export default memo(AnalyzeChart);
+});
+
+export default AnalyzeChart;

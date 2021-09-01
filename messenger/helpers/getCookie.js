@@ -30,10 +30,12 @@ export const getcookie = (req, key) => {
 // }
 
 export const getCookieValue = (name, cookies) => {
-    let cookieValue = "";
-    cookieValue = cookies
-        .split("; ")
-        .find((row) => row.startsWith(`${name}=`))
-        .split("=")[1];
-    return cookieValue;
+    if (cookies?.length > 0) {
+        let cookieValue = "";
+        cookieValue = cookies
+            .split("; ")
+            .find((row) => row.startsWith(`${name}=`))
+            .split("=")[1];
+        return cookieValue;
+    } else return null;
 };

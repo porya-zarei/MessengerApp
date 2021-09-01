@@ -1,4 +1,4 @@
-import {createContext, useState} from "react";
+import {createContext, useMemo, useState} from "react";
 import themeData from "../../../data/theme.json";
 
 export const DashboardContext = createContext({
@@ -8,7 +8,7 @@ export const DashboardContext = createContext({
         Rooms: [{}],
         Users: [{}],
     },
-    setAllData: () => {},
+    changeAllData: () => {},
     admin: {
         FirstName: "",
         LastName: "",
@@ -17,7 +17,7 @@ export const DashboardContext = createContext({
         UserName: "",
         ProfileImage: "",
     },
-    setAdmin: () => {},
+    changeAdmin: () => {},
     dashTheme: {
         name: "dark",
         light: "#DDDDDD",
@@ -35,13 +35,27 @@ export const DashboardContext = createContext({
         bubble1: "#577399",
         bubble2: "#495867",
     },
-    setDashTheme: () => {},
+    changeDashTheme: () => {},
+    asideIsOpen: false,
+    toggleAside: () => {},
+    currentTab: "",
+    changeCurrentTab: (tabName = "") => {},
 });
 
 const DashboardContextProvider = ({children, data, adminData}) => {
     const [allData, setAllData] = useState(data);
     const [admin, setAdmin] = useState(adminData);
-    const [dashTheme, setDashTheme] = useState(themeData.darkTheme);
+    const [dashThem, setDashTheme] = useState(themeData.darkTheme);
+    const dashTheme = useMemo(() => themeData.darkTheme, [dashThem]);
+    const [asideIsOpen, setAsideIsOpen] = useState(false);
+    const [currentTab, setCurrentTab] = useState("home");
+    const toggleAside = (flag) => {
+        // if (flag !== undefined && flag !== null) {
+        //     setAsideIsOpen(flag);
+        // } else {
+        setAsideIsOpen((p) => !p);
+        // }
+    };
     const changeAllData = (d) => {
         setAllData(d);
     };
@@ -53,6 +67,10 @@ const DashboardContextProvider = ({children, data, adminData}) => {
         setDashTheme(d);
     };
 
+    const changeCurrentTab = (tabName) => {
+        setCurrentTab(tabName);
+    };
+
     const context = {
         allData,
         admin,
@@ -60,6 +78,10 @@ const DashboardContextProvider = ({children, data, adminData}) => {
         changeAllData,
         changeAdmin,
         changeDashTheme,
+        asideIsOpen,
+        toggleAside,
+        currentTab,
+        changeCurrentTab,
     };
 
     return (

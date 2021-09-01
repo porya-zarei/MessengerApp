@@ -6,12 +6,13 @@ const ListItemCard = ({
     details,
     time,
     textColors,
+    onClick
 }) => {
     return (
         <div style={{color: textColors[0]}} className={classes.cardContainer}>
             <div className={classes.card}>
                 <di className={classes.cardIconContainer}>
-                    <div className={`${classes.cardIcon} bg-${iconColor}`}>
+                    <div onClick={onClick} className={`${classes.cardIcon} curser-pointer bg-${iconColor}`}>
                         <i className={iconClass}></i>
                     </div>
                 </di>

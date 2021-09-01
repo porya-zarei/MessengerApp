@@ -5,20 +5,23 @@ import DashboardContextProvider from "../../components/dashboard/context/dashboa
 import DashBoardLayout from "../../components/dashboard/layout/dashboard-layout";
 import DashboardHome from "../../components/dashboard/routes/home/dashboard-home";
 import {api_url} from "../../configs/configs";
-import {fetcher} from "../../hooks/fetcher";
+
 const DashboardPage = ({isError, adminData, allData}) => {
     const router = useRouter();
+
     useEffect(() => {
         if (isError) {
             router.replace("/");
         }
     }, []);
+
     if (isError) {
         return <div> access denied</div>;
     }
+
     return (
         <DashboardContextProvider data={allData} adminData={adminData}>
-            <DashboardHome adminData={adminData} data={allData} />
+            <DashboardHome />
         </DashboardContextProvider>
     );
 };

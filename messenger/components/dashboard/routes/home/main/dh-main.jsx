@@ -1,18 +1,14 @@
 import DashboardHomeMainAside from "./aside/dhm-aside";
 import DashboardHomeMainContent from "./content/dhm-content";
+import {DashboardContext} from '../../../context/dashboard-context'
 import themeData from "../../../../../data/theme.json";
-import { useState } from "react";
+import { useContext } from "react";
 
 const DashboardHomeMain = () => {
-    const theme = themeData.darkTheme;
-    const [asideIsOpen, setAsideIsOpen] = useState(false);
-    const toggleAside = (flag) => {
-        // if (flag !== undefined && flag !== null) {
-        //     setAsideIsOpen(flag);
-        // } else {
-            setAsideIsOpen((p) => !p);
-        // }
-    };
+    const {
+        dashTheme: theme,
+    } = useContext(DashboardContext);
+   
     return (
         <main
             style={{
@@ -28,8 +24,8 @@ const DashboardHomeMain = () => {
                 zIndex: "0",
                 overflow:"hidden"
             }}>
-            <DashboardHomeMainAside asideIsOpen={asideIsOpen} toggleAside={toggleAside} />
-            <DashboardHomeMainContent asideIsOpen={asideIsOpen} />
+            <DashboardHomeMainAside />
+            <DashboardHomeMainContent />
         </main>
     );
 };
