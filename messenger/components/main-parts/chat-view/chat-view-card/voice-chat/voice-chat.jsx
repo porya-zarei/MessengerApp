@@ -6,7 +6,7 @@ import classes from "./voicechat.module.scss";
 
 const VoiceChat = ({id, type, show, setShow}) => {
     const {connection, connectionId, user} = useContext(UserContext);
-    // const {} = useContext(ViewContext);
+    const {theme} = useContext(ViewContext);
     const [source, setSource] = useState();
     const [data, setData] = useState([]);
     const [mediaRecorder, setMediaRecorder] = useState();
@@ -44,7 +44,7 @@ const VoiceChat = ({id, type, show, setShow}) => {
         });
 
         return () => {
-            connection.send(
+            connection?.send(
                 "LeaveGroupVoiceChat",
                 id,
                 connectionId,
@@ -120,8 +120,10 @@ const VoiceChat = ({id, type, show, setShow}) => {
 
     return (
         <div className={`${classes.voiceChatContainer}`}>
-            <div className={`${classes.voiceChat}`}>
-                <div className="card h-100 w-100">
+            <div
+                className={`${classes.voiceChat}`}
+                style={{backgroundColor: theme.dark, color: theme.text}}>
+                <div className="card bg-transparent h-100 w-100">
                     <div className="card-header bg-transparent w-100">
                         <button
                             onClick={() => setShow(false)}
@@ -135,6 +137,10 @@ const VoiceChat = ({id, type, show, setShow}) => {
                                 {groupVoiceChat?.JoinedUsersFullName?.map(
                                     (fn) => (
                                         <li
+                                            style={{
+                                                backgroundColor: theme.darker,
+                                                color: theme.textGray,
+                                            }}
                                             className={
                                                 classes.voiceChatUserListItem
                                             }>
@@ -149,7 +155,7 @@ const VoiceChat = ({id, type, show, setShow}) => {
                         <div className="w-100 h-100 row m-0 p-0">
                             {joined ? (
                                 <>
-                                    <div className="col-9 m-0 p-0">
+                                    <div className="col-12 center m-0 p-0">
                                         <button
                                             onClick={handleRecoding}
                                             className="btn btn-info">
@@ -160,7 +166,7 @@ const VoiceChat = ({id, type, show, setShow}) => {
                                             )}
                                         </button>
                                     </div>
-                                    <div className="col-3 m-0 p-0">
+                                    <div style={{width:"0"}} className="m-0 p-0">
                                         <audio src={source} autoPlay></audio>
                                     </div>
                                 </>

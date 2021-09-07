@@ -35,11 +35,12 @@ namespace API.Controllers
         private readonly IWebHostEnvironment webHostEnvironment;
         private IConfiguration configuration;
 
-        public DashboardController(IHubContext<UsersHub> _usersHub, APIContext context, IHubContext<MainHub> _hubContext, ILogger<DashboardController> _logger, IConfiguration _configuration)
+        public DashboardController(IHubContext<UsersHub> _usersHub, APIContext context, IHubContext<MainHub> _hubContext, ILogger<DashboardController> _logger, IConfiguration _configuration, IWebHostEnvironment environment)
         {
             logger = _logger;
             configuration = _configuration;
             usersHub = _usersHub;
+            webHostEnvironment = environment;
 
             roomsChatsRepository = new RoomsChatsRepository(context);
             groupsChatsRepository = new GroupsChatsRepository(context);

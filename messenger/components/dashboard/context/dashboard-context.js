@@ -34,6 +34,7 @@ export const DashboardContext = createContext({
         textDark: "#151515",
         bubble1: "#577399",
         bubble2: "#495867",
+        illuColors: ["#6e6eff", "#3f3d56"],
     },
     changeDashTheme: () => {},
     asideIsOpen: false,

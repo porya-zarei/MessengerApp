@@ -3,9 +3,10 @@ import { toast } from "react-toastify";
 import {UserContext} from "../../../context/user-context/user-context";
 import {ViewContext} from "../../../context/view-context/view-context";
 import {fetcher} from "../../../hooks/fetcher";
+import { CreateGroupIllustration } from "../../illustrations/illustrations";
 import classes from "./cgd.module.scss";
 const CreateGroupDialog = () => {
-    const {showCreateGroup, setShowCreateGroup} = useContext(ViewContext);
+    const {showCreateGroup, setShowCreateGroup,theme} = useContext(ViewContext);
     const {userId, token} = useContext(UserContext);
     const [groupUserName, setGroupUserName] = useState("");
     const [groupName, setGroupName] = useState("");
@@ -50,7 +51,9 @@ const CreateGroupDialog = () => {
             id="createGroupDialogContainer"
             onClick={handleContainerClick}
             className={`${classes.container}`}>
-            <div className={`${classes.card} bg-dark`}>
+            <div
+                className={`${classes.card}`}
+                style={{backgroundColor: theme.darker, color: theme.text}}>
                 <form
                     onSubmit={handleSubmit}
                     className={`${classes.form} h-100 w-100`}>
@@ -102,16 +105,16 @@ const CreateGroupDialog = () => {
                             />
                         </div>
                         <div className="form-control p-1 w-100 my-2">
-                            <img
-                                src="/assets/images/svg/create.svg"
-                                height="200px"
-                                className="w-100"
-                            />
+                            <CreateGroupIllustration width={"100%"} colors={theme.illuColors} height={"200px"} />
                         </div>
                         <div className="w-100 p-1 my-2">
                             <button
                                 type="submit"
-                                className="btn btn-outline-info w-100">
+                                style={{
+                                    backgroundColor: theme.info,
+                                    color: theme.text,
+                                }}
+                                className="btn w-100">
                                 {!loading ? (
                                     "Send"
                                 ) : (

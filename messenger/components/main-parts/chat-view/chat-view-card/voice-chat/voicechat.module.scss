@@ -1,19 +1,18 @@
 .voiceChatContainer {
     position: fixed;
-    top: 0;
+    top: 30px;
     left: 0;
     z-index: 100;
-    height: 100%;
+    height: auto;
     width: 100%;
-    background-color: black;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 .voiceChat {
-    background-color: aqua;
     height: 460px;
     width: 320px;
+    border-radius: 25px;
 }
 .voiceChatUserList {
     height: 100%;
@@ -22,14 +21,12 @@
     overflow-y: scroll;
     overflow-x: hidden;
     padding: 5px;
-    background-color: rgba(10, 10, 85, 0.808);
 }
 .voiceChatUserListItem {
     width: 100%;
     height: 40px;
-    background-color: rgba(76, 76, 167, 0.856);
-    color: white;
     display: flex;
     justify-content: center;
     align-items: center;
+    margin-bottom: 5px;
 }

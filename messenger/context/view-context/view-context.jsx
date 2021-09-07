@@ -53,6 +53,7 @@ export const ViewContext = createContext({
         textDark: "#151515",
         bubble1: "#577399",
         bubble2: "#495867",
+        illuColors: ["#6e6eff", "#3f3d56"],
     },
     setTheme: () => {},
     chatBackground: "/assets/images/webp/background.webp",
@@ -109,6 +110,7 @@ const ViewContextProvider = ({children}) => {
         textDark: "#151515",
         bubble1: "#577399",
         bubble2: "#495867",
+        illuColors: ["#6e6eff", "#3f3d56"],
     });
     const theme = useMemo(() => th, [th.name]);
     const [chatBackground, setChatBackground] = useState(

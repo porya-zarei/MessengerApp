@@ -3,15 +3,18 @@ import {toast} from "react-toastify";
 import {UserContext} from "../../../context/user-context/user-context";
 import {ViewContext} from "../../../context/view-context/view-context";
 import {fetcher} from "../../../hooks/fetcher";
+import {CreateGroupIllustration} from "../../illustrations/illustrations";
+import CreateGroupDialog from "../create-group/create-group-dialog";
 import classes from "./ccd.module.scss";
 const CreateChannelDialog = () => {
-    const {showCreateChannel, setShowCreateChannel} = useContext(ViewContext);
+    const {showCreateChannel, setShowCreateChannel, theme} =
+        useContext(ViewContext);
     const {userId, token} = useContext(UserContext);
     const [channelUserName, setChannelUserName] = useState("");
     const [channelName, setChannelName] = useState("");
     const [channelDescription, setChannelDescription] = useState("");
     const [loading, setLoading] = useState(false);
-    
+
     const handleClose = () => {
         setShowCreateChannel(false);
     };
@@ -50,7 +53,9 @@ const CreateChannelDialog = () => {
             id="createChannelDialogContainer"
             onClick={handleContainerClick}
             className={`${classes.container}`}>
-            <div className={`${classes.card} bg-dark`}>
+            <div
+                className={`${classes.card}`}
+                style={{backgroundColor: theme.darker, color: theme.text}}>
                 <form
                     onSubmit={handleSubmit}
                     className={`${classes.form} h-100 w-100`}>
@@ -102,14 +107,18 @@ const CreateChannelDialog = () => {
                             />
                         </div>
                         <div className="form-control p-1 w-100 my-2">
-                            <img
-                                src="/assets/images/svg/create.svg"
-                                height="200px"
-                                className="w-100"
+                            <CreateGroupIllustration
+                                colors={theme.illuColors}
+                                height={"200px"}
+                                width={"100%"}
                             />
                         </div>
                         <div className="w-100 p-1 my-2">
                             <button
+                                style={{
+                                    backgroundColor: theme.info,
+                                    color: theme.text,
+                                }}
                                 type="submit"
                                 className="btn btn-outline-info w-100">
                                 {!loading ? (

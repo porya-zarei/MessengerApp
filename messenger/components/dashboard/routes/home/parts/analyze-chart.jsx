@@ -1,7 +1,7 @@
 import {memo} from "react";
 import {Doughnut} from "react-chartjs-2";
 
-const AnalyzeChart = memo(({data, options, bgColor, textColors}) => {
+const AnalyzeChart = memo(({data, options, bgColor, textColors,total}) => {
     console.log("re mount");
     return (
         <div
@@ -13,7 +13,7 @@ const AnalyzeChart = memo(({data, options, bgColor, textColors}) => {
                     <Doughnut data={data} options={options} />
                     <div className="absolute center-content">
                         <h5 className="font-weight-normal text-whiite text-center mb-2 text-white">
-                            1200
+                            {total}
                         </h5>
                         <p className="text-small text-muted text-center mb-0">
                             Total

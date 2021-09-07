@@ -2,9 +2,10 @@ import {useContext, useState} from "react";
 import {UserContext} from "../../../context/user-context/user-context";
 import {ViewContext} from "../../../context/view-context/view-context";
 import {fetcher} from "../../../hooks/fetcher";
+import {CreateGroupIllustration} from "../../illustrations/illustrations";
 import classes from "./crd.module.scss";
 const CreateRoomDialog = () => {
-    const {showCreateRoom, setShowCreateRoom} = useContext(ViewContext);
+    const {showCreateRoom, setShowCreateRoom, theme} = useContext(ViewContext);
     const {userId, token} = useContext(UserContext);
     const [receiverUserName, setReceiverUserName] = useState("");
     const [loading, setLoading] = useState(false);
@@ -16,8 +17,8 @@ const CreateRoomDialog = () => {
         setLoading(true);
         e.preventDefault();
         const data = {
-            SenderUserID:userId,
-            ReceiverUserName:receiverUserName
+            SenderUserID: userId,
+            ReceiverUserName: receiverUserName,
         };
         const {result, isError, resStatus} = await fetcher(
             "POST",
@@ -42,7 +43,9 @@ const CreateRoomDialog = () => {
             id="createRoomDialogContainer"
             onClick={handleContainerClick}
             className={`${classes.container}`}>
-            <div className={`${classes.card} bg-dark`}>
+            <div
+                style={{backgroundColor: theme.darker, color: theme.text}}
+                className={`${classes.card}`}>
                 <form
                     onSubmit={handleSubmit}
                     className={`${classes.form} h-100 w-100`}>
@@ -70,16 +73,20 @@ const CreateRoomDialog = () => {
                             />
                         </div>
                         <div className="form-control p-1 w-100 my-2">
-                            <img
-                                src="/assets/images/svg/create.svg"
-                                height="240px"
-                                className="w-100"
+                            <CreateGroupIllustration
+                                colors={theme.illuColors}
+                                className={"w-100"}
+                                height={"300px"}
                             />
                         </div>
                         <div className="w-100 p-1 my-2">
                             <button
+                                style={{
+                                    backgroundColor: theme.info,
+                                    color: theme.text,
+                                }}
                                 type="submit"
-                                className="btn btn-outline-info w-100">
+                                className="btn w-100">
                                 {!loading ? (
                                     "Send" + " " + successfull
                                 ) : (

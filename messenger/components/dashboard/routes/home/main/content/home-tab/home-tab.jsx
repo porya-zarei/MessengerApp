@@ -255,6 +255,11 @@ const HomeTab = () => {
                             options={transactionHistoryOptions}
                             bgColor={theme.dark}
                             textColors={[theme.text, theme.textGray]}
+                            total={
+                                allData?.Channels?.length +
+                                allData?.Groups?.length +
+                                allData?.Rooms?.length
+                            }
                         />
                     </div>
                     <div className="col-md-7 mb-2 col-lg-7 col-sm-12 p-0 m-0 center h-auto">
@@ -273,7 +278,7 @@ const HomeTab = () => {
                         <button
                             onClick={() => setShowListData((p) => !p)}
                             className="btn btn-secondary w-100 h-auto">
-                            {showListData?"Hide ":"Show "} Data
+                            {showListData ? "Hide " : "Show "} Data
                         </button>
                     </div>
                     <div className="col-12 p-0 m-0">

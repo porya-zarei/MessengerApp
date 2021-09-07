@@ -86,8 +86,8 @@ const DashboardHomeMainAside = () => {
                     </div>
                     <div className={classes.navContainer}>
                         <nav className={classes.nav}>
-                            {tabsBtn.map((btn) => (
-                                <div className={classes.navItemBtnContainer}>
+                            {tabsBtn.map((btn,i) => (
+                                <div key={i} className={classes.navItemBtnContainer}>
                                     <button
                                         style={btn.btnStyle}
                                         onClick={btn.btnOnClick}

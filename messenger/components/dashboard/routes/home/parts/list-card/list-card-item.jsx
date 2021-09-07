@@ -11,11 +11,11 @@ const ListItemCard = ({
     return (
         <div style={{color: textColors[0]}} className={classes.cardContainer}>
             <div className={classes.card}>
-                <di className={classes.cardIconContainer}>
+                <div className={classes.cardIconContainer}>
                     <div onClick={onClick} className={`${classes.cardIcon} curser-pointer bg-${iconColor}`}>
                         <i className={iconClass}></i>
                     </div>
-                </di>
+                </div>
                 <div className={classes.cardContent}>
                     <div className={classes.cardContentTop}>
                         <div className={classes.cardContentTopTitle}>

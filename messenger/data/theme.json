@@ -14,7 +14,8 @@
         "text": "#F5EDED",
         "textDark": "#151515",
         "bubble1": "#577399",
-        "bubble2": "#495867"
+        "bubble2": "#495867",
+        "illuColors":["#6e6eff","#3f3d56"]
     },
     "lightGreenTheme": {
         "name": "lightGreen",
@@ -31,6 +32,7 @@
         "text": "#12130f",
         "textDark": "#151515",
         "bubble1": "#b3e9c7",
-        "bubble2": "#78de77"
+        "bubble2": "#78de77",
+        "illuColors": ["#6e6eff", "#3f3d56"]
     }
 }
