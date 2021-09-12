@@ -6,6 +6,8 @@ import {useContext, useMemo, useState} from "react";
 import {DashboardContext} from "../../../../context/dashboard-context";
 import HomeTab from "./home-tab/home-tab";
 import SettingTab from "./setting-tab/setting-tab";
+import TasksTab from "./tasks-tab/tasks-tab";
+import BoardTab from "./board-tab/board-tab";
 const DashboardHomeMainContent = () => {
     
     const {
@@ -20,6 +22,10 @@ const DashboardHomeMainContent = () => {
                 return <HomeTab />;
             case "setting":
                 return <SettingTab />;
+            case "tasks":
+                return <TasksTab />;
+            case "board":
+                return <BoardTab />;
             default:
                 return <HomeTab />;
         }

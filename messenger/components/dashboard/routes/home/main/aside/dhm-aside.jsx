@@ -32,18 +32,22 @@ const DashboardHomeMainAside = () => {
                 name: "Setting Tab",
             },
             {
-                iconClass: "bi-question mx-2 center",
+                iconClass: "bi-list-task mx-2 center",
                 iconStyle: {color: theme.text},
                 btnStyle: {color: theme.text},
-                btnOnClick: () => {},
-                name: "Test Tab",
+                btnOnClick: () => {
+                    changeCurrentTab("tasks");
+                },
+                name: "Tasks Tab",
             },
             {
-                iconClass: "bi-question mx-2 center",
+                iconClass: "bi-paint-bucket mx-2 center",
                 iconStyle: {color: theme.text},
                 btnStyle: {color: theme.text},
-                btnOnClick: () => {},
-                name: "Test Tab",
+                btnOnClick: () => {
+                    changeCurrentTab("board");
+                },
+                name: "Board Tab",
             },
             {
                 iconClass: "bi-question mx-2 center",
@@ -86,8 +90,11 @@ const DashboardHomeMainAside = () => {
                     </div>
                     <div className={classes.navContainer}>
                         <nav className={classes.nav}>
-                            {tabsBtn.map((btn,i) => (
-                                <div key={i} className={classes.navItemBtnContainer}>
+                            {tabsBtn.map((btn, i) => (
+                                <div
+                                    key={i}
+                                    title={btn.name}
+                                    className={classes.navItemBtnContainer}>
                                     <button
                                         style={btn.btnStyle}
                                         onClick={btn.btnOnClick}

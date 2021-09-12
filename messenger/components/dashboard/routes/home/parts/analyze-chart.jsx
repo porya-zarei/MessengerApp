@@ -8,7 +8,7 @@ const AnalyzeChart = memo(({data, options, bgColor, textColors,total}) => {
             className="card w-100"
             style={{backgroundColor: bgColor, color: textColors[0]}}>
             <div className="card-body">
-                <h4 className="card-title">Transaction History</h4>
+                <h4 className="card-title center w-100">Activities</h4>
                 <div className="aligner-wrapper">
                     <Doughnut data={data} options={options} />
                     <div className="absolute center-content">
