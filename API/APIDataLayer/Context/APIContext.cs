@@ -21,5 +21,6 @@ namespace APIDataLayer.Context
         public DbSet<RoomChat> RoomsChats { get; set; }
         public DbSet<GroupChat> GroupsChats { get; set; }
         public DbSet<ChannelChat> ChannelsChats { get; set; }
+        public DbSet<DashboardTask> DashboardTasks { get; set; }
     }
 }

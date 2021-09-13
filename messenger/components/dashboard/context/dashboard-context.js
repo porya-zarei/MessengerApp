@@ -1,4 +1,5 @@
-import {createContext, useMemo, useState} from "react";
+import {createContext, useContext, useEffect, useMemo, useState} from "react";
+import {UserContext} from "../../../context/user-context/user-context";
 import themeData from "../../../data/theme.json";
 
 export const DashboardContext = createContext({
@@ -41,15 +42,66 @@ export const DashboardContext = createContext({
     toggleAside: () => {},
     currentTab: "",
     changeCurrentTab: (tabName = "") => {},
+    tasks: [
+        {
+            Content: "",
+            FinishDate: "",
+            Finished: false,
+            ForWhoID: "",
+            ForWhoName: "user1 user1",
+            SenderID: "",
+            SenderName: "",
+            StartDate: "",
+            StatusColor: "",
+            TaskID: "",
+            Title: "",
+        },
+    ],
+    changeTasks: (newTasks, newTask, updateTask, taskId) => {},
+    dashToken: "",
+    changeDashToken: () => {},
 });
 
-const DashboardContextProvider = ({children, data, adminData}) => {
+const DashboardContextProvider = ({
+    children,
+    data,
+    adminData,
+    allTasks,
+    token,
+}) => {
+    const {connection} = useContext(UserContext);
     const [allData, setAllData] = useState(data);
     const [admin, setAdmin] = useState(adminData);
+    const [tasks, setTasks] = useState(allTasks);
     const [dashThem, setDashTheme] = useState(themeData.darkTheme);
     const dashTheme = useMemo(() => themeData.darkTheme, [dashThem]);
     const [asideIsOpen, setAsideIsOpen] = useState(false);
     const [currentTab, setCurrentTab] = useState("home");
+    const [dashToken, setDashToken] = useState(token);
+    const changeDashToken = (tkn) => {
+        setDashToken(tkn);
+    };
+    const changeTasks = (type = "set", data) => {
+        console.log("in change tasks => ", type, data);
+        if (type === "set") {
+            setTasks(data);
+        } else if (type === "update-task") {
+            const otherTasks = [
+                ...tasks.filter((task) => task.TaskID !== data.TaskID),
+            ];
+            otherTasks.push(data);
+            setTasks(otherTasks);
+        } else if (type === "add-task") {
+            setTasks((p) => [...p, data]);
+        } else if (type === "delete-task") {
+            const otherTasks = [
+                ...tasks.filter((task) => task.TaskID !== data),
+            ];
+            setTasks(otherTasks);
+        } else {
+            console.log("nothing in change tasks");
+        }
+    };
     const toggleAside = (flag) => {
         // if (flag !== undefined && flag !== null) {
         //     setAsideIsOpen(flag);
@@ -83,7 +135,27 @@ const DashboardContextProvider = ({children, data, adminData}) => {
         toggleAside,
         currentTab,
         changeCurrentTab,
+        tasks,
+        changeTasks,
+        dashToken,
+        changeDashToken,
     };
+
+    useEffect(() => {
+        connection?.on("TaskCreated", (newTask) => {
+            changeTasks("add-task", newTask);
+        });
+        connection?.on("TaskUpdated", (updateTask) => {
+            console.log("in update task => ");
+            changeTasks("update-task", updateTask);
+        });
+        connection?.on("GetAllTasks", (allTasks) => {
+            changeTasks("set", allTasks);
+        });
+        connection?.on("TaskDeleted", (taskId) => {
+            changeTasks("delete-task", taskId);
+        });
+    }, [connection]);
 
     return (
         <DashboardContext.Provider value={context}>

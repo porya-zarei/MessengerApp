@@ -1,26 +1,59 @@
 import Cookies from "cookies";
 import {useRouter} from "next/router";
-import {useEffect} from "react";
+import {useContext, useEffect} from "react";
+import {toast} from "react-toastify";
 import DashboardContextProvider from "../../components/dashboard/context/dashboard-context";
 import DashBoardLayout from "../../components/dashboard/layout/dashboard-layout";
 import DashboardHome from "../../components/dashboard/routes/home/dashboard-home";
 import {api_url} from "../../configs/configs";
+import {UserContext} from "../../context/user-context/user-context";
+import {fetcher} from "../../hooks/fetcher";
 
-const DashboardPage = ({isError, adminData, allData}) => {
+const DashboardPage = ({isError, adminData, allData, allTasks, token}) => {
     const router = useRouter();
-
+    const {connection, connectionId} = useContext(UserContext);
     useEffect(() => {
         if (isError) {
             router.replace("/");
         }
     }, []);
+    useEffect(() => {
+        if (token) {
+            const data = {
+                UserID: adminData?.UserID,
+                ConnectionID: connectionId,
+            };
+            fetcher("POST", "Users/SetUserConnectionId", data, token)
+                .then(({isError, result, error}) => {
+                    console.log(
+                        "result in set connection => ",
+                        connection,
+                        connectionId,
+                        result,
+                    );
+                    if (result !== connectionId || isError) {
+                        console.log("error in set Connection ", error, result);
+                        router.replace("/Auth/Login");
+                    } else {
+                        toast.dark("realtime connection started");
+                    }
+                })
+                .catch((err) => {
+                    console.log("error in set Connection ", err);
+                });
+        }
+    }, [connectionId]);
 
     if (isError) {
         return <div> access denied</div>;
     }
 
     return (
-        <DashboardContextProvider data={allData} adminData={adminData}>
+        <DashboardContextProvider
+            data={allData}
+            adminData={adminData}
+            allTasks={allTasks}
+            token={token}>
             <DashboardHome />
         </DashboardContextProvider>
     );
@@ -94,7 +127,15 @@ export async function getServerSideProps({req, res}) {
             method: "GET",
         });
 
-        if (!resp1.ok || !resp2.ok || !resp1.json || !resp2.json) {
+        const resp3 = await fetch(`${api_url}/Dashboard/GetAllTasks`, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+                "Content-Type": "application/json",
+            },
+            method: "GET",
+        });
+
+        if (!resp1.ok || !resp2.ok || !resp3.ok) {
             return {
                 props: {isError: true},
             };
@@ -103,6 +144,8 @@ export async function getServerSideProps({req, res}) {
                 props: {
                     allData: await resp1.json(),
                     adminData: await resp2.json(),
+                    allTasks: await resp3.json(),
+                    token,
                 },
             };
         }

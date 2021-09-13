@@ -181,6 +181,25 @@
         font-size: 14px;
     }
 }
+.simpleTaskTimes{
+    width: 100%;
+    height: auto;
+    margin-top:auto;
+    border-top: 1px dashed;
+    font-size: 13px;
+    display: flex;
+    justify-content: baseline;
+    align-items: center;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    @media screen and (max-width:700px) {
+        font-size: 11px;
+    }
+    &>div{
+        width: 45%;
+        height: 15px;
+    }
+}
 .simpleTaskRight{
     height: 100%;
     width: 20%;

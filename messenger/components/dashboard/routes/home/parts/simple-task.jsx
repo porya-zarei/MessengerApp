@@ -1,21 +1,33 @@
 import {useContext, useState} from "react";
 import {DashboardContext} from "../../../context/dashboard-context";
-import {motion,useMotionValue} from 'framer-motion'
+import {motion, useMotionValue} from "framer-motion";
 import classes from "./parts.module.scss";
 
 const SimpleTask = ({
-    finished = false,
-    statusColor = "primary",
-    title = "",
-    content = "",
-    sender = "Creator",
-    forWho = "",
+    task = {},
+    selectedTaskForEdit,
+    changeSelectedTaskForEdit,
+    showForm,
+    changeShowForm,
 }) => {
+    const {
+        TaskID,
+        Title,
+        Content,
+        StartDate,
+        FinishDate,
+        Finished,
+        SenderID,
+        SenderName,
+        ForWhoID,
+        ForWhoName,
+        StatusColor,
+    } = task;
     const {dashTheme: theme} = useContext(DashboardContext);
-    const [checked, setChecked] = useState(finished);
+    const [checked, setChecked] = useState(Finished);
     const xPosition = useMotionValue(0);
     let statusBgColor = "";
-    switch (statusColor) {
+    switch (StatusColor) {
         case "primary":
             statusBgColor = "#3b8aff73";
             break;
@@ -42,8 +54,16 @@ const SimpleTask = ({
             break;
     }
     const handleDragEnd = () => {
-        
-    }
+        if (xPosition.get() > 70) {
+            console.log("delete");
+        } else if (xPosition.get() < -70) {
+            console.log("edit");
+            changeSelectedTaskForEdit(task);
+            changeShowForm(true);
+        } else {
+            console.log("no delete no edit");
+        }
+    };
     return (
         <div className={classes.simpleTaskContainer}>
             <motion.div
@@ -64,11 +84,17 @@ const SimpleTask = ({
                 }}
                 className={classes.simpleTask}>
                 <div className={classes.simpleTaskLeft}>
-                    <div className={classes.simpleTaskTitle}>{title}</div>
+                    <div className={classes.simpleTaskTitle}>{Title}</div>
                     <div
                         style={{borderTopColor: theme.text}}
                         className={classes.simpleTaskContent}>
-                        {content}
+                        {Content}
+                    </div>
+                    <div
+                        style={{borderTopColor: theme.text}}
+                        className={classes.simpleTaskTimes}>
+                        <div>{StartDate}</div>
+                        <div>{FinishDate}</div>
                     </div>
                 </div>
                 <div className={classes.simpleTaskRight}>
@@ -77,7 +103,7 @@ const SimpleTask = ({
                         className={`${classes.simpleTaskFinishStatus}`}>
                         <input
                             type="checkbox"
-                            className={`form-check-input bg-${statusColor}`}
+                            className={`form-check-input bg-${StatusColor}`}
                             checked={checked}
                             onChange={() => setChecked((p) => !p)}
                         />
@@ -85,13 +111,13 @@ const SimpleTask = ({
                     <div className={classes.simpleTaskDetail}>
                         <div className={classes.simpleTaskDetailSender}>
                             <span>Sender :</span>
-                            <span>{sender}</span>
+                            <span>{SenderName}</span>
                         </div>
                         <div
                             style={{borderTopColor: theme.text}}
                             className={classes.simpleTaskDetailForWho}>
                             <span>For :</span>
-                            <span>{forWho}</span>
+                            <span>{ForWhoName}</span>
                         </div>
                     </div>
                 </div>

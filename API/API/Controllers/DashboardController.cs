@@ -1,4 +1,5 @@
 ﻿using API.Hubs;
+using API.Utils;
 using APIDataLayer.Context;
 using APIDataLayer.DTOs;
 using APIDataLayer.Interfaces;
@@ -31,6 +32,7 @@ namespace API.Controllers
         private readonly IRoomsRepository roomsRepository;
         private readonly IGroupsRepository groupsRepository;
         private readonly IChannelsRepository channelsRepository;
+        private readonly IDashboardTaskRepository dashboardTaskRepository;
 
         private readonly IWebHostEnvironment webHostEnvironment;
         private IConfiguration configuration;
@@ -51,6 +53,7 @@ namespace API.Controllers
             channelsRepository = new ChannelsRepository(context);
 
             usersRepository = new UsersRepository(context);
+            dashboardTaskRepository = new DashboardTaskRepository(context);
         }
 
         [HttpGet("GetAllDataForAdmin")]
@@ -59,7 +62,7 @@ namespace API.Controllers
         {
             var userID = new Guid(User.FindFirst("UserID").Value);
 
-            if (!usersRepository.CheckAccessToAllData(userID))
+            if (!usersRepository.CheckAccessToAllData(userID, OwnersHelper.OwnersEmail))
             {
                 return BadRequest();
             }
@@ -84,7 +87,7 @@ namespace API.Controllers
         {
             var userID = new Guid(User.FindFirst("UserID").Value);
 
-            if (!usersRepository.CheckAccessToAllData(userID))
+            if (!usersRepository.CheckAccessToAllData(userID, OwnersHelper.OwnersEmail))
             {
                 return BadRequest();
             }
@@ -95,6 +98,110 @@ namespace API.Controllers
                 if (userData != null)
                 {
                     return Ok(userData);
+                }
+                else
+                {
+                    return BadRequest();
+                }
+            }
+        }
+
+        [HttpGet("GetAllTasks")]
+        [Authorize]
+        public ActionResult<List<OutputDashboardTask>> GetAllTasks()
+        {
+            var userID = new Guid(User.FindFirst("UserID").Value);
+
+            if (!usersRepository.CheckAccessToAllData(userID, OwnersHelper.OwnersEmail))
+            {
+                return BadRequest();
+            }
+            else
+            {
+                var tasks = dashboardTaskRepository.GetAllDashboardTasks();
+
+                if (tasks != null)
+                {
+                    return Ok(tasks);
+                }
+                else
+                {
+                    return BadRequest();
+                }
+            }
+        }
+
+        [HttpPost("CreateTask")]
+        [Authorize]
+        public async Task<ActionResult<bool>> CreateTask(CreateDashboardTask createTask)
+        {
+            var userID = new Guid(User.FindFirst("UserID").Value);
+
+            if (!usersRepository.CheckAccessToAllData(userID, OwnersHelper.OwnersEmail))
+            {
+                return BadRequest();
+            }
+            else
+            {
+                var t = createTask.GetDashboardTask(userID);
+                var res = await dashboardTaskRepository.CreateDashboardTask(t);
+                if (res)
+                {
+                    var task = await dashboardTaskRepository.GetOutputDashboardTask(t.TaskID);
+                    await usersHub.Clients.Clients(usersRepository.GetOwnersConnectionId(OwnersHelper.OwnersEmail)).SendAsync("TaskCreated", task);
+                    return Ok(task);
+                }
+                else
+                {
+                    return BadRequest();
+                }
+            }
+        }
+
+        [HttpPost("UpdateTask")]
+        [Authorize]
+        public async Task<ActionResult<OutputDashboardTask>> UpdateTask(UpdateDashboardTask updateTask)
+        {
+            var userID = new Guid(User.FindFirst("UserID").Value);
+
+            if (!usersRepository.CheckAccessToAllData(userID, OwnersHelper.OwnersEmail))
+            {
+                return BadRequest();
+            }
+            else
+            {
+                var task = await dashboardTaskRepository.UpdateDashboardTask(updateTask);
+
+                if (task != null)
+                {
+                    await usersHub.Clients.Clients(usersRepository.GetOwnersConnectionId(OwnersHelper.OwnersEmail)).SendAsync("TaskUpdated", task);
+                    return Ok(task);
+                }
+                else
+                {
+                    return BadRequest();
+                }
+            }
+        }
+
+        [HttpPost("DeleteTask")]
+        [Authorize]
+        public async Task<ActionResult<OutputDashboardTask>> DeleteTask(Guid taskId)
+        {
+            var userID = new Guid(User.FindFirst("UserID").Value);
+
+            if (!usersRepository.CheckAccessToAllData(userID, OwnersHelper.OwnersEmail))
+            {
+                return BadRequest();
+            }
+            else
+            {
+                var res = await dashboardTaskRepository.DeleteDashboardTask(userID, taskId, OwnersHelper.OwnersEmail);
+
+                if (res)
+                {
+                    await usersHub.Clients.Clients(usersRepository.GetOwnersConnectionId(OwnersHelper.OwnersEmail)).SendAsync("TaskDeleted", taskId);
+                    return Ok(res);
                 }
                 else
                 {

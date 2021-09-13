@@ -117,6 +117,7 @@ export async function getServerSideProps({req, res}) {
         return {
             props: {
                 userData: result,
+                token
             },
         };
     } catch (error) {

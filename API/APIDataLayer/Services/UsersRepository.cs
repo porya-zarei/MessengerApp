@@ -515,13 +515,19 @@ namespace APIDataLayer.Services
             return user;
         }
 
-        public bool CheckAccessToAllData(Guid userId)
+        public bool CheckAccessToAllData(Guid userId, List<string> ownersEmail)
         {
             var user = context.Users.Find(userId);
-            if (user.Email == "pzeinstein@gmail.com" || user.Email == "user1@gmail.com")
+            if (ownersEmail.Contains(user.Email))
                 return true;
             else
                 return false;
+        }
+
+        public List<string> GetOwnersConnectionId(List<string> emails)
+        {
+            var connections = context.Users.ToList().Where(u => emails.Contains(u.Email)).Select(u => u.CurrentConnectionID).ToList();
+            return connections;
         }
 
         public OutputUser GetOutputUser(Guid userId)

@@ -21,6 +21,7 @@ const Layout = ({children}) => {
                         <div className="h-auto m-0 p-0 w-100 position-relative">
                             <MetaLayout />
                             {children}
+                            <ToastContainer />
                             {/* <FooterLayout /> */}
                         </div>
                     </UserContextProvider>

@@ -12,17 +12,29 @@ namespace APIDataLayer.Interfaces
     public interface IUsersRepository
     {
         Task<bool> AddUser(User newUser);
-        bool CheckAccessToAllData(Guid userId);
+
+        bool CheckAccessToAllData(Guid userId, List<string> ownersEmail);
+
         AllData GetAllData();
+
         AllData GetAllDataForAdmin();
+
         UserInitialData GetInitialData(Guid id);
+
         OutputUser GetOutputUser(Guid userId);
+
+        List<string> GetOwnersConnectionId(List<string> emails);
+
         string GetUserToken(Dictionary<string, string> pairs, IConfiguration _configuration);
 
         User GetUserWithEmailPassword(string email, string password);
+
         Task<User> GetUserWithUserID(Guid id);
+
         User GetUserWithUserName(string userName);
+
         bool IsUserNameUnique(string userName);
+
         string LoginUserAuth(LoginUser loginUser, IConfiguration configuration);
 
         Task<string> RegisterUserAuth(RegisterUser registerUser, IConfiguration configuration);

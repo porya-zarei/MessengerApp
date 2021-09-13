@@ -37,7 +37,6 @@ const Container = () => {
             </MainLayout>
             <Dialogs />
             <ContextMenu />
-            <ToastContainer />
         </>
     );
 };
