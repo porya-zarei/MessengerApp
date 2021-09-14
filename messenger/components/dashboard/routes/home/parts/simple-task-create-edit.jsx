@@ -109,7 +109,11 @@ const SimpleTaskCreateEdit = ({
                     <button className="btn btn-lg btn-info">Create</button>
                 </div>
                 <div className="col-md-3 col-lg-3 col-sm-6 col-xs-6 p-0 m-0 mb-3 center">
-                    <button className="btn btn-lg btn-warning" onClick={handleCleanForm}>Clean Form</button>
+                    <button
+                        className="btn btn-lg btn-warning"
+                        onClick={handleCleanForm}>
+                        Clean Form
+                    </button>
                 </div>
                 <div className="col-md-3 col-lg-3 col-sm-6 col-xs-6 p-0 m-0 mb-3 center">
                     <button className="btn btn-lg btn-secondary">Create</button>
@@ -121,7 +125,7 @@ const SimpleTaskCreateEdit = ({
             <div className="row w-100 m-0 p-0 justify-content-evenly align-content-between">
                 <div className="col-12 p-0 m-0">
                     <button
-                        onClick={()=> changeShowForm(null)}
+                        onClick={() => changeShowForm(null)}
                         className="btn btn-secondary w-100">
                         {showForm ? "hide" : "show"} form
                     </button>
@@ -231,7 +235,7 @@ const SimpleTaskCreateEdit = ({
                                                 setForWhoId(e.target.value)
                                             }
                                             className="form-control form-select"
-                                            name="statusColor"
+                                            name="forWhoId"
                                             id="forWhoIdField">
                                             {allData.Users.map((user) => (
                                                 <option value={user.UserID}>

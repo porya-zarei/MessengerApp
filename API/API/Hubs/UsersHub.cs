@@ -19,7 +19,9 @@ namespace API.Hubs
 {
     public class UsersHub : Hub
     {
-        public static List<GroupVoiceChat> GroupVoiceChats = new List<GroupVoiceChat>() { };
+        private readonly static List<GroupVoiceChat> GroupVoiceChats = new List<GroupVoiceChat>() { };
+        private readonly static List<BoardUser> BoardUsers = new List<BoardUser>() { };
+        private static List<BoardElement> BoardElements = new List<BoardElement>() { };
         private readonly IUsersRepository usersRepository;
 
         public UsersHub(APIContext context)
@@ -154,6 +156,72 @@ namespace API.Hubs
         public async Task GetCheckUserStatus(string connectionId)
         {
             await Clients.Client(connectionId).SendAsync("GetUserStatus", true);
+        }
+
+        public async Task UserJoinBoard(Guid userId)
+        {
+            var user = await usersRepository.GetUserWithUserID(userId);
+            var boardUser = new BoardUser
+            {
+                UserID = user.UserID,
+                FullName = user.FirstName,
+                MousePoint = new Point { X = 0, Y = 0 },
+                ConnectionID = user.CurrentConnectionID
+            };
+            BoardUsers.Add(boardUser);
+            await Clients.Clients(BoardUsers.Select(bu => bu.ConnectionID).ToList()).SendAsync("GetAllBoardUsers", BoardUsers);
+        }
+
+        public async Task UserLeaveBoard(Guid userId)
+        {
+            var boardUser = BoardUsers.Find(bu => bu.UserID == userId);
+            if (boardUser != null)
+            {
+                BoardUsers.Remove(boardUser);
+                await Clients.Clients(BoardUsers.Select(bu => bu.ConnectionID).ToList()).SendAsync("GetAllBoardUsers", BoardUsers);
+            }
+        }
+
+        public async Task UserMoveMouseOnBoard(Guid userId, Point point)
+        {
+            var boardUser = BoardUsers.Find(bu => bu.UserID == userId);
+            if (boardUser != null)
+            {
+                boardUser.MousePoint = point;
+                await Clients.Clients(BoardUsers.Select(bu => bu.ConnectionID).ToList()).SendAsync("GetAllBoardUsers", BoardUsers);
+            }
+        }
+
+        public async Task SendAllBoardUsers(Guid userId)
+        {
+            await Clients.Clients(BoardUsers.Find(bu => bu.UserID == userId).ConnectionID).SendAsync("GetAllBoardUsers", BoardUsers);
+        }
+
+        public async Task CreateBoardElement(BoardElement element)
+        {
+            element.ElementID = Guid.NewGuid();
+            BoardElements.Add(element);
+            await Clients.Clients(BoardUsers.Select(bu => bu.ConnectionID).ToList()).SendAsync("GetAllBoardElements", BoardElements);
+        }
+
+        public async Task SendBoardElements()
+        {
+            await Clients.Clients(BoardUsers.Select(bu => bu.ConnectionID).ToList()).SendAsync("GetAllBoardElements", BoardElements);
+        }
+
+        public List<BoardElement> SendBoardElementsToUser()
+        {
+            return BoardElements;
+        }
+
+        public async Task UserMoveElementOnBoard(Guid elementId, Point point)
+        {
+            var boardElement = BoardElements.Find(bu => bu.ElementID == elementId);
+            if (boardElement != null)
+            {
+                boardElement.Position = point;
+                await Clients.Clients(BoardUsers.Select(bu => bu.ConnectionID).ToList()).SendAsync("GetAllBoardElements", BoardElements);
+            }
         }
     }
 }
