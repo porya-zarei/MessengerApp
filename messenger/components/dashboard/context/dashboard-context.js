@@ -70,7 +70,7 @@ export const DashboardContext = createContext({
     ],
     changeBoardUsers: (type = "", changeData) => {},
     handleJoinBoard: async () => {},
-    handleLeaveBoard: () => {},
+    handleLeaveBoard: async () => {},
     handleMoveMouseOnBoard: (x = 0, y = 0) => {},
     boardElements: [
         {
@@ -98,6 +98,8 @@ export const DashboardContext = createContext({
         },
     ) => {},
     handleDragElement: (elementId, x, y) => {},
+    joinedToBoard:false,
+    changeJoinedToBoard:()=>{}
 });
 
 const DashboardContextProvider = ({
@@ -118,6 +120,10 @@ const DashboardContextProvider = ({
     const [dashToken, setDashToken] = useState(token);
     const [boardUsers, setBoardUsers] = useState([{}]);
     const [boardElements, setBoardElements] = useState([{}]);
+    const [joinedToBoard, setJoinedToBoard] = useState(false);
+    const changeJoinedToBoard = (joined) => {
+        setJoinedToBoard(joined);
+    };
 
     const changeBoardElements = (tyoe = "", data) => {
         if (type === "set") {
@@ -180,10 +186,12 @@ const DashboardContextProvider = ({
     };
 
     const handleJoinBoard = async () => {
-        await connection.invoke("UserJoinBoard", admin.UserID);
+        const res = await connection.invoke("UserJoinBoard", admin.UserID);
+        changeJoinedToBoard(Boolean(res));
     };
-    const handleLeaveBoard = () => {
-        connection.send("UserLeaveBoard", admin.UserID);
+    const handleLeaveBoard = async () => {
+        const res = await connection.invoke("UserLeaveBoard", admin.UserID);
+        changeJoinedToBoard(!Boolean(res));
     };
     const handleMoveMouseOnBoard = (x, y) => {
         connection.send("UserMoveMouseOnBoard", admin.UserID, {X: x, Y: y});
@@ -221,6 +229,8 @@ const DashboardContextProvider = ({
         changeBoardElements,
         handleCreateElement,
         handleDragElement,
+        changeJoinedToBoard,
+        joinedToBoard,
     };
 
     useEffect(() => {
@@ -244,6 +254,7 @@ const DashboardContextProvider = ({
             console.log("in get all board elements => ", AllBoardElements);
             setBoardElements(AllBoardElements);
         });
+
         connection?.invoke("SendBoardElementsToUser").then((dt) => {
             console.log("all elmnt => ", dt);
             setBoardElements(dt);

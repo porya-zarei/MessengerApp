@@ -158,27 +158,43 @@ namespace API.Hubs
             await Clients.Client(connectionId).SendAsync("GetUserStatus", true);
         }
 
-        public async Task UserJoinBoard(Guid userId)
+        public async Task<bool> UserJoinBoard(Guid userId)
         {
-            var user = await usersRepository.GetUserWithUserID(userId);
-            var boardUser = new BoardUser
+            try
             {
-                UserID = user.UserID,
-                FullName = user.FirstName,
-                MousePoint = new Point { X = 0, Y = 0 },
-                ConnectionID = user.CurrentConnectionID
-            };
-            BoardUsers.Add(boardUser);
-            await Clients.Clients(BoardUsers.Select(bu => bu.ConnectionID).ToList()).SendAsync("GetAllBoardUsers", BoardUsers);
+                var user = await usersRepository.GetUserWithUserID(userId);
+                var boardUser = new BoardUser
+                {
+                    UserID = user.UserID,
+                    FullName = user.FirstName,
+                    MousePoint = new Point { X = 0, Y = 0 },
+                    ConnectionID = user.CurrentConnectionID
+                };
+                BoardUsers.Add(boardUser);
+                await Clients.Clients(BoardUsers.Select(bu => bu.ConnectionID).ToList()).SendAsync("GetAllBoardUsers", BoardUsers);
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
         }
 
-        public async Task UserLeaveBoard(Guid userId)
+        public async Task<bool> UserLeaveBoard(Guid userId)
         {
-            var boardUser = BoardUsers.Find(bu => bu.UserID == userId);
-            if (boardUser != null)
+            try
             {
-                BoardUsers.Remove(boardUser);
-                await Clients.Clients(BoardUsers.Select(bu => bu.ConnectionID).ToList()).SendAsync("GetAllBoardUsers", BoardUsers);
+                var boardUser = BoardUsers.Find(bu => bu.UserID == userId);
+                if (boardUser != null)
+                {
+                    BoardUsers.Remove(boardUser);
+                    await Clients.Clients(BoardUsers.Select(bu => bu.ConnectionID).ToList()).SendAsync("GetAllBoardUsers", BoardUsers);
+                }
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
             }
         }
 
@@ -222,6 +238,11 @@ namespace API.Hubs
                 boardElement.Position = point;
                 await Clients.Clients(BoardUsers.Select(bu => bu.ConnectionID).ToList()).SendAsync("GetAllBoardElements", BoardElements);
             }
+        }
+
+        public async Task UserDrawOnBoard(DrawLine line)
+        {
+            await Clients.Clients(BoardUsers.Select(bu => bu.ConnectionID).ToList()).SendAsync("Drawing", line);
         }
     }
 }

@@ -1,6 +1,6 @@
 import Cookies from "cookies";
 import {useRouter} from "next/router";
-import {useContext, useEffect} from "react";
+import {useContext, useEffect, useRef} from "react";
 import {toast} from "react-toastify";
 import DashboardContextProvider from "../../components/dashboard/context/dashboard-context";
 import DashBoardLayout from "../../components/dashboard/layout/dashboard-layout";
@@ -12,13 +12,14 @@ import {fetcher} from "../../hooks/fetcher";
 const DashboardPage = ({isError, adminData, allData, allTasks, token}) => {
     const router = useRouter();
     const {connection, connectionId} = useContext(UserContext);
+    const connectionConfirmed = useRef(false);
     useEffect(() => {
         if (isError) {
             router.replace("/");
         }
     }, []);
     useEffect(() => {
-        if (token) {
+        if (token && connectionConfirmed.current) {
             const data = {
                 UserID: adminData?.UserID,
                 ConnectionID: connectionId,
@@ -41,6 +42,8 @@ const DashboardPage = ({isError, adminData, allData, allTasks, token}) => {
                 .catch((err) => {
                     console.log("error in set Connection ", err);
                 });
+        } else {
+            connectionConfirmed.current = true;
         }
     }, [connectionId]);
 

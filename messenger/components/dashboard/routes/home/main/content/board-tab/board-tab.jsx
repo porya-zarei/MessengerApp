@@ -2,32 +2,21 @@ import {useContext, useEffect, useRef, useState} from "react";
 import {UserContext} from "../../../../../../../context/user-context/user-context";
 import {DashboardContext} from "../../../../../context/dashboard-context";
 import SimpleElementCreateEdit from "../../../parts/simple-element-create-edit";
-import {motion} from "framer-motion";
 
 const BoardTab = () => {
-    const {
-        boardUsers,
-        boardElements,
-        handleDragElement,
-        handleMoveMouseOnBoard,
-    } = useContext(DashboardContext);
+    const {connection} = useContext(UserContext);
 
     const boardRef = useRef();
-
-    const [dragging, setDragging] = useState(false);
-    const [joined, setJoined] = useState(false);
+    const curr = useRef({color: "#212529", x: 0.0, y: 0.0, lineWidth: 2});
 
     const [showForm, setShowForm] = useState(false);
 
-    const changeJoined = (joined) => {
-        setJoined(joined);
+    const changeColor = (cr) => {
+        curr.current.color = cr;
     };
 
-    const handleDrag = (e, info, id) => {
-        console.log("handle drag =>", e, info);
-        if (joined) {
-            handleDragElement(id, info.point.x, info.point.y);
-        }
+    const changeLineWidth = (st) => {
+        curr.current.lineWidth = st;
     };
 
     const changeShowForm = (show = "") => {
@@ -40,150 +29,159 @@ const BoardTab = () => {
         }
     };
 
-    const getElement = (element) => {
-        console.log("element => ", element);
-        if (element.Type === 0) {
-            return (
-                <motion.div
-                    key={element.ElementID}
-                    style={{
-                        height: `${element.Height}px`,
-                        width: `${element.Width}px`,
-                        position: "absolute",
-                        top: `${element.Position.Y}px`,
-                        left: `${element.Position.X}px`,
-                    }}
-                    className={`bg-${element.Color}`}>
-                    <textarea
-                        className="form-control w-100 h-100"
-                        type="text"
-                        value={element.Content}></textarea>
-                </motion.div>
-            );
-        } else if (element.Type === 1) {
-            return (
-                <motion.div
-                    key={element.ElementID}
-                    style={{
-                        height: `${element.R * 2}px`,
-                        width: `${element.R * 2}px`,
-                        position: "absolute",
-                        top: `${element.Position.Y}px`,
-                        left: `${element.Position.X}px`,
-                    }}
-                    className={`bg-${element.Color}`}>
-                    {element.Content}
-                </motion.div>
-            );
-        } else if (element.Type === 2) {
-            return (
-                <motion.div
-                    key={element.ElementID}
-                    drag
-                    dragConstraints={boardRef}
-                    onDrag={(ev, info) =>
-                        handleDrag(ev, info, element.ElementID)
-                    }
-                    style={{
-                        height: `${element.R * 2}px`,
-                        width: `${element.R * 2}px`,
-                        position: "absolute",
-                        top: `${element.Position.Y}px`,
-                        left: `${element.Position.X}px`,
-                        borderRadius: "50%",
-                    }}
-                    className={`bg-${element.Color}`}>
-                    {element.Content}
-                </motion.div>
-            );
-        } else if (element.Type === 3) {
-            return (
-                <motion.div
-                    key={element.ElementID}
-                    style={{
-                        height: `${element.Height}px`,
-                        width: `${element.Width}px`,
-                        position: "absolute",
-                        top: `${element.Position.Y}px`,
-                        left: `${element.Position.X}px`,
-                    }}
-                    className={`bg-${element.Color}`}>
-                    {element.Content}
-                </motion.div>
-            );
-        } else if (element.Type === 4) {
-            return (
-                <motion.div
-                    key={element.ElementID}
-                    style={{
-                        height: `${element.Height}px`,
-                        width: `${element.Width}px`,
-                        position: "absolute",
-                        top: `${element.Position.Y}px`,
-                        left: `${element.Position.X}px`,
-                    }}
-                    className={`bg-${element.Color}`}>
-                    {element.Content}
-                </motion.div>
-            );
-        } else {
-        }
-    };
-
-    const mouseMoveListener = (e) => {
-        handleMoveMouseOnBoard(e.offsetX, e.offsetY);
-    };
-
     useEffect(() => {
-        return () => {
-            boardRef.current.removeEventListener(
-                "mousemove",
-                mouseMoveListener,
+        const canvas = boardRef.current;
+        const current = curr.current;
+
+        let drawing = false;
+        const drawLine = (x0, y0, x1, y1, color, lw, emit) => {
+            if (!emit) {
+                const context = boardRef.current.getContext("2d");
+                // console.log("before draw => ", x0, y0, x1, y1);
+                context.beginPath();
+                context.moveTo(x0, y0);
+                context.lineTo(x1, y1);
+                context.strokeStyle = color;
+                context.lineWidth = lw;
+                context.stroke();
+                context.closePath();
+                // console.log("after draw => ", context);
+                return;
+            } else {
+                const w = canvas.width;
+                const h = canvas.height;
+                // console.log("before send line => ", x0, y0, x1, y1);
+                connection.send("UserDrawOnBoard", {
+                    X0: x0 / w,
+                    Y0: y0 / h,
+                    X1: x1 / w,
+                    Y1: y1 / h,
+                    Color: color,
+                    LineWidth: Number(lw),
+                });
+                return;
+            }
+        };
+
+        const onMouseDown = (e) => {
+            drawing = true;
+            current.x = e?.offsetX || e?.touches[0]?.offsetX;
+            current.y = e?.offsetY || e?.touches[0]?.offsetY;
+        };
+
+        const onMouseMove = (e) => {
+            
+            if (!drawing) {
+                return;
+            }
+            drawLine(
+                current.x,
+                current.y,
+                e?.offsetX || e?.touches[0]?.offsetX,
+                e?.offsetY || e?.touches[0]?.offsetY,
+                curr.current.color,
+                curr.current.lineWidth,
+                true,
+            );
+            current.x = e?.offsetX || e?.touches[0]?.offsetX;
+            current.y = e?.offsetY || e?.touches[0]?.offsetY;
+        };
+
+        const onMouseUp = (e) => {
+            
+            if (!drawing) {
+                return;
+            }
+            drawing = false;
+            drawLine(
+                current.x,
+                current.y,
+                e?.offsetX || e?.touches[0]?.offsetX,
+                e?.offsetY || e?.touches[0]?.offsetY,
+                curr.current.color,
+                curr.current.lineWidth,
+                true,
             );
         };
+
+        const throttle = (callback, delay) => {
+            let previousCall = new Date().getTime();
+            return function () {
+                const time = new Date().getTime();
+
+                if (time - previousCall >= delay) {
+                    previousCall = time;
+                    callback.apply(null, arguments);
+                }
+            };
+        };
+
+        canvas.addEventListener("mousedown", onMouseDown, false);
+        canvas.addEventListener("mouseup", onMouseUp, false);
+        canvas.addEventListener("mouseout", onMouseUp, false);
+        canvas.addEventListener("mousemove", throttle(onMouseMove, 10), false);
+
+        canvas.addEventListener("touchstart", onMouseDown, false);
+        canvas.addEventListener("touchend", onMouseUp, false);
+        canvas.addEventListener("touchcancel", onMouseUp, false);
+        canvas.addEventListener("touchmove", throttle(onMouseMove, 10), false);
+
+        const onResize = () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        };
+
+        window.addEventListener("resize", onResize, false);
+
+        onResize();
+
+        const onDrawingEvent = (data) => {
+            const w = canvas.width;
+            const h = canvas.height;
+            // console?.log("on draw event => ", data);
+            drawLine(
+                data.X0 * w,
+                data.Y0 * h,
+                data.X1 * w,
+                data.Y1 * h,
+                data.Color,
+                data.LineWidth,
+                false,
+            );
+        };
+        connection?.on("Drawing", onDrawingEvent);
     }, []);
 
     return (
-        <div className="row p-0 m-0 h-100 w-100 align-content-start">
+        <div className="row p-0 m-auto h-100 w-100 overflow-hidden">
             <div className="col-12 p-0 m-0 h-auto center">
                 <SimpleElementCreateEdit
                     showForm={showForm}
                     changeShowForm={changeShowForm}
-                    selectedElementForEdit={{}}
-                    boardRef={boardRef}
-                    changeJoined={changeJoined}
-                    mouseMoveListener={mouseMoveListener}
+                    changeColor={changeColor}
+                    changeLineWidth={changeLineWidth}
                 />
             </div>
+            <div className="col-12 p-0 m-0 h-auto center"></div>
             <div className="col-12 p-0 m-0 h-auto center">
                 <div
-                    className="w-100 bg-white rounded rounded-3 mt-2"
-                    ref={boardRef}
                     style={{
                         height: "500px",
+                        width: "100%",
                         position: "relative",
-                        overflow: "hidden",
                     }}>
-                    {boardUsers &&
-                        boardUsers?.length > 0 &&
-                        boardUsers?.map((user) => (
-                            <div
-                                key={user.UserID}
-                                style={{
-                                    position: "absolute",
-                                    top: user?.MousePoint?.Y,
-                                    left: user?.MousePoint?.X,
-                                    height: "auto",
-                                    width: "auto",
-                                    backgroundColor: "black",
-                                    color: "white",
-                                }}>
-                                {user?.FullName}
-                            </div>
-                        ))}
-                    {boardElements &&
-                        boardElements?.length > 0 &&
-                        boardElements?.map((element) => getElement(element))}
+                    <canvas
+                        className="bg-white text-dark rounded rounded-3 mt-2"
+                        style={{
+                            height: "100%",
+                            width: "100%",
+                            position: "absolute",
+                            overflow: "hidden",
+                            top: 0,
+                            left: 0,
+                        }}
+                        ref={boardRef}
+                    />
                 </div>
             </div>
         </div>
