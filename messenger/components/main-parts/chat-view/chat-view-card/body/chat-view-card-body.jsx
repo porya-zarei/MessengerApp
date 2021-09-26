@@ -5,9 +5,11 @@ import Chat from "./chat/chat";
 import Chats from "./chats/chats";
 import ContextMenu from "../../../../context-menu/context-menu";
 import classes from "./cvcb.module.scss";
+import VideoChat from "../video-chat/video-chat";
 
 const ChatViewCardBody = () => {
-    const {chatsToShow, chatBackground} = useContext(ViewContext);
+    const {chatsToShow, chatBackground, showVideoChat} =
+        useContext(ViewContext);
 
     const {userId} = useContext(UserContext);
 
@@ -64,6 +66,7 @@ const ChatViewCardBody = () => {
                     type={chatsToShow.type}
                 />
             </div>
+            {showVideoChat && <VideoChat />}
         </div>
     );
 };

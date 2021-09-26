@@ -19,6 +19,10 @@ body {
     align-items: center;
 }
 
+.circle{
+    border-radius: 50%;
+}
+
 .m4-inmdlg {
     margin-bottom: 20px;
 }

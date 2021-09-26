@@ -211,10 +211,16 @@ const Register = () => {
                 <label htmlFor="LastNameRegister">LastName</label>
             </div>
             <button
-                className="w-100 btn btn-lg btn-info"
+                className="w-100 btn btn-lg btn-info h-40px"
                 type="submit"
                 disabled={loading}>
-                Register
+                {loading ? (
+                    <i
+                        className="spinner-border"
+                        style={{height: "35px", width: "35px"}}></i>
+                ) : (
+                    "Register"
+                )}
             </button>
         </form>
     );

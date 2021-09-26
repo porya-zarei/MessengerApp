@@ -1,5 +1,5 @@
 import {useRouter} from "next/router";
-import { useContext, useEffect, useState} from "react";
+import {useContext, useEffect, useState} from "react";
 import {UserContext} from "../../../context/user-context/user-context";
 import classes from "./login.module.scss";
 import {fetcher} from "../../../hooks/fetcher";
@@ -9,7 +9,7 @@ const Login = () => {
     const {setIsLoged, connectionId, setToken} = useContext(UserContext);
 
     const [email, setEmail] = useState("");
-    const [emailError, setErrorEmail] = useState("");           
+    const [emailError, setErrorEmail] = useState("");
     const [password, setPassword] = useState("");
     const [passwordError, setErrorPassword] = useState("");
     const [loading, setLoading] = useState(false);
@@ -23,7 +23,7 @@ const Login = () => {
         setEmail(e.target.value);
     };
 
-    const handleBlur = (type="") => {
+    const handleBlur = (type = "") => {
         if (type === "password") {
             if (password.length < 4) {
                 setErrorPassword(" Your Password is too Short ");
@@ -51,7 +51,7 @@ const Login = () => {
 
     useEffect(() => {
         router.prefetch("/Messenger/");
-        let timeOut = setTimeout(()=>{
+        let timeOut = setTimeout(() => {
             if (
                 connectionId.length > 0 &&
                 localStorage.getItem("userLoginInfo")
@@ -77,10 +77,10 @@ const Login = () => {
                         });
                 }
             }
-        },500);
-        return ()=>{
+        }, 500);
+        return () => {
             clearTimeout(timeOut);
-        }
+        };
     }, [connectionId]);
 
     const handleAutoLogin = async (data) => {
@@ -192,10 +192,16 @@ const Login = () => {
                 </label>
             </div>
             <button
-                className="w-100 btn btn-lg btn-primary"
+                className="w-100 btn btn-lg btn-primary center"
                 type="submit"
                 disabled={loading}>
-                {loading ? <i className="spinner-border h-100"></i> : "Login"}
+                {loading ? (
+                    <i
+                        className="spinner-border"
+                        style={{height: "35px", width: "35px"}}></i>
+                ) : (
+                    "Login"
+                )}
             </button>
         </form>
     );

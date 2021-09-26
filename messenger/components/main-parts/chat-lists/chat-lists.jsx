@@ -1,21 +1,14 @@
 import {useContext} from "react";
 import {ViewContext} from "../../../context/view-context/view-context";
 import ChatListItems from "../chat-parts/chat-lists-items/chat-list-items";
-
+import classes from "./cl.module.scss";
 const ChatLists = () => {
     const {theme} = useContext(ViewContext);
 
     return (
         <div
-            className="m-0 w-100"
-            style={{
-                height: "100%",
-                overflowY: "scroll",
-                overflowX: "hidden",
-                zIndex: "0",
-                padding: "70px 0 0 0",
-                backgroundColor: theme.dark,
-            }}>
+            className={classes.chatListItemsContainer}
+            style={{backgroundColor: theme.primarier}}>
             <ChatListItems />
         </div>
     );

@@ -1,5 +1,5 @@
 import {useContext, useState} from "react";
-import { toast } from "react-toastify";
+import {toast} from "react-toastify";
 import {UserContext} from "../../../../../../context/user-context/user-context";
 import {ViewContext} from "../../../../../../context/view-context/view-context";
 import {fetcher} from "../../../../../../hooks/fetcher";
@@ -7,8 +7,9 @@ import VoiceChat from "../../voice-chat/voice-chat";
 import classes from "./headersetting.module.scss";
 
 const HeaderSetting = () => {
-    const {chatsToShow, theme} = useContext(ViewContext);
-    const {userId, token,connection} = useContext(UserContext);
+    const {chatsToShow, theme, setShowVideoChat, showVideoChat} =
+        useContext(ViewContext);
+    const {userId, token, connection} = useContext(UserContext);
     const [voiceChatShow, setVoiceChatShow] = useState(false);
     const [loading, setLoading] = useState(false);
 
@@ -139,17 +140,30 @@ const HeaderSetting = () => {
                     </li>
                 )}
                 {chatsToShow.type === "room" && (
-                    <li
-                        style={{
-                            backgroundColor: theme.primary,
-                        }}
-                        className={`${classes.chatSettingListItem}`}>
-                        <button
-                            onClick={sendNotification}
-                            className={`${classes.chatSettingListItemBtn} btn h-100 w-100 center`}>
-                            send notification
-                        </button>
-                    </li>
+                    <>
+                        <li
+                            style={{
+                                backgroundColor: theme.primary,
+                            }}
+                            className={`${classes.chatSettingListItem}`}>
+                            <button
+                                onClick={sendNotification}
+                                className={`${classes.chatSettingListItemBtn} btn h-100 w-100 center`}>
+                                send notification
+                            </button>
+                        </li>
+                        <li
+                            style={{
+                                backgroundColor: theme.primary,
+                            }}
+                            className={`${classes.chatSettingListItem}`}>
+                            <button
+                                onClick={() => setShowVideoChat((p) => !p)}
+                                className={`${classes.chatSettingListItemBtn} btn h-100 w-100 center`}>
+                                {showVideoChat ? "close" : "open"} video chat
+                            </button>
+                        </li>
+                    </>
                 )}
             </ul>
         </div>

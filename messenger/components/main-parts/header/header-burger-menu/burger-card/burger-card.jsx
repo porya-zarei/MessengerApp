@@ -1,4 +1,4 @@
-import {useContext, useEffect, useRef, useState} from "react";
+import {useContext, useState} from "react";
 import {UserContext} from "../../../../../context/user-context/user-context";
 import {ViewContext} from "../../../../../context/view-context/view-context";
 import {files_url} from "../../../../../configs/configs";
@@ -34,7 +34,7 @@ const BurgerCard = () => {
                 }}
                 className={`${classes.burgerCard} row p-0 m-0`}>
                 <div className={`${classes.burgerCardHeader} col-12 p-0 m-0`}>
-                    <div className={`${classes.burgerAvatar}`}>
+                    <div className={`${classes.burgerAvatar} center`}>
                         <img
                             src={
                                 user?.ProfileImage?.length > 0
@@ -43,7 +43,7 @@ const BurgerCard = () => {
                             }
                             height="66px"
                             width="66px"
-                            className="h-100 w-100 img-circle"
+                            className="h-100 w-100 circle"
                         />
                     </div>
                     <CardBgHandler

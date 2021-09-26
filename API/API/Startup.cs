@@ -18,6 +18,8 @@ using Newtonsoft.Json.Serialization;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
+using System.Net.WebSockets;
 using System.Text;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
@@ -81,10 +83,12 @@ namespace API
                         }
                     });
             });
+
             services.AddSignalR().AddJsonProtocol(options =>
             {
                 options.PayloadSerializerOptions.PropertyNamingPolicy = null;
             });//.AddStackExchangeRedis("localhost, port:6379, password='13792000'");
+
             services.AddCors(options =>
             {
                 options.AddPolicy("ClientPermission", policy =>
@@ -143,9 +147,15 @@ namespace API
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseRouting();
+
             app.UseCors("ClientPermission");
             app.UseAuthentication();
             app.UseAuthorization();
+
+            app.UseWebSockets(new WebSocketOptions()
+            {
+                KeepAliveInterval = TimeSpan.FromSeconds(120),
+            });
 
             app.UseEndpoints(endpoints =>
             {

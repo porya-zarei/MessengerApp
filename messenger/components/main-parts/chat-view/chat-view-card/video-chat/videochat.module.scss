@@ -1,0 +1,45 @@
+.container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    z-index: 10;
+    padding: 10px 10px 150px 10px;
+    background-color: yellow;
+}
+.videoChat {
+    height: 100%;
+    width: 100%;
+    position: relative;
+    padding: 0;
+    background-color: black;
+}
+.otherUserVideo {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    z-index: 11;
+}
+.userVideo {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    height: 200px;
+    width: 200px;
+    z-index: 12;
+    @media screen and (max-width: 700px) {
+        height: 130px;
+        width: 130px;
+    }
+}
+.controlsContainer {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 70px;
+    width: 100%;
+    z-index: 12;
+}

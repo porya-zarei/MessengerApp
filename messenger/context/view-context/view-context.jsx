@@ -58,6 +58,8 @@ export const ViewContext = createContext({
     setTheme: () => {},
     chatBackground: "/assets/images/webp/background.webp",
     setChatBackground: () => {},
+    showVideoChat: false,
+    setShowVideoChat: () => {},
 });
 
 const ViewContextProvider = ({children}) => {
@@ -116,6 +118,9 @@ const ViewContextProvider = ({children}) => {
     const [chatBackground, setChatBackground] = useState(
         "/assets/images/webp/background.webp",
     );
+
+    const [showVideoChat, setShowVideoChat] = useState(false);
+
     useEffect(() => {
         if (window) {
             console.log(
@@ -162,6 +167,8 @@ const ViewContextProvider = ({children}) => {
         setTheme,
         chatBackground,
         setChatBackground,
+        showVideoChat,
+        setShowVideoChat,
     };
     return (
         <ViewContext.Provider value={context}>{children}</ViewContext.Provider>
