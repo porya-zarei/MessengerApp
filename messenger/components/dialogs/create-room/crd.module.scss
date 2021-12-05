@@ -1,4 +1,39 @@
-.container{
+@keyframes scalein {
+    0% {
+        transform: scale(0);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+@keyframes scaleout {
+    0% {
+        transform: scale(1);
+    }
+    100% {
+        transform: scale(0);
+    }
+}
+
+@keyframes movedown {
+    0% {
+        transform: translateY(0);
+    }
+    100% {
+        transform: translateY(100%);
+    }
+}
+
+.scaleInAnimation{
+    animation: scalein 0.3s 0s ease-in-out;
+}
+
+.moveDownAnimation{
+    animation: movedown 0.3s 0s ease-in-out;
+}
+
+.container {
     position: fixed;
     top: 0;
     left: 0;
@@ -10,7 +45,7 @@
     z-index: 1000;
     background-color: rgba(248, 246, 242, 0.562);
 }
-.card{
+.card {
     position: absolute;
     border-radius: 10px;
     padding: 10px;
@@ -20,39 +55,35 @@
 }
 
 @media (max-width: 576px) {
-.card{
-    position: absolute;
-    border-radius: 10px;
-    padding: 10px;
-    overflow: hidden;
-    height: 500px;
-    width: 300px;
-}
+    .card {
+        position: absolute;
+        border-radius: 10px;
+        padding: 10px;
+        overflow: hidden;
+        height: 500px;
+        width: 300px;
+    }
 }
 
 @media (max-width: 768px) {
-.card{
-    position: absolute;
-    border-radius: 10px;
-    padding: 10px;
-    overflow: hidden;
-    height: 500px;
-    width: 300px;
-}
+    .card {
+        position: absolute;
+        border-radius: 10px;
+        padding: 10px;
+        overflow: hidden;
+        height: 500px;
+        width: 300px;
+    }
 }
 
 @media (max-width: 992px) {
-   
 }
 
 @media (max-width: 1200px) {
-    
 }
 
 @media (max-width: 1400px) {
-    
 }
 
 @media (max-width: 2000px) {
-    
 }

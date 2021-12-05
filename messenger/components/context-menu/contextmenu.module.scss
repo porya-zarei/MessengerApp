@@ -1,3 +1,17 @@
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+    
+}
+
+.fadeInAnimation {
+  animation: fadeIn 0.5s;
+}
+
 .contextMenuContainer {
     position: fixed;
     top: 0;

@@ -1,24 +1,36 @@
 import {useContext, useState} from "react";
-import { toast } from "react-toastify";
+import {toast} from "react-toastify";
 import {UserContext} from "../../../context/user-context/user-context";
 import {ViewContext} from "../../../context/view-context/view-context";
 import {fetcher} from "../../../hooks/fetcher";
-import { CreateGroupIllustration } from "../../illustrations/illustrations";
+import {CreateGroupIllustration} from "../../illustrations/illustrations";
 import classes from "./cgd.module.scss";
 const CreateGroupDialog = () => {
-    const {showCreateGroup, setShowCreateGroup,theme} = useContext(ViewContext);
+    const {showCreateGroup, setShowCreateGroup, theme} =
+        useContext(ViewContext);
     const {userId, token} = useContext(UserContext);
     const [groupUserName, setGroupUserName] = useState("");
     const [groupName, setGroupName] = useState("");
     const [groupDescription, setGroupDescription] = useState("");
     const [loading, setLoading] = useState(false);
+    const [animationClass, setAnimationClass] = useState(
+        classes.scaleInAnimation,
+    );
 
-    const handleClose = () => {
-        setShowCreateGroup(false);
+    const handleClose = (e) => {
+        e.preventDefault();
+        setAnimationClass(classes.moveDownAnimation);
+    };
+    const handleAnimationEnd = (e) => {
+        e.preventDefault();
+        if (animationClass === classes.moveDownAnimation) {
+            setShowCreateGroup(false);
+            setAnimationClass(classes.scaleInAnimation);
+        }
     };
     const handleSubmit = async (e) => {
-        setLoading(true);
         e.preventDefault();
+        setLoading(true);
         const data = {
             Name: groupName,
             GroupUserName: groupUserName,
@@ -42,7 +54,7 @@ const CreateGroupDialog = () => {
 
     const handleContainerClick = (e) => {
         if (e.target.id === "createGroupDialogContainer") {
-            setShowCreateGroup(false);
+            handleClose(e);
         }
     };
 
@@ -52,7 +64,8 @@ const CreateGroupDialog = () => {
             onClick={handleContainerClick}
             className={`${classes.container}`}>
             <div
-                className={`${classes.card}`}
+                className={`${classes.card} ${animationClass}`}
+                onAnimationEnd={handleAnimationEnd}
                 style={{backgroundColor: theme.darker, color: theme.text}}>
                 <form
                     onSubmit={handleSubmit}
@@ -105,7 +118,11 @@ const CreateGroupDialog = () => {
                             />
                         </div>
                         <div className="form-control p-1 w-100 my-2">
-                            <CreateGroupIllustration width={"100%"} colors={theme.illuColors} height={"200px"} />
+                            <CreateGroupIllustration
+                                width={"100%"}
+                                colors={theme.illuColors}
+                                height={"200px"}
+                            />
                         </div>
                         <div className="w-100 p-1 my-2">
                             <button

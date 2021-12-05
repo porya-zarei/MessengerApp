@@ -27,7 +27,7 @@ const ContextMenu = () => {
                         top: contextMenu.y + "px",
                         left: contextMenu.x + "px",
                     }}
-                    className={`${classes.contextMenu}`}>
+                    className={`${classes.contextMenu} ${classes.fadeInAnimation}`}>
                     <ul className={`${classes.contextMenuList}`}>
                         {contextMenu.chatData && contextMenu.chatData.ChatID && (
                             <>

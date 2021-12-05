@@ -10,12 +10,21 @@ const CreateRoomDialog = () => {
     const [receiverUserName, setReceiverUserName] = useState("");
     const [loading, setLoading] = useState(false);
     const [successfull, setSuccessfull] = useState("");
-    const handleClose = () => {
-        setShowCreateRoom(false);
-    };
-    const handleSubmit = async (e) => {
-        setLoading(true);
+    const [animationClass, setAnimationClass] = useState(classes.scaleInAnimation);
+    const handleClose = (e) => {
         e.preventDefault();
+        setAnimationClass(classes.moveDownAnimation);
+    };
+    const handleAnimationEnd = (e) => {
+        e.preventDefault();
+        if (animationClass === classes.moveDownAnimation) {
+            setShowCreateRoom(false);
+            setAnimationClass(classes.scaleInAnimation);
+        }
+    }
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        setLoading(true);
         const data = {
             SenderUserID: userId,
             ReceiverUserName: receiverUserName,
@@ -34,7 +43,7 @@ const CreateRoomDialog = () => {
 
     const handleContainerClick = (e) => {
         if (e.target.id === "createRoomDialogContainer") {
-            setShowCreateRoom(false);
+            handleClose(e);
         }
     };
 
@@ -45,7 +54,8 @@ const CreateRoomDialog = () => {
             className={`${classes.container}`}>
             <div
                 style={{backgroundColor: theme.darker, color: theme.text}}
-                className={`${classes.card}`}>
+                className={`${classes.card} ${animationClass}`}
+                onAnimationEnd={handleAnimationEnd}>
                 <form
                     onSubmit={handleSubmit}
                     className={`${classes.form} h-100 w-100`}>

@@ -1,4 +1,4 @@
-import {useContext, useEffect, useRef, useState} from "react";
+import {useContext, useEffect, useLayoutEffect, useRef, useState} from "react";
 import {UserContext} from "../../../../../context/user-context/user-context";
 import {ViewContext} from "../../../../../context/view-context/view-context";
 import Chat from "./chat/chat";
@@ -44,12 +44,15 @@ const ChatViewCardBody = () => {
         };
         const timeout = setTimeout(() => {
             console.log("in chat view body timeout =>");
-            handleScrollButton();
+            chatsBody.current.scrollTop = Number(
+                chatsBody.current.scrollHeight,
+            );
+            scrollButton.current.style.display = "none";
         }, 500);
         return () => {
             clearTimeout(timeout);
         };
-    }, []);
+    }, [chatsToShow]);
 
     return (
         <div style={bgStyle} className={`${classes.cardBodyContainer} col-12`}>

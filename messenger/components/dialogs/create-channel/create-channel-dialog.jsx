@@ -14,13 +14,24 @@ const CreateChannelDialog = () => {
     const [channelName, setChannelName] = useState("");
     const [channelDescription, setChannelDescription] = useState("");
     const [loading, setLoading] = useState(false);
+    const [animationClass, setAnimationClass] = useState(
+        classes.scaleInAnimation,
+    );
 
-    const handleClose = () => {
-        setShowCreateChannel(false);
+    const handleClose = (e) => {
+        e.preventDefault();
+        setAnimationClass(classes.moveDownAnimation);
+    };
+    const handleAnimationEnd = (e) => {
+        e.preventDefault();
+        if (animationClass === classes.moveDownAnimation) {
+            setShowCreateChannel(false);
+            setAnimationClass(classes.scaleInAnimation);
+        }
     };
     const handleSubmit = async (e) => {
-        setLoading(true);
         e.preventDefault();
+        setLoading(true);
         const data = {
             Name: channelName,
             ChannelUserName: channelUserName,
@@ -44,7 +55,7 @@ const CreateChannelDialog = () => {
 
     const handleContainerClick = (e) => {
         if (e.target.id === "createChannelDialogContainer") {
-            setShowCreateChannel(false);
+            handleClose(e);
         }
     };
 
@@ -54,7 +65,8 @@ const CreateChannelDialog = () => {
             onClick={handleContainerClick}
             className={`${classes.container}`}>
             <div
-                className={`${classes.card}`}
+                className={`${classes.card} ${animationClass}`}
+                onAnimationEnd={handleAnimationEnd}
                 style={{backgroundColor: theme.darker, color: theme.text}}>
                 <form
                     onSubmit={handleSubmit}

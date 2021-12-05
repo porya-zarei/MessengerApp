@@ -1,3 +1,39 @@
+@keyframes scalein {
+    0% {
+        transform: scale(0);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+@keyframes scaleout {
+    0% {
+        transform: scale(1);
+    }
+    100% {
+        transform: scale(0);
+    }
+}
+
+@keyframes movedown {
+    0% {
+        transform: translateY(0);
+    }
+    100% {
+        transform: translateY(100%);
+    }
+}
+
+.scaleInAnimation{
+    animation: scalein 0.3s 0s ease-in-out;
+}
+
+.moveDownAnimation{
+    animation: movedown 0.3s 0s ease-in-out;
+}
+
+
 .container{
     position: fixed;
     top: 0;

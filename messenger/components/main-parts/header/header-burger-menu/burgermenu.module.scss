@@ -1,8 +1,41 @@
+@keyframes jumpInFromLeft {
+    0% {
+        transform: translateX(-100%);
+    }
+    100% {
+        transform: translateX(0);
+    }
+}
+
+@keyframes jumpOutToLeft {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(-100%);
+    }
+    
+}
+
+.jumpInFromLeftAnimation {
+    animation-name: jumpInFromLeft;
+    animation-duration: 0.5s;
+    animation-timing-function: ease-in-out;
+    animation-fill-mode: forwards;
+}
+
+.jumpOutToLeftAnimation {
+    animation-name: jumpOutToLeft;
+    animation-duration: 0.5s;
+    animation-timing-function: ease-in-out;
+    animation-fill-mode: forwards;
+}
+
 .burgerMenuContainer {
     position: fixed;
     top: 50px;
     left: 0px;
-    display: none;
+    display: block;
     height: 100%;
     width: 100%;
     z-index: 10;
