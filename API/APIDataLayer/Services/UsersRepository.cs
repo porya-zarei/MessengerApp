@@ -402,22 +402,6 @@ namespace APIDataLayer.Services
                     AdminsUserName = users.Where(cu => c.AdminsID.Contains(cu.UserID)).Select(cu => cu.UserName).ToList(),
                     CreatorName = (users.First(u => u.UserID == c.CreatorID).FirstName + " " + users.First(u => u.UserID == c.CreatorID).LastName) ?? "null",
                     ChannelChatsID = c.ChannelChatsID,
-                    //Chats = channelsChats.Where(cc => c.ChannelChatsID.Contains(cc.ChatID)).Select(cc => new OutputChannelChat()
-                    //{
-                    //    ChannelID = cc.ChannelID,
-                    //    ChatID = cc.ChatID,
-                    //    Image = cc.Image,
-                    //    File = cc.File,
-                    //    FileSize = cc.FileSize,
-                    //    ImageSize = cc.ImageSize,
-                    //    Text = cc.Text,
-                    //    Seens = cc.Seens,
-                    //    Video = cc.Video,
-                    //    Voice = cc.Voice,
-                    //    VideoSize = cc.VideoSize,
-                    //    VoiceSize = cc.VoiceSize,
-                    //    SendingTime = cc.SendingTime
-                    //}).OrderBy(ch => ch.SendingTime).ToList()
                 }).ToList());
 
                 all.Rooms.AddRange(rooms.Select(r => new OutputRoom()
@@ -542,6 +526,11 @@ namespace APIDataLayer.Services
                 Description = user.Description,
                 ProfileImage = user.ProfileImage
             };
+        }
+
+        public string GetUserCookie()
+        {
+
         }
     }
 }

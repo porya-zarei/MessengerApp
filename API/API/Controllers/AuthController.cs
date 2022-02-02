@@ -13,6 +13,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Authorization;
+using API.Utils;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -43,17 +44,8 @@ namespace API.Controllers
             if (token != null)
             {
                 var registeredUser = usersRepository.GetUserWithEmailPassword(registerUser.Email, registerUser.Password);
-                var cookieConfig = new CookieOptions()
-                {
-                    HttpOnly = false,
-                    Domain = "http://localhost:3000",
-                    Expires = DateTime.Now.AddHours(2),
-                    Secure = false,
-                    SameSite = SameSiteMode.Unspecified
-                };
-                Response.Cookies.Append("Token", token, cookieConfig);
-
-                //await usersRepository.SetConnectionId(registeredUser.UserID, registerUser.ConnectionID);
+               
+                Response.Cookies.Append(GlobalConfigs.TokenKey, token, GlobalConfigs.CookieConfig);
 
                 await usersHub.Clients.Client(registerUser.ConnectionID).SendAsync("GetMainUserData", registeredUser);
 
@@ -75,17 +67,8 @@ namespace API.Controllers
                 return BadRequest();
             }
             var loginedUser = usersRepository.GetUserWithEmailPassword(loginUser.Email, loginUser.Password);
-            var cookieConfig = new CookieOptions()
-            {
-                HttpOnly = false,
-                Domain = "http://localhost:3000",
-                Path = "/",
-                Expires = DateTime.Now.AddHours(2),
-                Secure = false,
-                SameSite = SameSiteMode.Unspecified,
-                MaxAge = TimeSpan.FromHours(2)
-            };
-            Response.Cookies.Append("Token", token, cookieConfig);
+
+            Response.Cookies.Append(GlobalConfigs.TokenKey, token, GlobalConfigs.CookieConfig);
 
             //await usersRepository.SetConnectionId(loginedUser.UserID, loginUser.ConnectionID);
 
