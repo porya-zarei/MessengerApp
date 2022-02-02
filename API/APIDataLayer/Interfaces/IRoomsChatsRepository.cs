@@ -1,33 +1,23 @@
-﻿using APIDataLayer.DTOs;
-using APIDataLayer.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace APIDataLayer.Interfaces
+﻿namespace APIDataLayer.Interfaces;
+public interface IRoomsChatsRepository
 {
-    public interface IRoomsChatsRepository
-    {
-        Task<bool> AddChatToRoom(RoomChat roomChat);
+    Task<bool> AddChatToRoom(RoomChat roomChat);
 
-        bool CheckUserAccess(Guid userID, Guid senderID, Guid roomID);
+    bool CheckUserAccess(Guid userID, Guid senderID, Guid roomID);
 
-        Task<string> DeleteRoomChat(Guid chatId, Guid userId);
+    Task<string> DeleteRoomChat(Guid chatId, Guid userId);
 
-        Task<OutputForwardRoomChats> ForwardChatsToRooms(List<Guid> roomsId, List<ForwardChatContent> chats);
+    Task<OutputForwardRoomChats> ForwardChatsToRooms(List<Guid> roomsId, List<ForwardChatContent> chats);
 
-        OutputRoomChat GetOutputRoomChat(RoomChat roomChat);
+    OutputRoomChat GetOutputRoomChat(RoomChat roomChat);
 
-        Task<RoomChat> GetRoomChatWithChatID(Guid id);
+    Task<RoomChat> GetRoomChatWithChatID(Guid id);
 
-        Task<OutputRoomChat> RoomChatIDToOutputRoomChat(Guid id);
+    Task<OutputRoomChat> RoomChatIDToOutputRoomChat(Guid id);
 
-        void SaveChanges();
+    void SaveChanges();
 
-        Task SaveChangesAsync();
+    Task SaveChangesAsync();
 
-        Task<bool> UpdateRoomChat(ChatUpdate chatUpdate, string fileName, string imageName, Guid userId, string videoName, string voiceName);
-    }
+    Task<bool> UpdateRoomChat(ChatUpdate chatUpdate, string fileName, string imageName, Guid userId, string videoName, string voiceName);
 }

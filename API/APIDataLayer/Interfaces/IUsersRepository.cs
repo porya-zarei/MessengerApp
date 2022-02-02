@@ -1,50 +1,39 @@
-﻿using APIDataLayer.DTOs;
-using APIDataLayer.Models;
-using Microsoft.Extensions.Configuration;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace APIDataLayer.Interfaces
+﻿namespace APIDataLayer.Interfaces;
+public interface IUsersRepository
 {
-    public interface IUsersRepository
-    {
-        Task<bool> AddUser(User newUser);
+    Task<bool> AddUser(User newUser);
 
-        bool CheckAccessToAllData(Guid userId, List<string> ownersEmail);
+    bool CheckAccessToAllData(Guid userId, List<string> ownersEmail);
 
-        AllData GetAllData();
+    AllData GetAllData();
 
-        AllData GetAllDataForAdmin();
+    AllData GetAllDataForAdmin();
 
-        UserInitialData GetInitialData(Guid id);
+    UserInitialData GetInitialData(Guid id);
 
-        OutputUser GetOutputUser(Guid userId);
+    OutputUser GetOutputUser(Guid userId);
 
-        List<string> GetOwnersConnectionId(List<string> emails);
+    List<string> GetOwnersConnectionId(List<string> emails);
 
-        string GetUserToken(Dictionary<string, string> pairs, IConfiguration _configuration);
+    string GetUserToken(Dictionary<string, string> pairs, IConfiguration _configuration);
 
-        User GetUserWithEmailPassword(string email, string password);
+    User GetUserWithEmailPassword(string email, string password);
 
-        Task<User> GetUserWithUserID(Guid id);
+    Task<User> GetUserWithUserID(Guid id);
 
-        User GetUserWithUserName(string userName);
+    User GetUserWithUserName(string userName);
 
-        bool IsUserNameUnique(string userName);
+    bool IsUserNameUnique(string userName);
 
-        string LoginUserAuth(LoginUser loginUser, IConfiguration configuration);
+    string LoginUserAuth(LoginUser loginUser, IConfiguration configuration);
 
-        Task<string> RegisterUserAuth(RegisterUser registerUser, IConfiguration configuration);
+    Task<string> RegisterUserAuth(RegisterUser registerUser, IConfiguration configuration);
 
-        Task SaveChangesAsync();
+    Task SaveChangesAsync();
 
-        Task<bool> SetConnectionId(Guid userId, string connId);
+    Task<bool> SetConnectionId(Guid userId, string connId);
 
-        Task<User> UpdateUserInfo(UpdateUser updateUser, Guid userId, string imageName);
+    Task<User> UpdateUserInfo(UpdateUser updateUser, Guid userId, string imageName);
 
-        //Task<bool> SetUserConnectionID(string ID, string CID);
-    }
+    //Task<bool> SetUserConnectionID(string ID, string CID);
 }

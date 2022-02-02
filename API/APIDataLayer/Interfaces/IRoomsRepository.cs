@@ -1,35 +1,25 @@
-﻿using APIDataLayer.DTOs;
-using APIDataLayer.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace APIDataLayer.Interfaces
+﻿namespace APIDataLayer.Interfaces;
+public interface IRoomsRepository
 {
-    public interface IRoomsRepository
-    {
-        Task<bool> CreateRoom(Room room);
+    Task<bool> CreateRoom(Room room);
 
-        Task<Guid> GetRoomIDWithChatID(Guid id);
+    Task<Guid> GetRoomIDWithChatID(Guid id);
 
-        List<string> GetRoomUsersConnectionID(Guid roomID, Guid senderId, Guid receiverId);
+    List<string> GetRoomUsersConnectionID(Guid roomID, Guid senderId, Guid receiverId);
 
-        List<string> GetRoomUsersConnectionID(Guid roomID);
+    List<string> GetRoomUsersConnectionID(Guid roomID);
 
-        Task<Room> GetRoomWithChatID(Guid id);
+    Task<Room> GetRoomWithChatID(Guid id);
 
-        Task<Room> GetRoomWithRoomID(Guid id);
+    Task<Room> GetRoomWithRoomID(Guid id);
 
-        User GetUserWithUserName(string userName);
+    User GetUserWithUserName(string userName);
 
-        List<OutputRoomChat> RoomChatsToOutputRoomChats(List<Guid> chatsId);
+    List<OutputRoomChat> RoomChatsToOutputRoomChats(List<Guid> chatsId);
 
-        OutputRoom RoomToOutputRoom(Room room, Guid userId);
+    OutputRoom RoomToOutputRoom(Room room, Guid userId);
 
-        void SaveChanges();
+    void SaveChanges();
 
-        Task SaveChangesAsync();
-    }
+    Task SaveChangesAsync();
 }

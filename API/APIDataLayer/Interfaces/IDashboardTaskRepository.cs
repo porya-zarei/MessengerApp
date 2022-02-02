@@ -1,29 +1,20 @@
-﻿using APIDataLayer.DTOs;
-using APIDataLayer.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿namespace APIDataLayer.Interfaces;
 
-namespace APIDataLayer.Interfaces
+public interface IDashboardTaskRepository
 {
-    public interface IDashboardTaskRepository
-    {
-        Task<bool> CheckAccess(Guid userId, Guid taskId, List<string> ownersEmail);
+    Task<bool> CheckAccess(Guid userId, Guid taskId, List<string> ownersEmail);
 
-        Task<bool> CreateDashboardTask(DashboardTask task);
+    Task<bool> CreateDashboardTask(DashboardTask task);
 
-        Task<bool> DeleteDashboardTask(Guid userId, Guid taskId, List<string> ownersEmail);
+    Task<bool> DeleteDashboardTask(Guid userId, Guid taskId, List<string> ownersEmail);
 
-        List<OutputDashboardTask> GetAllDashboardTasks();
+    List<OutputDashboardTask> GetAllDashboardTasks();
 
-        Task<OutputDashboardTask> GetOutputDashboardTask(Guid taskId);
+    Task<OutputDashboardTask> GetOutputDashboardTask(Guid taskId);
 
-        void SaveChanges();
+    void SaveChanges();
 
-        Task SaveChangesAsync();
+    Task SaveChangesAsync();
 
-        Task<OutputDashboardTask> UpdateDashboardTask(UpdateDashboardTask updateTask);
-    }
+    Task<OutputDashboardTask> UpdateDashboardTask(UpdateDashboardTask updateTask);
 }

@@ -1,33 +1,23 @@
-﻿using APIDataLayer.DTOs;
-using APIDataLayer.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace APIDataLayer.Interfaces
+﻿namespace APIDataLayer.Interfaces;
+public interface IGroupsChatsRepository
 {
-    public interface IGroupsChatsRepository
-    {
-        Task<bool> AddChatToGroup(GroupChat groupChat);
+    Task<bool> AddChatToGroup(GroupChat groupChat);
 
-        bool CheckUserAccess(Guid userID, Guid senderID, Guid groupID);
+    bool CheckUserAccess(Guid userID, Guid senderID, Guid groupID);
 
-        Task<string> DeleteGroupChat(Guid chatId, Guid userId);
+    Task<string> DeleteGroupChat(Guid chatId, Guid userId);
 
-        Task<OutputForwardGroupChats> ForwardChatsToGroups(List<Guid> groupsId, List<ForwardChatContent> chats);
+    Task<OutputForwardGroupChats> ForwardChatsToGroups(List<Guid> groupsId, List<ForwardChatContent> chats);
 
-        Task<GroupChat> GetGroupChatWithChatID(Guid id);
+    Task<GroupChat> GetGroupChatWithChatID(Guid id);
 
-        OutputGroupChat GetOutputGroupChat(GroupChat groupChat);
+    OutputGroupChat GetOutputGroupChat(GroupChat groupChat);
 
-        Task<OutputGroupChat> GroupChatIDToOutputGroupChat(Guid id);
+    Task<OutputGroupChat> GroupChatIDToOutputGroupChat(Guid id);
 
-        void SaveChanges();
+    void SaveChanges();
 
-        Task SaveChangesAsync();
+    Task SaveChangesAsync();
 
-        Task<bool> UpdateGroupChat(ChatUpdate chatUpdate, string fileName, string imageName, Guid userId, string videoName, string voiceName);
-    }
+    Task<bool> UpdateGroupChat(ChatUpdate chatUpdate, string fileName, string imageName, Guid userId, string videoName, string voiceName);
 }

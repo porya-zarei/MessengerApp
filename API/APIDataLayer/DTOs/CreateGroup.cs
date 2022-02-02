@@ -1,18 +1,11 @@
-﻿using APIDataLayer.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace APIDataLayer.DTOs
+﻿namespace APIDataLayer.DTOs
 {
     public class CreateGroup
     {
         public string Name { get; set; }
         public string GroupUserName { get; set; }
         public Guid CreatorID { get; set; }
-        public string GroupDescription {get;set;}
+        public string GroupDescription { get; set; }
 
         public Group CreateGroupToGroup()
         {

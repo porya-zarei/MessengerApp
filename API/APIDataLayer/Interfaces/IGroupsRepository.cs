@@ -1,55 +1,46 @@
-﻿using APIDataLayer.DTOs;
-using APIDataLayer.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿namespace APIDataLayer.Interfaces;
 
-namespace APIDataLayer.Interfaces
+public interface IGroupsRepository
 {
-    public interface IGroupsRepository
-    {
-        bool AddGroup(Group group);
+    bool AddGroup(Group group);
 
-        Task<List<string>> DeleteGroupComplete(Guid userId, Guid groupId);
+    Task<List<string>> DeleteGroupComplete(Guid userId, Guid groupId);
 
-        Task<Group> GetGroupWithChatID(Guid id);
+    Task<Group> GetGroupWithChatID(Guid id);
 
-        Task<string> GetConnectionIdWithUserId(Guid userId);
+    Task<string> GetConnectionIdWithUserId(Guid userId);
 
-        Task<Guid> GetGroupCreatorID(Guid id);
+    Task<Guid> GetGroupCreatorID(Guid id);
 
-        Task<Guid> GetGroupIDWithChatID(Guid id);
+    Task<Guid> GetGroupIDWithChatID(Guid id);
 
-        List<string> GetGroupUsersConnectionID(Guid groupID);
+    List<string> GetGroupUsersConnectionID(Guid groupID);
 
-        List<OutputGroupChat> GroupChatsToOutputGroupChats(List<Guid> chatsId);
+    List<OutputGroupChat> GroupChatsToOutputGroupChats(List<Guid> chatsId);
 
-        OutputGroup GroupToOutputGroup(Group group);
+    OutputGroup GroupToOutputGroup(Group group);
 
-        Task<bool> JoinGroup(Guid userID, Guid groupID);
+    Task<bool> JoinGroup(Guid userID, Guid groupID);
 
-        Task<bool> LeaveGroup(Guid userId, Guid groupId);
+    Task<bool> LeaveGroup(Guid userId, Guid groupId);
 
-        void SaveChanges();
+    void SaveChanges();
 
-        Task SaveChangesAsync();
+    Task SaveChangesAsync();
 
-        Task<Group> GetGroupWithGroupID(Guid id);
+    Task<Group> GetGroupWithGroupID(Guid id);
 
-        Task<bool> UpdateGroup(UpdateGroup updateGroup, string profileImage, Guid userId);
+    Task<bool> UpdateGroup(UpdateGroup updateGroup, string profileImage, Guid userId);
 
-        Task<List<OutputUser>> GetGroupUsers(Guid groupId);
+    Task<List<OutputUser>> GetGroupUsers(Guid groupId);
 
-        Task<bool> IsAdmin(Guid groupId, Guid userId);
+    Task<bool> IsAdmin(Guid groupId, Guid userId);
 
-        Task<bool> IsCreator(Guid groupId, Guid userId);
+    Task<bool> IsCreator(Guid groupId, Guid userId);
 
-        Task<bool> AddAdminToGroup(Guid groupId, Guid senderId, Guid userId);
+    Task<bool> AddAdminToGroup(Guid groupId, Guid senderId, Guid userId);
 
-        Task<bool> RemoveAdminFromGroup(Guid groupId, Guid senderId, Guid userId);
+    Task<bool> RemoveAdminFromGroup(Guid groupId, Guid senderId, Guid userId);
 
-        Task<bool> RemoveUserFromGroup(Guid userId, Guid groupId);
-    }
+    Task<bool> RemoveUserFromGroup(Guid userId, Guid groupId);
 }

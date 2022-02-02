@@ -1,33 +1,23 @@
-﻿using APIDataLayer.DTOs;
-using APIDataLayer.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace APIDataLayer.Interfaces
+﻿namespace APIDataLayer.Interfaces;
+public interface IChannelsChatsRepository
 {
-    public interface IChannelsChatsRepository
-    {
-        Task<bool> AddChatToChannel(ChannelChat channelChat);
+    Task<bool> AddChatToChannel(ChannelChat channelChat);
 
-        Task<OutputChannelChat> ChannelChatIDToOutputChannelChat(Guid id);
+    Task<OutputChannelChat> ChannelChatIDToOutputChannelChat(Guid id);
 
-        bool CheckUserAccess(Guid userID, Guid senderID, Guid channelID);
+    bool CheckUserAccess(Guid userID, Guid senderID, Guid channelID);
 
-        Task<string> DeleteChannelChat(Guid chatId, Guid userId);
+    Task<string> DeleteChannelChat(Guid chatId, Guid userId);
 
-        Task<OutputForwardChannelChats> ForwardChatsToChannels(List<Guid> channelsId, List<ForwardChatContent> chats);
+    Task<OutputForwardChannelChats> ForwardChatsToChannels(List<Guid> channelsId, List<ForwardChatContent> chats);
 
-        Task<ChannelChat> GetChannelChatWithChatID(Guid id);
+    Task<ChannelChat> GetChannelChatWithChatID(Guid id);
 
-        OutputChannelChat GetOutputChannelChat(ChannelChat channelChat);
+    OutputChannelChat GetOutputChannelChat(ChannelChat channelChat);
 
-        void SaveChanges();
+    void SaveChanges();
 
-        Task SaveChangesAsync();
+    Task SaveChangesAsync();
 
-        Task<bool> UpdateChannelChat(ChatUpdate chatUpdate, string fileName, string imageName, Guid userId, string videoName, string voiceName);
-    }
+    Task<bool> UpdateChannelChat(ChatUpdate chatUpdate, string fileName, string imageName, Guid userId, string videoName, string voiceName);
 }
