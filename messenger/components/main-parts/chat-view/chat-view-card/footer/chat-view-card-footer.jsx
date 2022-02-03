@@ -8,13 +8,14 @@ import {sendRequest} from "./send-request";
 import VoiceSender from "./voice-sender/voice-sender";
 
 const ChatViewCardFooter = () => {
-    const {chatsToShow, theme} = useContext(ViewContext);
+    const {chatsToShow, theme, sendByEnter} = useContext(ViewContext);
     const {userId, token, user} = useContext(UserContext);
     const [text, setText] = useState("");
     const file = useRef();
     const image = useRef();
     const video = useRef();
     const [voice, setVoice] = useState();
+    const inputRef = useRef();
     const handleSendChat = async () => {
         if (
             (text.length > 0 || file.current.files[0] !== null,
@@ -42,6 +43,22 @@ const ChatViewCardFooter = () => {
     };
     useEffect(() => {
         console.log("show chats => ", chatsToShow, user, userId);
+        inputRef.current.focus();
+        const handleEnter = (e) => {
+            if (
+                e.keyCode === 13 &&
+                text.length > 0 &&
+                document.activeElement === inputRef.current
+            ) {
+                handleSendChat();
+            }
+        };
+        if (sendByEnter) {
+            window.addEventListener("keydown", handleEnter);
+            return () => {
+                window.removeEventListener("keydown", handleEnter);
+            };
+        }
     }, []);
     return (
         <div
@@ -63,6 +80,7 @@ const ChatViewCardFooter = () => {
                                 <input
                                     type="text"
                                     placeholder="type..."
+                                    ref={inputRef}
                                     className={`${classes.searchInput} p-2 m-0`}
                                     value={text}
                                     onChange={(e) => {

@@ -3,6 +3,7 @@ import HomeInfo from "./info/home-info";
 import HomeNavbar from "./navbar/home-navbar";
 import Image from "next/image";
 import {useState} from "react";
+import homeImage from "../../assets/images/dasht.jpg";
 
 const Home = () => {
     const [chats, setChats] = useState([
@@ -21,7 +22,7 @@ const Home = () => {
                     <div className={classes.bannerContainer}>
                         <Image
                             className={classes.banner}
-                            src="/assets/images/jpg/dasht.jpg"
+                            src={homeImage}
                             layout="responsive"
                             height={200}
                             width={500}

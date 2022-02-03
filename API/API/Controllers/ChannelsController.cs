@@ -65,30 +65,30 @@ public class ChannelsController : ControllerBase
         {
             var channelChat = sendChannelChat.SendChannelChatToChannelChat();
             // upload =>
-            if (sendChannelChat.File != null || sendChannelChat.Image != null || sendChannelChat.Video != null || sendChannelChat.Voice != null)
+
+            var uploader = new Uploader();
+
+            if (sendChannelChat.File != null)
             {
-                var uploader = new Uploader();
-                if (sendChannelChat.File != null)
-                {
-                    channelChat.File = await uploader.UploadFile(sendChannelChat.File, webHostEnvironment.WebRootPath);
-                    channelChat.FileSize = sendChannelChat.File.Length;
-                }
-                if (sendChannelChat.Image != null && sendChannelChat.Video == null)
-                {
-                    channelChat.Image = await uploader.UploadImage(sendChannelChat.Image, webHostEnvironment.WebRootPath);
-                    channelChat.ImageSize = sendChannelChat.Image.Length;
-                }
-                if (sendChannelChat.Video != null && sendChannelChat.Image == null)
-                {
-                    channelChat.Video = await uploader.UploadVideo(sendChannelChat.Video, webHostEnvironment.WebRootPath);
-                    channelChat.VideoSize = sendChannelChat.Video.Length;
-                }
-                if (sendChannelChat.Voice != null)
-                {
-                    channelChat.Voice = await uploader.UploadVoice(sendChannelChat.Voice, webHostEnvironment.WebRootPath);
-                    channelChat.VoiceSize = sendChannelChat.Voice.Length;
-                }
+                channelChat.File = await uploader.UploadFile(sendChannelChat.File, webHostEnvironment.WebRootPath);
+                channelChat.FileSize = sendChannelChat.File.Length;
             }
+            if (sendChannelChat.Image != null && sendChannelChat.Video == null)
+            {
+                channelChat.Image = await uploader.UploadImage(sendChannelChat.Image, webHostEnvironment.WebRootPath);
+                channelChat.ImageSize = sendChannelChat.Image.Length;
+            }
+            if (sendChannelChat.Video != null && sendChannelChat.Image == null)
+            {
+                channelChat.Video = await uploader.UploadVideo(sendChannelChat.Video, webHostEnvironment.WebRootPath);
+                channelChat.VideoSize = sendChannelChat.Video.Length;
+            }
+            if (sendChannelChat.Voice != null)
+            {
+                channelChat.Voice = await uploader.UploadVoice(sendChannelChat.Voice, webHostEnvironment.WebRootPath);
+                channelChat.VoiceSize = sendChannelChat.Voice.Length;
+            }
+
             // end upload
             await channelsChatsRepository.AddChatToChannel(channelChat);
             await usersHub.Clients

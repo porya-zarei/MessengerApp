@@ -60,6 +60,8 @@ export const ViewContext = createContext({
     setChatBackground: () => {},
     showVideoChat: false,
     setShowVideoChat: () => {},
+    sendByEnter: false,
+    changeSendByEnter: () => {},
 });
 
 const ViewContextProvider = ({children}) => {
@@ -120,7 +122,15 @@ const ViewContextProvider = ({children}) => {
     );
 
     const [showVideoChat, setShowVideoChat] = useState(false);
-
+    const [sendByEnter, setSendByEnter] = useState(true);
+    const changeSendByEnter = (value, type) => {
+        if (type === "reverse") {
+            localStorage.setItem("sendByEnter", !sendByEnter);
+        } else if (type === "set") {
+            localStorage.setItem("sendByEnter", value);
+        }
+        setSendByEnter(value);
+    };
     useEffect(() => {
         if (window) {
             console.log(
@@ -138,6 +148,9 @@ const ViewContextProvider = ({children}) => {
             if (theme.name !== storageTheme.name) {
                 setTheme(storageTheme);
             }
+        }
+        if (localStorage.getItem("sendByEnter")) {
+            setSendByEnter(!!JSON.parse(localStorage.getItem("sendByEnter")));
         }
     }, []);
     const context = {
@@ -169,6 +182,8 @@ const ViewContextProvider = ({children}) => {
         setChatBackground,
         showVideoChat,
         setShowVideoChat,
+        sendByEnter,
+        changeSendByEnter,
     };
     return (
         <ViewContext.Provider value={context}>{children}</ViewContext.Provider>

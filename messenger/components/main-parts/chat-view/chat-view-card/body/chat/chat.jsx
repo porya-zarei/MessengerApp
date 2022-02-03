@@ -111,7 +111,7 @@ const Chat = ({
                 className={`${classes.chat} row m-0 my-1 p-1`}>
                 {imageName && (
                     <div className="col-12 m-0 p-0 h-auto">
-                        <ImageChat imageName={imageName} />
+                        <ImageChat me={me} imageName={imageName} />
                     </div>
                 )}
                 {videoName && (

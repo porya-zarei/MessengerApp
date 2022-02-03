@@ -10,6 +10,9 @@ var builder = WebApplication.CreateBuilder(args);
 #region --Services--
 
 // Add services to the container.
+
+AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
+
 builder.Services.AddControllers().AddJsonOptions(options =>
 {
     options.JsonSerializerOptions.PropertyNamingPolicy = null;

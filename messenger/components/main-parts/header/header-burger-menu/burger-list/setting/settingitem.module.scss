@@ -50,3 +50,14 @@
     padding: 10px;
     height: auto;
 }
+
+.sendByEnterContainer{
+    width: 100%;
+    padding: 10px;
+    height: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: row;
+    flex-wrap: nowrap;
+}

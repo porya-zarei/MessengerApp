@@ -1,0 +1,10 @@
+.image {
+    @media screen and (min-width: 900px) {
+        &:hover {
+            cursor: zoom-in;
+            transition: all 0.5s;
+            transform: scale(2);
+            z-index: 30;
+        }
+    }
+}

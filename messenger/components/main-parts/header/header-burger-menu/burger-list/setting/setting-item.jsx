@@ -4,8 +4,9 @@ import classes from "./settingitem.module.scss";
 import themeData from "../../../../../../data/theme.json";
 
 const SettingItem = () => {
-    const {darkTheme,lightGreenTheme} = themeData;
-    const {theme, setTheme, setChatBackground} = useContext(ViewContext);
+    const {darkTheme, lightGreenTheme} = themeData;
+    const {theme, setTheme, setChatBackground, sendByEnter, changeSendByEnter} =
+        useContext(ViewContext);
     const [showSetting, setShowSetting] = useState(false);
 
     const showingColors = ["dark", "primary", "primarier", "danger", "light"];
@@ -101,6 +102,17 @@ const SettingItem = () => {
                                 ref={chatbgRef}
                                 type="file"
                                 hidden={true}
+                            />
+                        </div>
+                        <div className={`${classes.sendByEnterContainer}`}>
+                            Send Chat By Enter :{" "}
+                            <input
+                                type="checkbox"
+                                checked={sendByEnter}
+                                style={{color: theme.textGray}}
+                                onChange={() =>
+                                    changeSendByEnter((p) => !p, "reverse")
+                                }
                             />
                         </div>
                     </div>

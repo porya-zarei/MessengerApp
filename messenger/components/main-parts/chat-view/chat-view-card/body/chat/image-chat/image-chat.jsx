@@ -1,7 +1,8 @@
 import {useEffect, useState} from "react";
-import { files_url } from "../../../../../../../configs/configs";
+import {files_url} from "../../../../../../../configs/configs";
+import classes from "./imagechat.module.scss";
 
-const ImageChat = ({imageName}) => {
+const ImageChat = ({imageName, me}) => {
     const [source, setSource] = useState("");
     const [show, setShow] = useState(false);
     const handleShowImage = () => {
@@ -17,11 +18,27 @@ const ImageChat = ({imageName}) => {
             setSource(localStorage.getItem(`${imageName}`));
         }
     }, []);
-    if (!show&& source.length > 0) {
-        return <img alt={imageName} title={imageName} src={source} className="w-100" height="200px" />;
+    if (!show && source.length > 0) {
+        return (
+            <img
+                alt={imageName}
+                title={imageName}
+                src={source}
+                style={{transformOrigin: `bottom ${me ? "right" : "left"}`}}
+                className={`w-100 ${classes.image}`}
+                height="200px"
+            />
+        );
     }
     return show ? (
-        <img alt={imageName} title={imageName} src={source} className="w-100" height="200px" />
+        <img
+            alt={imageName}
+            title={imageName}
+            src={source}
+            style={{transformOrigin: `bottom ${me ? "right" : "left"}`}}
+            className={`w-100 ${classes.image}`}
+            height="200px"
+        />
     ) : (
         <div className="bg-secondary w-100 center" style={{height: "200px"}}>
             <button
